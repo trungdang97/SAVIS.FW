@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SAVIS.CoreFW.SchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="scf_Class">
+    <Key>
+      <PropertyRef Name="ClassId" />
+    </Key>
+    <Property Name="ClassId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StudentQuantity" Type="int" Nullable="false" />
+    <Property Name="TeacherId" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="scf_Class_Role">
+    <Key>
+      <PropertyRef Name="ClassRoleId" />
+    </Key>
+    <Property Name="ClassRoleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="scf_Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Birthday" Type="date" Nullable="false" />
+    <Property Name="ClassRoleId" Type="uniqueidentifier" />
+    <Property Name="ClassId" Type="uniqueidentifier" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Student_History' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="scf_Student_History">
+    <Key>
+      <PropertyRef Name="StudentId" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="FromClassId" />
+    </Key>
+    <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="FromClassId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ToClassId" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="scf_Teacher">
+    <Key>
+      <PropertyRef Name="TeacherId" />
+    </Key>
+    <Property Name="TeacherId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Birthday" Type="date" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="scf_Teacher_History">
+    <Key>
+      <PropertyRef Name="TeacherId" />
+      <PropertyRef Name="ClassId" />
+      <PropertyRef Name="StartDate" />
+    </Key>
+    <Property Name="TeacherId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ClassId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="StartDate" Type="date" Nullable="false" />
+    <Property Name="EndDate" Type="date" />
+  </EntityType>
+  <Association Name="FK_Class_Teacher">
+    <End Role="scf_Teacher" Type="Self.scf_Teacher" Multiplicity="0..1" />
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Teacher">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="scf_Class">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Class">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
+    <End Role="scf_Student" Type="Self.scf_Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Student">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Class_Role">
+    <End Role="scf_Class_Role" Type="Self.scf_Class_Role" Multiplicity="0..1" />
+    <End Role="scf_Student" Type="Self.scf_Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class_Role">
+        <PropertyRef Name="ClassRoleId" />
+      </Principal>
+      <Dependent Role="scf_Student">
+        <PropertyRef Name="ClassRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_History_FromClass">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+    <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Student_History">
+        <PropertyRef Name="FromClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_History_Student">
+    <End Role="scf_Student" Type="Self.scf_Student" Multiplicity="1" />
+    <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="scf_Student_History">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_History_ToClass">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
+    <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Student_History">
+        <PropertyRef Name="ToClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_History_Class">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+    <End Role="scf_Teacher_History" Type="Self.scf_Teacher_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Teacher_History">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_History_Teacher">
+    <End Role="scf_Teacher" Type="Self.scf_Teacher" Multiplicity="1" />
+    <End Role="scf_Teacher_History" Type="Self.scf_Teacher_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Teacher">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="scf_Teacher_History">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SAVISCoreFWSchoolModelStoreContainer">
+    <EntitySet Name="scf_Class" EntityType="Self.scf_Class" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Class_Role" EntityType="Self.scf_Class_Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Student" EntityType="Self.scf_Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [scf_Student_History].[StudentId] AS [StudentId], 
+    [scf_Student_History].[StartDate] AS [StartDate], 
+    [scf_Student_History].[EndDate] AS [EndDate], 
+    [scf_Student_History].[FromClassId] AS [FromClassId], 
+    [scf_Student_History].[ToClassId] AS [ToClassId]
+    FROM [dbo].[scf_Student_History] AS [scf_Student_History]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [scf_Teacher_History].[TeacherId] AS [TeacherId], 
+    [scf_Teacher_History].[ClassId] AS [ClassId], 
+    [scf_Teacher_History].[StartDate] AS [StartDate], 
+    [scf_Teacher_History].[EndDate] AS [EndDate]
+    FROM [dbo].[scf_Teacher_History] AS [scf_Teacher_History]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
+      <End Role="scf_Teacher" EntitySet="scf_Teacher" />
+      <End Role="scf_Class" EntitySet="scf_Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Student" EntitySet="scf_Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Class_Role" Association="Self.FK_Student_Class_Role">
+      <End Role="scf_Class_Role" EntitySet="scf_Class_Role" />
+      <End Role="scf_Student" EntitySet="scf_Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_History_FromClass" Association="Self.FK_Student_History_FromClass">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Student_History" EntitySet="scf_Student_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_History_Student" Association="Self.FK_Student_History_Student">
+      <End Role="scf_Student" EntitySet="scf_Student" />
+      <End Role="scf_Student_History" EntitySet="scf_Student_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_History_ToClass" Association="Self.FK_Student_History_ToClass">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Student_History" EntitySet="scf_Student_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_History_Class" Association="Self.FK_Teacher_History_Class">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_History_Teacher" Association="Self.FK_Teacher_History_Teacher">
+      <End Role="scf_Teacher" EntitySet="scf_Teacher" />
+      <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

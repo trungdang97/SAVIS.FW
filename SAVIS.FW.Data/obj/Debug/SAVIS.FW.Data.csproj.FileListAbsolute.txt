@@ -1,0 +1,17 @@
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.csprojResolveAssemblyReference.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Data.dll.config
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Data.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Data.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\EntityFramework.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Common.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\log4net.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Common.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\EntityFramework.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\log4net.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.pdb

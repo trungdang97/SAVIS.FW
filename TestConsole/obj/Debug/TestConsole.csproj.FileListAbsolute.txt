@@ -1,0 +1,7 @@
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\bin\Debug\TestConsole.exe.config
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\bin\Debug\TestConsole.exe
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\bin\Debug\TestConsole.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\bin\Debug\Sodium.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\obj\Debug\TestConsole.csprojResolveAssemblyReference.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\obj\Debug\TestConsole.exe
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestConsole\obj\Debug\TestConsole.pdb

@@ -1,0 +1,16 @@
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csprojResolveAssemblyReference.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Business.dll.config
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Business.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Business.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Common.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Data.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\log4net.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Common.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Data.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\log4net.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\EntityFramework.xml
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.pdb

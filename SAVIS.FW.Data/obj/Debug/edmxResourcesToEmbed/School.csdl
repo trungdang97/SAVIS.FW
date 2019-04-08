@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SAVIS.CoreFW.SchoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="scf_Class">
+    <Key>
+      <PropertyRef Name="ClassId" />
+    </Key>
+    <Property Name="ClassId" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StudentQuantity" Type="Int32" Nullable="false" />
+    <Property Name="TeacherId" Type="Guid" />
+    <NavigationProperty Name="scf_Teacher" Relationship="Self.FK_Class_Teacher" FromRole="scf_Class" ToRole="scf_Teacher" />
+    <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_Class" FromRole="scf_Class" ToRole="scf_Student" />
+    <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Class" ToRole="scf_Student_History" />
+    <NavigationProperty Name="scf_Student_History1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Class" ToRole="scf_Student_History" />
+    <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Class" FromRole="scf_Class" ToRole="scf_Teacher_History" />
+  </EntityType>
+  <EntityType Name="scf_Class_Role">
+    <Key>
+      <PropertyRef Name="ClassRoleId" />
+    </Key>
+    <Property Name="ClassRoleId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_Class_Role" FromRole="scf_Class_Role" ToRole="scf_Student" />
+  </EntityType>
+  <EntityType Name="scf_Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClassRoleId" Type="Guid" />
+    <Property Name="ClassId" Type="Guid" />
+    <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_Class" FromRole="scf_Student" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Class_Role" Relationship="Self.FK_Student_Class_Role" FromRole="scf_Student" ToRole="scf_Class_Role" />
+    <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student" ToRole="scf_Student_History" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="scf_Teacher">
+    <Key>
+      <PropertyRef Name="TeacherId" />
+    </Key>
+    <Property Name="TeacherId" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="scf_Student_History">
+    <Key>
+      <PropertyRef Name="StudentId" />
+      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="FromClassId" />
+    </Key>
+    <Property Name="StudentId" Type="Guid" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="FromClassId" Type="Guid" Nullable="false" />
+    <Property Name="ToClassId" Type="Guid" />
+    <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Student_History" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Class1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Student_History" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student_History" ToRole="scf_Student" />
+  </EntityType>
+  <EntityType Name="scf_Teacher_History">
+    <Key>
+      <PropertyRef Name="TeacherId" />
+      <PropertyRef Name="ClassId" />
+      <PropertyRef Name="StartDate" />
+    </Key>
+    <Property Name="TeacherId" Type="Guid" Nullable="false" />
+    <Property Name="ClassId" Type="Guid" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="scf_Class" Relationship="Self.FK_Teacher_History_Class" FromRole="scf_Teacher_History" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Teacher" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher_History" ToRole="scf_Teacher" />
+  </EntityType>
+  <Association Name="FK_Class_Teacher">
+    <End Role="scf_Teacher" Type="Self.scf_Teacher" Multiplicity="0..1" />
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Teacher">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="scf_Class">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Class">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
+    <End Role="scf_Student" Type="Self.scf_Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Student">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_History_FromClass">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+    <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Student_History">
+        <PropertyRef Name="FromClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_History_ToClass">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
+    <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Student_History">
+        <PropertyRef Name="ToClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_History_Class">
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+    <End Role="scf_Teacher_History" Type="Self.scf_Teacher_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="scf_Teacher_History">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Class_Role">
+    <End Role="scf_Class_Role" Type="Self.scf_Class_Role" Multiplicity="0..1" />
+    <End Role="scf_Student" Type="Self.scf_Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Class_Role">
+        <PropertyRef Name="ClassRoleId" />
+      </Principal>
+      <Dependent Role="scf_Student">
+        <PropertyRef Name="ClassRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_History_Student">
+    <End Role="scf_Student" Type="Self.scf_Student" Multiplicity="1" />
+    <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="scf_Student_History">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Teacher_History_Teacher">
+    <End Role="scf_Teacher" Type="Self.scf_Teacher" Multiplicity="1" />
+    <End Role="scf_Teacher_History" Type="Self.scf_Teacher_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Teacher">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="scf_Teacher_History">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="scf_Class" EntityType="Self.scf_Class" />
+    <EntitySet Name="scf_Class_Role" EntityType="Self.scf_Class_Role" />
+    <EntitySet Name="scf_Student" EntityType="Self.scf_Student" />
+    <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" />
+    <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" />
+    <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" />
+    <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
+      <End Role="scf_Teacher" EntitySet="scf_Teacher" />
+      <End Role="scf_Class" EntitySet="scf_Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Student" EntitySet="scf_Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_History_FromClass" Association="Self.FK_Student_History_FromClass">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Student_History" EntitySet="scf_Student_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_History_ToClass" Association="Self.FK_Student_History_ToClass">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Student_History" EntitySet="scf_Student_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_History_Class" Association="Self.FK_Teacher_History_Class">
+      <End Role="scf_Class" EntitySet="scf_Class" />
+      <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Class_Role" Association="Self.FK_Student_Class_Role">
+      <End Role="scf_Class_Role" EntitySet="scf_Class_Role" />
+      <End Role="scf_Student" EntitySet="scf_Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_History_Student" Association="Self.FK_Student_History_Student">
+      <End Role="scf_Student" EntitySet="scf_Student" />
+      <End Role="scf_Student_History" EntitySet="scf_Student_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Teacher_History_Teacher" Association="Self.FK_Teacher_History_Teacher">
+      <End Role="scf_Teacher" EntitySet="scf_Teacher" />
+      <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
