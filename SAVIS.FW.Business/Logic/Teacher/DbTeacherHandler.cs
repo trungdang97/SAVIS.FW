@@ -12,6 +12,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
 {
     class DbTeacherHandler : ITeacherHandler
     {
+        ILogService logger = BusinessServiceLocator.Instance.GetService<ILogService>();
         public Response<Teacher> CreateTeacher(TeacherCreateRequestModel teacher)
         {
             try

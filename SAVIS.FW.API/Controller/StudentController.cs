@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace SAVIS.FW.API.Controller
 {
-    class StudentController
+    public class StudentController : ApiController
     {
         readonly IStudentHandler _studentHandler = BusinessServiceLocator.Instance.GetService<IStudentHandler>();
         [HttpGet]
