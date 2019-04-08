@@ -42,10 +42,10 @@ namespace SAVIS.FW.Business.Logic.Teacher
         {
             try
             {
-                using(var unitOfWork = new UnitOfWork())
+                using (var unitOfWork = new UnitOfWork())
                 {
                     var model = unitOfWork.GetRepository<scf_Teacher>().GetById(teacherId);
-                    if(model == null)
+                    if (model == null)
                     {
                         return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
@@ -55,7 +55,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     return new Response<Teacher>(ConfigType.SUCCESS, "DELETED", ConvertTeacher(model));
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
             }
@@ -65,17 +65,17 @@ namespace SAVIS.FW.Business.Logic.Teacher
         {
             try
             {
-                using(var unitOfWork = new UnitOfWork())
+                using (var unitOfWork = new UnitOfWork())
                 {
                     var model = unitOfWork.GetRepository<scf_Teacher>().GetById(teacherId);
-                    if(model == null)
+                    if (model == null)
                     {
                         return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists", null);
                     }
                     return new Response<Teacher>(ConfigType.SUCCESS, "OK", ConvertTeacher(model));
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
             }
@@ -100,7 +100,10 @@ namespace SAVIS.FW.Business.Logic.Teacher
                             excludedRows = 0;
                         data = data.Skip(excludedRows).Take(filter.PageSize.Value + 1).ToList();
                     }
-                    return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(data));
+                    return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(data))
+                    {
+                        DataCount = count
+                    };
                 }
             }
             catch (Exception ex)

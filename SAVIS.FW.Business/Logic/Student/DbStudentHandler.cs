@@ -26,13 +26,22 @@ namespace SAVIS.FW.Business.Logic.Student
                         Code = student.Code,
                         Name = student.Name,
                         Birthday = student.Birthday,
-                        ClassId = student.ClassId,
-                        ClassRoleId = student.ClassRoleId
+                        ClassRoleId = null,
+                        ClassId = null                       
                     };
+                    if(student.ClassRoleId != Guid.Empty)
+                    {
+                        model.ClassRoleId = student.ClassRoleId;
+                    }
+                    if(student.ClassId != Guid.Empty)
+                    {
+                        model.ClassId = student.ClassId;
+                    }
+                    
                     unitOfWork.GetRepository<scf_Student>().Add(model);
                     unitOfWork.Save();
 
-                    return new Response<Student>(ConfigType.SUCCESS, "CREATED", null);
+                    return new Response<Student>(ConfigType.SUCCESS, "CREATED", ConvertStudent(model));
                 }
             }
             catch (Exception ex)
@@ -71,7 +80,7 @@ namespace SAVIS.FW.Business.Logic.Student
                 using (var unitOfWork = new UnitOfWork())
                 {
                     string textSearch = filter.TextSearch;
-                    List<scf_Student> data = unitOfWork.GetRepository<scf_Student>().GetMany(x => (x.Name.Contains(textSearch)) || (x.Code.Contains(textSearch)) || (x.Birthday.ToString("d/M/yyyy").Contains(textSearch))).ToList();
+                    List<scf_Student> data = unitOfWork.GetRepository<scf_Student>().GetMany(x => (x.Name.Contains(textSearch)) || (x.Code.Contains(textSearch))).ToList();// || (x.Birthday.ToString("d/M/yyyy").Contains(textSearch))).ToList();
                     int count = data.Count;
 
                     if (filter.PageSize.HasValue && filter.PageNumber.HasValue)
@@ -83,7 +92,10 @@ namespace SAVIS.FW.Business.Logic.Student
                             excludedRows = 0;
                         data = data.Skip(excludedRows).Take(filter.PageSize.Value + 1).ToList();
                     }
-                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", ConvertStudents(data));
+                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", ConvertStudents(data))
+                    {
+                        DataCount = count
+                    };
                 }
             }
             catch (Exception ex)

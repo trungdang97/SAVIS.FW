@@ -22,9 +22,16 @@ namespace SAVIS.FW.API.Controller
         }
 
         [HttpPost]
-        [Route("api/v1/classes/filter")]
-        public Response<IList<Class>> GetFilter([FromBody] ClassQueryFilter filter)
+        [Route("api/v1/classes/filter/{textSearch}/{pageSize}/{pageNumber}")]
+        public Response<IList<Class>> GetFilter(string textSearch, int? pageSize, int? pageNumber)
         {
+            ClassQueryFilter filter = new ClassQueryFilter()
+            {
+                TextSearch = textSearch,
+                PageSize = (pageSize != null) ? pageSize : 10,
+                PageNumber = (pageNumber != null) ? pageNumber : 1
+            };
+            
             return _classHandler.GetFilter(filter);
         }
 

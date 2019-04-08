@@ -71,7 +71,7 @@ namespace SAVIS.FW.Business.Logic.Class
             {
                 using (var unitOfWork = new UnitOfWork())
                 {
-                    var db = unitOfWork.DataContext;
+                    //var db = unitOfWork.DataContext;
                     scf_Class model = new scf_Class()
                     {
                         ClassId = Guid.NewGuid(),
