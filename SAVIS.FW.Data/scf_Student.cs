@@ -23,9 +23,9 @@ namespace SAVIS.FW.Data
         public System.Guid StudentId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public System.DateTime Birthday { get; set; }
         public Nullable<System.Guid> ClassRoleId { get; set; }
         public Nullable<System.Guid> ClassId { get; set; }
-        public System.DateTime Birthday { get; set; }
     
         public virtual scf_Class scf_Class { get; set; }
         public virtual scf_Class_Role scf_Class_Role { get; set; }

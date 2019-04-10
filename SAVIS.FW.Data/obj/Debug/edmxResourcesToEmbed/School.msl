@@ -23,39 +23,42 @@
     <EntitySetMapping Name="scf_Student">
       <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Student">
         <MappingFragment StoreEntitySet="scf_Student">
-          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
           <ScalarProperty Name="ClassRoleId" ColumnName="ClassRoleId" />
           <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="scf_Teacher">
-      <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher">
-        <MappingFragment StoreEntitySet="scf_Teacher">
-          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="scf_Student_History">
       <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Student_History">
         <MappingFragment StoreEntitySet="scf_Student_History">
+          <ScalarProperty Name="StudentHistoryId" ColumnName="StudentHistoryId" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="FromClassId" ColumnName="FromClassId" />
           <ScalarProperty Name="ToClassId" ColumnName="ToClassId" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="scf_Teacher">
+      <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher">
+        <MappingFragment StoreEntitySet="scf_Teacher">
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="scf_Teacher_History">
       <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher_History">
         <MappingFragment StoreEntitySet="scf_Teacher_History">
+          <ScalarProperty Name="TeacherHistoryId" ColumnName="TeacherHistoryId" />
           <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
           <ScalarProperty Name="ClassId" ColumnName="ClassId" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />

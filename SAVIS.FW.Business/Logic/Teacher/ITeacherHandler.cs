@@ -14,5 +14,10 @@ namespace SAVIS.FW.Business.Logic.Teacher
         Response<Teacher> CreateTeacher(TeacherCreateRequestModel teacher);
         Response<Teacher> UpdateTeacher(TeacherUpdateRequestModel teacher);
         Response<Teacher> DeleteTeacher(Guid teacherId);
+
+        //
+        int TotalQuantity();
+
+        Response<Teacher> CurrentAssignedClasses(Guid teacherId);
     }
 }

@@ -14,5 +14,10 @@ namespace SAVIS.FW.Business.Logic.Class
         Response<Class> UpdateClass(ClassUpdateRequestModel Class);
         Response<Class> DeleteClass(Guid ClassId);
         Response<IList<Class>> GetFilter(ClassQueryFilter filter);
+
+        //specific 
+        Response<Class> AssignToClass(Guid? teacherId, Guid classId);
+        int TotalQuantity();
+        Response<Class> CurrentStudents(Guid classId);
     }
 }

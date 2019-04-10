@@ -28,8 +28,8 @@ namespace SAVIS.FW.Data
         public virtual DbSet<scf_Class> scf_Class { get; set; }
         public virtual DbSet<scf_Class_Role> scf_Class_Role { get; set; }
         public virtual DbSet<scf_Student> scf_Student { get; set; }
-        public virtual DbSet<scf_Teacher> scf_Teacher { get; set; }
         public virtual DbSet<scf_Student_History> scf_Student_History { get; set; }
+        public virtual DbSet<scf_Teacher> scf_Teacher { get; set; }
         public virtual DbSet<scf_Teacher_History> scf_Teacher_History { get; set; }
     }
 }

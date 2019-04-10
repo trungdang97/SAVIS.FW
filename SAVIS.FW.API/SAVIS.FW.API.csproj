@@ -103,6 +103,8 @@
   <ItemGroup>
     <Compile Include="Controller\ClassController.cs" />
     <Compile Include="Controller\StudentController.cs" />
+    <Compile Include="Controller\SummaryController.cs" />
+    <Compile Include="Controller\TeacherController.cs" />
     <Compile Include="Controller\ValuesController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

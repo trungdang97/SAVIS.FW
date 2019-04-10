@@ -28,19 +28,17 @@
     <Property Name="ClassRoleId" Type="uniqueidentifier" />
     <Property Name="ClassId" Type="uniqueidentifier" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Student_History' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="scf_Student_History">
     <Key>
-      <PropertyRef Name="StudentId" />
-      <PropertyRef Name="StartDate" />
-      <PropertyRef Name="FromClassId" />
+      <PropertyRef Name="StudentHistoryId" />
     </Key>
+    <Property Name="StudentHistoryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="StartDate" Type="date" Nullable="false" />
     <Property Name="EndDate" Type="date" />
-    <Property Name="FromClassId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FromClassId" Type="uniqueidentifier" />
     <Property Name="ToClassId" Type="uniqueidentifier" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="scf_Teacher">
     <Key>
@@ -51,14 +49,11 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Student_History' does 
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Birthday" Type="date" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="scf_Teacher_History">
     <Key>
-      <PropertyRef Name="TeacherId" />
-      <PropertyRef Name="ClassId" />
-      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="TeacherHistoryId" />
     </Key>
+    <Property Name="TeacherHistoryId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="TeacherId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="ClassId" Type="uniqueidentifier" Nullable="false" />
     <Property Name="StartDate" Type="date" Nullable="false" />
@@ -101,7 +96,7 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Student_History_FromClass">
-    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
     <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="scf_Class">
@@ -164,24 +159,9 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
     <EntitySet Name="scf_Class" EntityType="Self.scf_Class" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="scf_Class_Role" EntityType="Self.scf_Class_Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="scf_Student" EntityType="Self.scf_Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [scf_Student_History].[StudentId] AS [StudentId], 
-    [scf_Student_History].[StartDate] AS [StartDate], 
-    [scf_Student_History].[EndDate] AS [EndDate], 
-    [scf_Student_History].[FromClassId] AS [FromClassId], 
-    [scf_Student_History].[ToClassId] AS [ToClassId]
-    FROM [dbo].[scf_Student_History] AS [scf_Student_History]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [scf_Teacher_History].[TeacherId] AS [TeacherId], 
-    [scf_Teacher_History].[ClassId] AS [ClassId], 
-    [scf_Teacher_History].[StartDate] AS [StartDate], 
-    [scf_Teacher_History].[EndDate] AS [EndDate]
-    FROM [dbo].[scf_Teacher_History] AS [scf_Teacher_History]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
       <End Role="scf_Teacher" EntitySet="scf_Teacher" />
       <End Role="scf_Class" EntitySet="scf_Class" />

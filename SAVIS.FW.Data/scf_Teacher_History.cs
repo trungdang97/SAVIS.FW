@@ -14,6 +14,7 @@ namespace SAVIS.FW.Data
     
     public partial class scf_Teacher_History
     {
+        public System.Guid TeacherHistoryId { get; set; }
         public System.Guid TeacherId { get; set; }
         public System.Guid ClassId { get; set; }
         public System.DateTime StartDate { get; set; }

@@ -30,12 +30,27 @@
     <Property Name="StudentId" Type="Guid" Nullable="false" />
     <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="ClassRoleId" Type="Guid" />
     <Property Name="ClassId" Type="Guid" />
     <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_Class" FromRole="scf_Student" ToRole="scf_Class" />
     <NavigationProperty Name="scf_Class_Role" Relationship="Self.FK_Student_Class_Role" FromRole="scf_Student" ToRole="scf_Class_Role" />
     <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student" ToRole="scf_Student_History" />
-    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="scf_Student_History">
+    <Key>
+      <PropertyRef Name="StudentHistoryId" />
+    </Key>
+    <Property Name="StudentHistoryId" Type="Guid" Nullable="false" />
+    <Property Name="StudentId" Type="Guid" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="FromClassId" Type="Guid" />
+    <Property Name="ToClassId" Type="Guid" />
+    <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Student_History" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Class1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Student_History" ToRole="scf_Class" />
+    <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student_History" ToRole="scf_Student" />
   </EntityType>
   <EntityType Name="scf_Teacher">
     <Key>
@@ -44,31 +59,15 @@
     <Property Name="TeacherId" Type="Guid" Nullable="false" />
     <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
     <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
-    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
-  </EntityType>
-  <EntityType Name="scf_Student_History">
-    <Key>
-      <PropertyRef Name="StudentId" />
-      <PropertyRef Name="StartDate" />
-      <PropertyRef Name="FromClassId" />
-    </Key>
-    <Property Name="StudentId" Type="Guid" Nullable="false" />
-    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="EndDate" Type="DateTime" Precision="0" />
-    <Property Name="FromClassId" Type="Guid" Nullable="false" />
-    <Property Name="ToClassId" Type="Guid" />
-    <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Student_History" ToRole="scf_Class" />
-    <NavigationProperty Name="scf_Class1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Student_History" ToRole="scf_Class" />
-    <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student_History" ToRole="scf_Student" />
   </EntityType>
   <EntityType Name="scf_Teacher_History">
     <Key>
-      <PropertyRef Name="TeacherId" />
-      <PropertyRef Name="ClassId" />
-      <PropertyRef Name="StartDate" />
+      <PropertyRef Name="TeacherHistoryId" />
     </Key>
+    <Property Name="TeacherHistoryId" Type="Guid" Nullable="false" />
     <Property Name="TeacherId" Type="Guid" Nullable="false" />
     <Property Name="ClassId" Type="Guid" Nullable="false" />
     <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -101,7 +100,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Student_History_FromClass">
-    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+    <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
     <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="scf_Class">
@@ -176,8 +175,8 @@
     <EntitySet Name="scf_Class" EntityType="Self.scf_Class" />
     <EntitySet Name="scf_Class_Role" EntityType="Self.scf_Class_Role" />
     <EntitySet Name="scf_Student" EntityType="Self.scf_Student" />
-    <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" />
     <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" />
+    <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" />
     <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" />
     <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
       <End Role="scf_Teacher" EntitySet="scf_Teacher" />

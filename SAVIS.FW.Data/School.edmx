@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SAVIS.CoreFW.SchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SAVIS.CoreFW.SchoolModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="scf_Class">
           <Key>
             <PropertyRef Name="ClassId" />
@@ -33,19 +33,17 @@
           <Property Name="ClassRoleId" Type="uniqueidentifier" />
           <Property Name="ClassId" Type="uniqueidentifier" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Student_History' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="scf_Student_History">
           <Key>
-            <PropertyRef Name="StudentId" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="FromClassId" />
+            <PropertyRef Name="StudentHistoryId" />
           </Key>
+          <Property Name="StudentHistoryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" />
-          <Property Name="FromClassId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FromClassId" Type="uniqueidentifier" />
           <Property Name="ToClassId" Type="uniqueidentifier" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="scf_Teacher">
           <Key>
@@ -56,14 +54,11 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Student_History' does 
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Birthday" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="scf_Teacher_History">
           <Key>
-            <PropertyRef Name="TeacherId" />
-            <PropertyRef Name="ClassId" />
-            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="TeacherHistoryId" />
           </Key>
+          <Property Name="TeacherHistoryId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TeacherId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ClassId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
@@ -106,7 +101,7 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_History_FromClass">
-          <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+          <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
           <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="scf_Class">
@@ -169,24 +164,9 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           <EntitySet Name="scf_Class" EntityType="Self.scf_Class" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scf_Class_Role" EntityType="Self.scf_Class_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scf_Student" EntityType="Self.scf_Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [scf_Student_History].[StudentId] AS [StudentId], 
-    [scf_Student_History].[StartDate] AS [StartDate], 
-    [scf_Student_History].[EndDate] AS [EndDate], 
-    [scf_Student_History].[FromClassId] AS [FromClassId], 
-    [scf_Student_History].[ToClassId] AS [ToClassId]
-    FROM [dbo].[scf_Student_History] AS [scf_Student_History]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [scf_Teacher_History].[TeacherId] AS [TeacherId], 
-    [scf_Teacher_History].[ClassId] AS [ClassId], 
-    [scf_Teacher_History].[StartDate] AS [StartDate], 
-    [scf_Teacher_History].[EndDate] AS [EndDate]
-    FROM [dbo].[scf_Teacher_History] AS [scf_Teacher_History]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
             <End Role="scf_Teacher" EntitySet="scf_Teacher" />
             <End Role="scf_Class" EntitySet="scf_Class" />
@@ -220,7 +200,8 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
             <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SAVIS.CoreFW.SchoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -254,12 +235,27 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           <Property Name="StudentId" Type="Guid" Nullable="false" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ClassRoleId" Type="Guid" />
           <Property Name="ClassId" Type="Guid" />
           <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_Class" FromRole="scf_Student" ToRole="scf_Class" />
           <NavigationProperty Name="scf_Class_Role" Relationship="Self.FK_Student_Class_Role" FromRole="scf_Student" ToRole="scf_Class_Role" />
           <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student" ToRole="scf_Student_History" />
-          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="scf_Student_History">
+          <Key>
+            <PropertyRef Name="StudentHistoryId" />
+          </Key>
+          <Property Name="StudentHistoryId" Type="Guid" Nullable="false" />
+          <Property Name="StudentId" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="FromClassId" Type="Guid" />
+          <Property Name="ToClassId" Type="Guid" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Student_History" ToRole="scf_Class" />
+          <NavigationProperty Name="scf_Class1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Student_History" ToRole="scf_Class" />
+          <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student_History" ToRole="scf_Student" />
         </EntityType>
         <EntityType Name="scf_Teacher">
           <Key>
@@ -268,31 +264,15 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           <Property Name="TeacherId" Type="Guid" Nullable="false" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
           <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
-          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
-        <EntityType Name="scf_Student_History">
-          <Key>
-            <PropertyRef Name="StudentId" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="FromClassId" />
-          </Key>
-          <Property Name="StudentId" Type="Guid" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
-          <Property Name="FromClassId" Type="Guid" Nullable="false" />
-          <Property Name="ToClassId" Type="Guid" />
-          <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Student_History" ToRole="scf_Class" />
-          <NavigationProperty Name="scf_Class1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Student_History" ToRole="scf_Class" />
-          <NavigationProperty Name="scf_Student" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student_History" ToRole="scf_Student" />
         </EntityType>
         <EntityType Name="scf_Teacher_History">
           <Key>
-            <PropertyRef Name="TeacherId" />
-            <PropertyRef Name="ClassId" />
-            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="TeacherHistoryId" />
           </Key>
+          <Property Name="TeacherHistoryId" Type="Guid" Nullable="false" />
           <Property Name="TeacherId" Type="Guid" Nullable="false" />
           <Property Name="ClassId" Type="Guid" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -325,7 +305,7 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Student_History_FromClass">
-          <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="1" />
+          <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="0..1" />
           <End Role="scf_Student_History" Type="Self.scf_Student_History" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="scf_Class">
@@ -400,8 +380,8 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           <EntitySet Name="scf_Class" EntityType="Self.scf_Class" />
           <EntitySet Name="scf_Class_Role" EntityType="Self.scf_Class_Role" />
           <EntitySet Name="scf_Student" EntityType="Self.scf_Student" />
-          <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" />
           <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" />
+          <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" />
           <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" />
           <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
             <End Role="scf_Teacher" EntitySet="scf_Teacher" />
@@ -464,39 +444,42 @@ warning 6002: The table/view 'SAVIS.CoreFW.School.dbo.scf_Teacher_History' does 
           <EntitySetMapping Name="scf_Student">
             <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Student">
               <MappingFragment StoreEntitySet="scf_Student">
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
                 <ScalarProperty Name="ClassRoleId" ColumnName="ClassRoleId" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="scf_Teacher">
-            <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher">
-              <MappingFragment StoreEntitySet="scf_Teacher">
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="scf_Student_History">
             <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Student_History">
               <MappingFragment StoreEntitySet="scf_Student_History">
+                <ScalarProperty Name="StudentHistoryId" ColumnName="StudentHistoryId" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="FromClassId" ColumnName="FromClassId" />
                 <ScalarProperty Name="ToClassId" ColumnName="ToClassId" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scf_Teacher">
+            <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher">
+              <MappingFragment StoreEntitySet="scf_Teacher">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="scf_Teacher_History">
             <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher_History">
               <MappingFragment StoreEntitySet="scf_Teacher_History">
+                <ScalarProperty Name="TeacherHistoryId" ColumnName="TeacherHistoryId" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />

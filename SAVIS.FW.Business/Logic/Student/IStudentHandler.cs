@@ -14,5 +14,11 @@ namespace SAVIS.FW.Business.Logic.Student
         Response<Student> CreateStudent(StudentCreateRequestModel student);
         Response<Student> UpdateStudent(StudentUpdateRequestModel student);
         Response<Student> DeleteStudent(Guid studentId);
+
+        //Nghiep vu
+        Response<Student> JoinClass(Guid studentId, Guid? classId);
+        //Response<Student> LeaveClass(Guid studentId, Guid? ToClassId);
+        Response<Student> AssignToRole(Guid studentId, Guid classRoleId);
+        int TotalQuantity();
     }
 }

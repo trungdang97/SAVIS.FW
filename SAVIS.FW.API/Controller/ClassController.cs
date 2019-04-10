@@ -7,6 +7,8 @@ using SAVIS.FW.Business.Logic.Class;
 using System.Web.Http;
 using SAVIS.FW.Common;
 using SAVIS.FW.Business.Config;
+using Newtonsoft.Json;
+using System.Web.Http.Cors;
 
 namespace SAVIS.FW.API.Controller
 {
@@ -16,27 +18,24 @@ namespace SAVIS.FW.API.Controller
 
         [HttpGet]
         [Route("api/v1/classes/{classId}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Class> GetClassById(Guid classId)
         {
             return _classHandler.GetClassById(classId);
         }
 
-        [HttpPost]
-        [Route("api/v1/classes/filter/{textSearch}/{pageSize}/{pageNumber}")]
-        public Response<IList<Class>> GetFilter(string textSearch, int? pageSize, int? pageNumber)
+        [HttpGet]
+        [Route("api/v1/classes/filter/")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<Class>> GetFilter(string filter)
         {
-            ClassQueryFilter filter = new ClassQueryFilter()
-            {
-                TextSearch = textSearch,
-                PageSize = (pageSize != null) ? pageSize : 10,
-                PageNumber = (pageNumber != null) ? pageNumber : 1
-            };
-            
-            return _classHandler.GetFilter(filter);
+            ClassQueryFilter classFilter = JsonConvert.DeserializeObject<ClassQueryFilter>(filter);
+            return _classHandler.GetFilter(classFilter);
         }
 
         [HttpPost]
         [Route("api/v1/classes/")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Class> CreateClass([FromBody]ClassCreateRequestModel Class)
         {
             return _classHandler.CreateClass(Class);
@@ -44,6 +43,7 @@ namespace SAVIS.FW.API.Controller
 
         [HttpPut]
         [Route("api/v1/classes/")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Class> CreateClass([FromBody]ClassUpdateRequestModel Class)
         {
             return _classHandler.UpdateClass(Class);
@@ -51,9 +51,29 @@ namespace SAVIS.FW.API.Controller
 
         [HttpDelete]
         [Route("api/v1/classes/{classId}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Class> DeleteClass(Guid classId)
         {
             return _classHandler.DeleteClass(classId);
+        }
+
+        ////Nghiep vu yeu cau
+
+        //Them bot giao vien chu nhiem cho lop
+        [HttpPost]
+        [Route("api/v1/classes/assign")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<Class> AssignToClass(Guid? teacherId, Guid classId)
+        {
+            return _classHandler.AssignToClass(teacherId, classId);
+        }
+
+        [HttpGet]
+        [Route("api/v1/classes/{classId}/detail")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<Class> ClassDetail(Guid classId)
+        {
+            return _classHandler.CurrentStudents(classId);
         }
     }
 }

@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7320c9c9136e4c04aac3484ec3e3ba52" Name="Diagram1">
-        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Class" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Class_Role" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Student" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Teacher" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Student_History" Width="1.5" PointX="10.5" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Teacher_History" Width="1.5" PointX="8.25" PointY="2.75" IsExpanded="true" />
+      <Diagram DiagramId="33a5af63b70d409e8f530c44cb224fd2" Name="Diagram1">
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Class" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Class_Role" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Student" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Student_History" Width="1.5" PointX="10.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Teacher" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Teacher_History" Width="1.5" PointX="8.25" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_Class_Teacher" ManuallyRouted="false" />
         <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_Student_Class" ManuallyRouted="false" />
         <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_Student_History_FromClass" ManuallyRouted="false" />

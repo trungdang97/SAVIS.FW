@@ -12,7 +12,13 @@ namespace SAVIS.FW.Business.Logic.Class
         public string Code { get; set; }
         public string Name { get; set; }
         public int StudentQuantity { get; set; }
-        public Guid TeacherId { get; set; }
+        public Guid? TeacherId { get; set; }
+        public Teacher.Teacher Teacher { get; set; }
+        public List<Student.Student> Students { get; set; }
+        public Class()
+        {
+            StudentQuantity = 0;
+        }
     }
 
     public class ClassQueryFilter

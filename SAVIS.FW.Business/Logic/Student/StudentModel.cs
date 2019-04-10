@@ -15,6 +15,8 @@ namespace SAVIS.FW.Business.Logic.Student
         public DateTime Birthday { get; set; }
         public Guid ClassId { get; set; }
         public Class.Class Class { get; set; }
+        public Guid ClassRoleId { get; set; }
+        public ClassRole Role { get; set; }
     }
 
     public class StudentQueryFilter
@@ -44,8 +46,8 @@ namespace SAVIS.FW.Business.Logic.Student
         public string Code { get; set; }
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
-        public Guid ClassId { get; set; }
-        public Guid ClassRoleId { get; set; }
+        public Guid? ClassId { get; set; }
+        public Guid? ClassRoleId { get; set; }
     }
 
     public class StudentDeleteResponseModel
@@ -56,5 +58,11 @@ namespace SAVIS.FW.Business.Logic.Student
         public Guid ClassId { get; set; }
         public Guid ClassRoleId { get; set; }
         public string Message { get; set; }
+    }
+
+    public class ClassRole
+    {
+        public Guid ClassRoleId { get; set; }
+        public string Name { get; set; }
     }
 }

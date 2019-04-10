@@ -12,6 +12,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
         public string Code { get; set; }
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
+        public List<Class.Class> Classes { get; set; }
     }
 
     public class TeacherCreateRequestModel
