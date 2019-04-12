@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Savis ECM</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">-->
+	<link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+	<link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+	<!-- END GLOBAL MANDATORY STYLES -->
+
+	<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+	<!-- <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"> -->
+	<!-- <link href="assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"> -->
+	<!-- <link href="assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"> -->
+	<!-- <link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"> -->
+	<!-- END PAGE LEVEL PLUGIN STYLES -->
+
+	<!-- BEGIN PAGE STYLES -->
+	<!-- <link href="assets/admin/pages/css/tasks.css" rel="stylesheet" type="text/css"> -->
+	<!-- END PAGE STYLES -->
+
+	<!-- BEGIN THEME STYLES -->
+	<!-- BEGIN THEME FOR MATERIAL DESIGN -->
+	<!-- <link href="assets/global/css/components-md.css" id="style_components" rel="stylesheet" type="text/css"> -->
+	<!-- <link href="assets/global/css/plugins-md.css" rel="stylesheet" type="text/css"> -->
+
+	<!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+	<link href="assets/global/css/components-rounded.css" id="style_components" rel="stylesheet" type="text/css">
+	<link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css">
+	<link href="assets/admin/layout4/css/layout.css" rel="stylesheet" type="text/css">
+	<link href="assets/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color">
+	<link href="assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css">
+	<!-- END THEME STYLES -->
+
+    <!--BEGIN PLUGIN STYLES-->
+    <link rel="stylesheet" href="libs/uploadify/uploadify.css" type="text/css" />
+    <link rel="stylesheet" href="libs/redactor/redactor.css" type="text/css" />
+    <link rel="stylesheet" href="libs/chosen/chosen.min.css" type="text/css" /> 
+    <link rel="stylesheet" href="libs/angularCropImage/image-crop-styles.css" type="text/css" />
+    <link rel="stylesheet" href="libs/ng-img-crop/compile/minified/ng-img-crop.css" type="text/css" />
+    <link rel="stylesheet" href="libs/bootstrap-slider-master/dist/css/bootstrap-slider.min.css" type="text/css" />
+    <link rel="stylesheet" href="libs/loading-bar.min.css">
+    <link rel="stylesheet" href="libs/ngtaginput/ng-tags-input.bootstrap.css">
+    <link rel="stylesheet" href="libs/ui-select/select.css">
+    <link rel="stylesheet" href="libs/ngtaginput/ng-tags-input.css">  
+      <!--start codemirror-->
+    <link rel="stylesheet" href="libs/codemirror-5.15.2/lib/codemirror.css" />
+    <link href="libs/codemirror-5.15.2/theme/eclipse.css" rel="stylesheet" />
+    <link href="libs/codemirror-5.15.2/theme/twilight.css" rel="stylesheet" />
+    <link href="libs/codemirror-5.15.2/theme/rubyblue.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="libs/codemirror-5.15.2/addon/hint/show-hint.css" />
+    <link rel="stylesheet" href="libs/codemirror-5.15.2/addon/display/fullscreen.css" />
+    <link rel="stylesheet" href="libs/codemirror-5.15.2/addon/fold/foldgutter.css" />
+    <link rel="stylesheet" href="libs/codemirror-5.15.2/addon/lint/lint.css" />
+    <link href="libs/codemirror-5.15.2/addon/dialog/dialog.css" rel="stylesheet" />
+    <link href="libs/codemirror-5.15.2/addon/search/matchesonscrollbar.css" rel="stylesheet" />
+    <!--end codemirror-->
+    <link href="libs/angular-hotkeys-master/build/hotkeys.min.css" rel="stylesheet" />
+    <link href="libs/amcharts_3.20.7.free/amcharts/plugins/export/export.css" rel="stylesheet" />
+    <link href="libs/jquery-ui-1.9.2.custom/css/base/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
+</head>
+
+<!-- NOTE : Use page-md to set to material design page -->
+<body class="page-sidebar-closed-hide-logo">
+<!-- <body class="page-md page-sidebar-closed-hide-logo page-sidebar-closed-hide-logo"> -->
+<!-- <body class="page-header-fixed login"> -->
+
+    <!--HEADER DIV-->
+    <div id="headerDiv" style="display:none" ng-include src="'/app-data/views/header/header.html'"></div>
+    <!--END HEADER DIV-->
+
+    <div class="page-container">
+        <div id="sidebarDiv" style="display:none" ng-include src="'/app-data/views/sidebar/sidebar.html'">
+        </div>
+
+        <!--MAIN VIEW-->
+        <div class="page-content-wrapper">
+            <div class="page-content" ng-view autoscroll="true"></div>
+        </div>
+        <!--END MAIN VIEW-->
+
+        <!--LOADING DIV-->
+        <div id="loadingDiv" style="position:fixed;width:100%;top:30px;margin:0px auto;text-align:center;z-index:-99">
+            <div style="width: 50px; background: #ff0000; margin-top: 5px;display:inline-block">
+                <img src="../../assets/admin/layout4/img/Logo-new-2014.png" alt="logo" style="width: 50px;margin-left:0px !important;">
+            </div>
+            ECM ADMIN PANEL
+            <div>loading...</div>
+        </div>
+        <!--END LOADING-->
+
+        <script data-main="/app-data-admin/main.js" src="libs/require.js"></script>
+    </div>
+
+    <div class="clearfix"></div>    
+
+    <!--START FOOTER DIV-->
+    <div id="footerDiv" style="display:none"  ng-include src="'/app-data/views/footer/footer.html'"></div>
+    <!--END FOOTER DIV-->
+</body>
+</html>

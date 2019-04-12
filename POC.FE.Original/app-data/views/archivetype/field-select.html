@@ -1,0 +1,151 @@
+﻿<style type="text/css">
+    .CodeMirror pre {
+        padding: 0px 42px;
+    }
+</style>
+<form name="formly_form" ng-submit="btnSve()">
+    <div class="portlet light" style="padding-bottom:0;">
+        <div class="portlet-title tabbable-line">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>
+                <span class="caption-subject bold uppercase">Chọn Field</span>
+                <span class="caption-helper">...</span>
+            </div> 
+
+            <div class="inputs">
+                <div class="portlet-input input-small input-inline">
+                    <div class="input-icon right">
+                        <i class="icon-magnifier" ng-click="Search()"></i>
+                        <input type="text" ng-model="filterText" ng-keyup="$event.keyCode == 13 && Search()" class="form-control form-control-solid" placeholder="Tìm kiếm...." ng-pattern="word" required ng-trim="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions margin-right-10">
+
+                <button type="button" class="btn btn-sm" title="Tải lại" ng-click="Button.Reload.Click()">
+                    <i class="fa fa-refresh"></i>
+                    <span>Tải Lại</span>
+                </button> 
+            </div> 
+        </div>
+        <div class="portlet-body"> 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2">
+                            <div class="checker">
+                                <span ng-class="IsRecordCommonField?'checked':''">
+                                    <input type="checkbox" ng-model="IsRecordCommonField" class="checkboxes" />
+                                </span>
+                            </div>
+                            <span class="label label-sm label-warning"> Thuộc hồ sơ </span>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="checker">
+                                <span ng-class="IsDocumentCommonField?'checked':''">
+                                    <input type="checkbox" ng-model="IsDocumentCommonField" class="checkboxes" />
+                                </span>
+                            </div>
+                            <span class="label label-sm label-danger"> Thuộc văn bản </span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <div class="col-md-12 col-lg-12">
+                        <table class="table table-striped table-hover dataTable table-bordered">
+                            <thead>
+                                <tr style="background-color: #eeeeee;">
+                                    <th class="table-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                        <div class="checker">
+                                            <span ng-class="SelectAll?'checked':''">
+                                                <input type="checkbox" class="group-checkable" ng-click="SelectAllItem()" ng-model="SelectAll">
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <th ng-repeat="header in Headers" width="{{header.Width}}" align="{{header.Align}}">
+                                        {{header.Value}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in ListData" ng-class="data.Selecting?'selected':''">
+                                    <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                        <div class="checker">
+                                            <span ng-class="data.Selecting?'checked':''">
+                                                <input type="checkbox" ng-click="SelectItem(data)" ng-model="data.Selecting" class="checkboxes">
+                                            </span>
+                                        </div>
+                                    </th>
+                                    <td>
+
+
+                                        <div class="margin-bottom-5">
+                                            <a href="javascript:;" class="item-title">{{data.Name}} (<small>{{data.Code}}</small>)</a>
+                                        </div>
+                                        <div class="margin-bottom-5">
+                                            <span class="text-muted"><strong>Tên trường Db :</strong> {{data.FormlyContentObj[0].data.columnName}}</span> &nbsp;|&nbsp;
+                                            <span class="text-muted"><strong>Kiểu dữ liệu :</strong> {{data.FormlyContentObj[0].data.dbType}}</span>
+                                        </div>
+                                        <div class="margin-bottom-5">
+                                            <small title="Số từ trong bài viết">Bắt buộc <i class="fa text-muted" ng-class="data.FormlyContentObj[0].data.required?'fa-check-square-o':'fa-square-o'"></i></small>&nbsp;&nbsp;
+                                            <small title="Số ảnh trong bài viết">Đánh index <i class="fa text-muted" ng-class="data.FormlyContentObj[0].data.isIndex?'fa-check-square-o':'fa-square-o'"></i></small>&nbsp;&nbsp;
+                                            <small title="Số video trong bài viết">Cho  tìm kiếm <i class="fa text-muted" ng-class="data.FormlyContentObj[0].data.isSearch?'fa-check-square-o':'fa-square-o'"></i></small>&nbsp;&nbsp;
+                                            <span class="label label-xs label-warning" ng-if="data.IsRecordCommonField"> Thuộc hồ sơ </span>&nbsp;&nbsp;
+                                            <span class="label label-xs label-danger" ng-if="data.IsDocumentCommonField"> Thuộc văn bản </span> &nbsp;&nbsp;
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="well-sm zoom-85">
+                                            <formly-form fields="data.FormlyContentObj" model="data.Data">
+                                            </formly-form>
+                                        </div>
+                                    </td>
+                                    <!--<td>
+                                        <button type="button" class="btn btn-xs btn-primary" ng-click="Button.SelectItem.Click(data)"><i class="fa fa-check"></i></button> 
+                                    </td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="col-md-12" ng-show="ListData.length>0">
+                        <div class="pull-left">
+                            <pre>{{FromRecord}} - {{ToRecord}} / {{TotalCount}}</pre>
+                        </div>
+                        <div class="pull-right">
+                            <ul uib-pagination total-items="TotalCount"
+                                ng-model="PageNumber"
+                                max-size="MaxSizePage"
+                                items-per-page="PageSize"
+                                class="pagination-sm"
+                                boundary-link-numbers="true"
+                                rotate="true"
+                                ng-change="Button.GoToPageNumber.Click()"
+                                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                        </div>
+                    </div>
+                    <!-- END PAGE CONTENT-->
+                </div> 
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ng-click="Save()" class="btn btn-sm btn-primary" ng-disabled="ListSelected.length<=0">
+            <i class="fa fa-check"></i> Chọn
+        </button>
+        <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
+            <i class="fa fa-ban"></i> Đóng
+        </a>
+    </div>
+</form>
+<div class="alerts" ng-show="notify.queue.length > 0">
+    <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
+        <button type="button" class="close" ng-click="closeAlert(m.body)" data-dismiss="alert">×</button>
+        <label>{{m.title}}</label>
+        <div>{{m.body}}</div>
+    </div>
+</div> 
+
+

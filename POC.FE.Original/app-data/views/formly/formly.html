@@ -1,0 +1,280 @@
+﻿<style>
+    .active{
+        background-color:#4552d4;
+        color:#FAFAFA;
+
+    }
+    
+</style>
+<!-- BEGIN PAGE CONTENT-->
+<div class="portlet light formly">
+    <div class="portlet-title tabbable-line">
+        <div class="caption col-md-9">
+            <strong>Tạo Form cho thủ tục hành chính: {{thuTucHanhChinh.TenTTHC}}</strong>
+        </div>
+        <ul class="nav nav-tabs col-md-3">
+
+            <li class="pull-right" ng-class="FormMode==='preview'?'active':''">
+                <a href="javascript:;" ng-click="ChangeForm('preview')" data-toggle="tab" aria-expanded="false"><i class="fa fa-eye"></i>&nbsp;Xem trước</a>
+            </li>
+            <li class="pull-right" ng-class="FormMode==='config'?'active':''">
+                <a href="javascript:;" ng-click="ChangeForm('config')" data-toggle="tab" aria-expanded="true"><i class="fa fa-cogs"></i>&nbsp; Cấu hình</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="portlet-body">
+        <div class="row" ng-show="FormMode==='config'">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group form-inline">
+                        <label class="col-md-3" style="line-height:33px;">Tên form <span class="required">*</span> </label>
+
+                        <div class="col-md-9">
+                            <input name="form-acction" class="form-control" style="height:33px; width: 100%;" type="text" ng-model="FormName" placeholder="Nhập tên form" />
+
+                            <div class="error" ng-show="!FormValid.FormName">
+                                Tên Form không được bỏ trống và phải nhỏ hơn 255 ký tự
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-inline">
+                        <label  class="col-md-3"  style="line-height:33px;">Mã form <span class="required">*</span> </label>
+                        <div class="col-md-9">
+                            <input name="form-acction" class="form-control" style="height:33px; width: 100%;" type="text" ng-disabled="ActionName == action.edit" ng-model="FormCode" placeholder="Nhập mã form" />
+                            <div class="error" ng-show="!FormValid.FormCode || !FormExist.FormCode">
+                                <span class="error" ng-show="!FormValid.FormCode">Mã Form không được bỏ trống và phải nhỏ hơn 16 ký tự</span>
+                                <span class="error" ng-show="!FormExist.FormCode">Mã Form bị trùng, Vui lòng nhập lại</span>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group form-inline">
+                        <label class="col-md-3" style="line-height:33px;">Ngày hiệu lực <span class="required">*</span> </label>
+
+                        <div class="col-md-9" >
+                            <p class="input-group" style="width:100%">
+                                <input type="text"
+                                       id="StartDate"
+                                       name="StartDate"
+                                       ng-model="StartDate"
+                                       class="form-control input-sm"
+                                       ng-click="open1($event)"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       datepicker-popup="dd/MM/yyyy"
+                                       is-open="opened1"
+                                       close-text="Đóng" clear-text="Xóa" current-text="Hôm nay" />
+                                <span class="input-group-btn" style="width:1%">
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="opened1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+
+                            <div class="error" ng-show="!FormValid.StartDate">
+                                Ngày bắt đầu hiệu lực không được bỏ trống
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group form-inline">
+                        <label  class="col-md-3" style="line-height:33px;">Ngày hết hiệu lực</label>
+                        <div class="col-md-9">
+                            <p class="input-group" style="width:100%">
+                                <input type="text"
+                                       id="EndDate"
+                                       name="EndDate"
+                                       ng-model="EndDate"
+                                       class="form-control input-sm"
+                                       ng-click="open2($event)"
+                                       uib-datepicker-popup="dd/MM/yyyy"
+                                       datepicker-popup="dd/MM/yyyy"
+                                       is-open="opened2"
+                                       close-text="Đóng" clear-text="Xóa" current-text="Hôm nay" />
+                                <span class="input-group-btn" style="width:1%">
+                                    <button type="button" class="btn btn-sm btn-default" ng-click="opened2($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+
+                            <!--<div class="error" ng-show="!FormValid.EndDate">
+                                Ngày hết hiệu lực không được bỏ trống
+                            </div>-->
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 pull-left">
+                    <input type="button" value="Lưu form" class="btn btn-primary padding-right-15" ng-click="SaveBieu()" />
+                    <input type="button" value="Xóa form này" class="btn btn-danger padding-right-15" ng-click="DeleteForm()" />
+                </div>
+
+            </div>
+            <div class="clearfix"></div><br />
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="256px">
+                                <i class="icon-puzzle"></i> Các thành phần
+                            </th>
+                            <th>
+                                <i class="fa fa-qrcode"></i> Biểu mẫu
+                                <span class="pull-right">
+                                    <a href="javascript:;" class="btn btn-danger btn-xs" ng-click="AddRow()">
+                                        <i class="fa fa-plus"></i> Thêm dòng
+                                    </a> 
+                                    <a href="javascript:;" class="btn btn-danger btn-xs" ng-click="AddTable()">
+                                        <i class="fa fa-plus"></i> Thêm bảng
+                                    </a>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0">
+                                <div ng-repeat="item in ListFormData track by $index" class="{{activeClass == item.Id ? 'active' : ''}}" style="text-align:center">
+                                    <div ng-disabled="{{activeClass == item.Id}}" ng-click="ChangeFormActive(item)">{{item.FormName}} - {{item.Version}}<br /> <small>{{item.StartDate | date}} - {{item.EndDate | date}}</small></div>
+                                </div>
+                                <div class="input-icon right" style="border-radius: 0 ">
+                                    <i class="icon-magnifier"></i>
+                                    <input type="text" class="form-control input-sm" ng-model="filterText" placeholder="Tìm kiếm">
+                                </div>
+                                <script type="text/ng-template" id="toolBoxTree">
+                                    <div class="tree-folder-header" ng-mousedown="ClickToCategory(control)" ng-class="control.data.Selected?'selected':''">
+                                        <i ng-class="control.data.IsExpand ? 'fa fa-caret-down':'fa fa-caret-right'" ng-show="control.data.hasChild">
+                                        </i>
+                                        <div class="tree-folder-name">
+                                            <span ng-if="control.data.hasChild"><img ng-src="{{control.data.imageSrc}}" width="50px" height="20px" /></span>
+                                            <span ng-class="control.data.hasChild ? '' : 'text-bold'">{{control.data.name}}</span>
+                                        </div>
+                                    </div>
+                                    <hr style="margin:2px;" ng-show="control.data.IsExpand" />
+                                    <div class="tree-folder-content" ng-show="control.data.child&&control.data.IsExpand">
+                                        <div ng-class="control.data.hasChild?'':'draggable'" id="{{control.key}}" ng-repeat="control in control.data.child | filter:filterText" ng-include="'toolBoxTree'">
+                                        </div>
+                                    </div>
+                                </script>
+                                <div id="formly-toolbox" class="tree tree-plus-minus tree-no-line tree-unselectable" style="padding: 0;">
+                                    <div style="background: #FAFAFA;" class="tree-folder">
+                                        <div ng-class="form-control.data.hasChild?'':'draggable'" id="{{control.data.key}}" ng-repeat="control in component | filter:filterText" ng-include="'toolBoxTree'"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="background-color: #777;padding:0px">
+
+                                <script type="text/ng-template" id="loki-lopp">
+                                    <!-- Row -->
+                                    <div class="formly-row droppable" ng-show="compoment.data.type == 1" id="{{compoment.data.index}}">
+                                        <div class="formly-head">
+                                            <div class="formly-title">
+                                                {{compoment.data.name}}
+                                            </div>
+                                            <div class="formly-tools">
+                                                <button type="button" class="btn btn-xs btn-danger formly-btn" ng-click="DeleteRow(compoment)" title="Xóa hàng">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button><br />
+
+                                                <button type="button" class="btn btn-xs btn-primary formly-btn" ng-click="EditRow(compoment)" title="Cấu hình">
+                                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                </button><br />
+                                                <button type="button" class="btn btn-xs formly-btn" ng-class="CheckSwapRow(compoment)" ng-click="SwapRow(compoment)" title="Đổi chỗ">
+                                                    <i class="fa fa-exchange" aria-hidden="true"></i>
+                                                </button><br />
+                                                <button type="button" class="btn btn-xs btn-info formly-btn" ng-click="CloneRow(compoment)" title="Nhân bản hàng">
+                                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                                </button>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="formly-body">
+                                            <ul  class="sortable" id={{compoment.data.index}}>
+                                                <li ng-repeat="compoment in compoment.fieldGroup" class="{{compoment.className}}" ng-include="'loki-lopp'" id={{compoment.key}}>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>                                    
+                                    <!-- Item -->
+                                    <div class="formly-block" ng-show="compoment.data.type == 0">
+                                        <div class="formly-head">
+                                            <div class="formly-tools">
+
+                                                <button type="button" class="btn btn-xs btn-danger formly-btn" ng-click="DeleteItem(compoment)" title="Xóa ">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button><br />
+
+                                                <button type="button" class="btn btn-xs btn-primary formly-btn" ng-click="EditItem(compoment)" title="Cấu hình">
+                                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                </button><br />
+                                                <button type="button" class="btn btn-xs btn-info formly-btn" ng-click="CloneItem(compoment)" title="Nhân bản ">
+                                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                                </button> 
+                                            </div>
+                                            <div class="formly-title">
+                                                {{compoment.data.name}}
+                                            </div>
+                                        </div>
+                                        <div class="formly-body padding-left-15" title="key: {{compoment.key}}&#13;label:{{compoment.templateOptions.label}}" >
+                                            <small><strong> key:</strong> {{compoment.key}}</small><br /> 
+                                            <small ng-if="compoment.templateOptions.label"><strong> label:</strong> {{compoment.templateOptions.label}}</small>
+                                        </div>
+                                    </div>
+                                    <!-- Item Html -->
+                                    <div class="formly-block" ng-show="compoment.data.type==2">
+                                        <div class="formly-head">
+                                            <div class="formly-tools">
+                                                <button type="button" class="btn btn-xs btn-danger formly-btn" ng-click="DeleteItem(compoment)" title="Xóa ">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button><br />
+
+                                                <button type="button" class="btn btn-xs btn-primary formly-btn" ng-click="EditItem(compoment,'label')" title="Cấu hình">
+                                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                </button><br />
+                                                <button type="button" class="btn btn-xs btn-info formly-btn" ng-click="CloneItem(compoment)" title="Nhân bản ">
+                                                    <i class="fa fa-copy" aria-hidden="true"></i>
+                                                </button> 
+                                            </div>
+                                        </div>
+                                        <div class="formly-body">
+                                            <div class="zoomedOutConfig" ng-bind-html="deliberatelyTrustDangerousSnippet(compoment.template)"></div>
+                                        </div>
+                                    </div>
+                                </script>
+                                <div id="formly-mainscreen" style="padding:10px">
+                                    <div style="padding:10px">
+                                        <ul class="sortablerow ">
+                                            <li ng-repeat="compoment in vm.Model" ng-include="'loki-lopp'" class="{{compoment.className}}"></li>
+                                        </ul>
+                                    </div> 
+                                </div> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" ng-if="FormMode==='preview'">
+            <div class="col-md-12">
+                <form ng-submit="vm.onSubmit()">
+                    <formly-form fields="vm.Scheme" model="vm.Data">
+                        <!--<button class="btn btn-primary btn-sm" type="submit">Lưu biểu mẫu</button>-->
+                    </formly-form>
+                </form>
+                <a href="javascript:;" ng-click="IsShowInfo = !IsShowInfo">Xem thuộc tính</a>
+            </div>
+            <div class="col-md-12" ng-show="IsShowInfo">
+                <hr />
+                <h2>Form Data</h2>
+                <pre>{{vm.Data | json}}</pre>
+                <hr />
+                <h2>Form Scheme</h2>
+                <pre>{{vm.Scheme | json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>

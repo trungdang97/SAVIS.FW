@@ -1,0 +1,1 @@
+To get started, open index.html, using your favourite web browser.

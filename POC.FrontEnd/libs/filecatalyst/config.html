@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, chrome=1">
+    <title>TransferAgent</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <!-- this small script disables connection to remote servers on pages that
+    do not need it-->
+    <script>
+      var overrideAutoconnect = true;
+    </script>
+
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/i18next.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/localization.js"></script>
+    <script src="js/configuration.js"></script>
+    <script src="js/main.js"></script>
+
+    <iframe src="#" id="config"></iframe>
+    <script>
+      var thisPage = {};
+      thisPage.query = pg.utils.parseQuery(window.location.search.substring(1));
+      thisPage.port = thisPage.query.port;
+      $("#config").attr('src','https://localhost.filecatalyst.net:' + thisPage.port + '/config.html');
+    </script>
+  </body>
+</html>

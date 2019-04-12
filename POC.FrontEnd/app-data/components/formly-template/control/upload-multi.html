@@ -1,0 +1,12 @@
+﻿<button id="{{::id}}" name="{{::id}}" ngf-multiple="true" class="btn btn-sm btn-primary margin-bottom-10 margin-left-none" ngf-pattern="'{{to.accept}}'" ngf-accept="'{{to.accept}}'" ngf-max-size="to.maxsize" ngf-select="upload.UploadFiles($files, $invalidFiles)">
+    <span ng-bind-html="to.uploadText"></span>
+</button>
+<div ng-repeat="file in upload.UploadControl.files" ng-hide="file.IsUpLoadDone == true">
+    <strong>{{file.name}}</strong>
+    <div uib-progressbar progressbar class="progress-striped active" value="file.progress" type="success">
+        <small>{{file.progress}}%</small>
+    </div> 
+</div>
+<div ng-repeat="file in model[options.key]">
+   {{file}}<span class="text-danger" ng-click="upload.Remove(file)"><i class="fa fa-trash"></i></span>
+</div>

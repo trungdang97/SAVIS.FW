@@ -1,0 +1,8 @@
+﻿<ui-select multiple data-ng-model="model[options.key]" data-required="{{to.required}}" style="width: 100%" data-disabled="{{to.disabled}}"  theme="bootstrap">
+    <ui-select-match placeholder="{{to.placeholder}}">{{$item[to.labelProp]}}</ui-select-match>
+    <ui-select-choices data-group-by="to.groupProp" data-repeat="option[to.valueProp] as option in to.options | filter: $select.search">
+        <div ng-bind-html="option[to.labelProp] | highlight: $select.search"></div>
+    </ui-select-choices>
+</ui-select>
+
+

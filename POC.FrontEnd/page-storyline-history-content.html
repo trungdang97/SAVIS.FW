@@ -1,0 +1,339 @@
+﻿
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/assets-frontend/Images/favicon.ico" />
+
+    <link rel="stylesheet" href="/assets-frontend/Plugins/Bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets-frontend/Plugins/Bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/assets-frontend/Plugins/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/assets-frontend/Plugins/Slick/slick.css" />
+    <link rel="stylesheet" href="/assets-frontend/Styles/common.css" />
+    <link rel="stylesheet" href="/assets-frontend/Styles/portal.css" />
+    <link rel="stylesheet" href="/assets-frontend/Styles/news.css" />
+    <link rel="stylesheet" href="/assets-frontend/Styles/video.css" />
+    <link rel="stylesheet" href="/assets-frontend/cssmenu/styles.css" />
+
+    <link href="/assets-frontend/Plugins/DownloadPlugin/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="/assets-frontend/Plugins/DownloadPlugin/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="/assets-frontend/Plugins/DownloadPlugin/select2/theme/select2-flat-theme.min.css" rel="stylesheet" />
+    <link href="/assets-frontend/Plugins/DownloadPlugin/select2/theme/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Start mandatories scripts -->
+    <script type="text/javascript" src="/assets-frontend/Plugins/JQuery/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" defer="defer" src="/assets-frontend/Plugins/Modernizr/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <!-- End mandatories scripts -->
+
+</head>
+<body>
+    <div ID="BodyContent">
+        <div class="container">
+            <div class="main-wrapper">
+                <!--//========================== HEADER ================================//-->
+                <div class="header">
+                    <div class="row">
+                        <div class="col-md-16">
+                            <a href="#">
+                                <img src="/assets-frontend/Images/BannerSite/Banner_UBDT.jpg" class="img-responsive" />
+                            </a>
+                            <div class="language hidden-xs">
+                                <a href="#">
+                                    Tiếng Việt
+                                    <!--<img src="/assets-frontend/icons/Vietnam-Flag-icon.png" />-->
+                                </a>|<a href="#">
+                                    <!-- <img src="/assets-frontend/icons/United-Kingdom-flag-icon.png" />-->English
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--//========================== TOP NAVIGATION ================================//-->
+                <div id="topPanel" class="ecm-panel">
+                    <nav class="navbar navbar-inverse" role="navigation" id="top-nav">
+                        <div class="container top-nav-h">
+                            <div class="navbar-header">
+                                <div class="hidden-lg language-m">
+                                    <a href="#">VN</a>
+                                    <div class="hr-v">|</div>
+                                    <a href="#">EN</a>
+                                </div>
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <code class="sr-only">Toggle navigation</code>
+                                    <code class="icon-bar"></code>
+                                    <code class="icon-bar"></code>
+                                    <code class="icon-bar"></code>
+                                </button>
+                                <a class="navbar-brand iconhome hidden-xs" href="#">
+                                    <img src="/assets-frontend/Images/Logo/home.png" />
+                                </a>
+                            </div>
+
+                            <div id="navbar" class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav">
+                                    <li><a class="parent-level" href="#">TRANG CHỦ</a></li>
+                                </ul>
+
+                                <div class="navbar-form navbar-right hidden-sm" role="search" style="display: normal">
+                                    <div class="input-group  quick-search">
+                                        <input type="text" name="txtSearchNews" id="txtSearchNews" class="form-control input-sm" placeholder="Tìm kiếm" style="font-size: 12px; color: black; border-radius: 4px 0px 0px 4px; height: 21px; padding: 0px 5px 0px 5px;" />
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-warning" style="height: 21px; padding: 0px 10px;" type="button" id="btnSearchNews"><i class="glyphicon glyphicon-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-16 padding-left-10 padding-right-10 box-search">
+                                <div class="col-sm-16 col-md-16 col-lg-16">
+                                    <div class="current-time" style="">
+                                        <a href="#">
+                                            <img style="padding-bottom: 3px; padding-right: 5px;" src="/assets-frontend/icons/nc-rss.png" />
+                                        </a>
+                                        <span id="txtShowTimer" class="showTime"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            ShowTime();
+                        });
+                        function ShowTime() {
+                            var currentDate = new Date();
+                            var year = currentDate.getFullYear();
+                            var month = currentDate.getMonth() + 1;
+                            if (month < 9) {
+                                month = "0" + month;
+                            }
+                            var date = currentDate.getDate();
+                            if (date < 9) {
+                                date = "0" + date;
+                            }
+
+                            var hour = currentDate.getHours();
+
+                            if (hour >= 12) {
+                            }
+
+                            if (hour > 12) {
+                                hour = hour;
+                            }
+
+                            if (hour < 9) {
+                                hour = "0" + hour;
+                            }
+                            var minute = currentDate.getMinutes();
+                            if (minute < 9) {
+                                minute = "0" + minute;
+                            }
+                            var second = currentDate.getSeconds();
+                            if (second < 9) {
+                                second = "0" + second;
+                            }
+
+
+                            var weekday = new Array(7);
+                            weekday[0] = "Chủ Nhật";
+                            weekday[1] = "Thứ Hai";
+                            weekday[2] = "Thứ Ba";
+                            weekday[3] = "Thứ Tư";
+                            weekday[4] = "Thứ Năm";
+                            weekday[5] = "Thứ Sáu";
+                            weekday[6] = "Thứ Bảy";                                             
+
+                            var day = weekday[currentDate.getDay()];
+
+                            document.getElementById("txtShowTimer").innerHTML = day +", Ngày "+  date + "/" + month + "/" + year +" "+ hour + ":" + minute + " ";
+
+                            window.setTimeout("ShowTime()", 1000); // Here 1000(milliseconds) means one 1 Sec
+                        }
+                    </script>
+                </div>
+                <!--//========================== BANNER ================================//-->
+                <!--//========================== MAIN CONTENT ================================//-->
+
+                <div class="main-content">
+
+                    <div class="row">
+
+                        <!--//========================== LEFT SECTION ================================//-->
+                        <div class="col-md-12 left-section">
+                            <div id="leftPanel" class="ecm-panel">
+                                    <div id="content">
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 right-section hidden-xs">
+                            <div id="rightPanel" class="ecm-panel">
+                                <ol class="breadcrumb hidden-xs">
+                                    <li><a href="#"> Thông tin thêm :</a></li>
+                                </ol>
+                                <div class="row news-info">
+                                    <form role="form">
+                                        <div class="col-md-16">
+                                            <label>Chuyên mục :</label><br />
+                                            <code id="chuyenmuc"></code>
+                                        </div>
+                                        <div class="clearfix"></div>  <br />
+                                        <div class="col-md-16">
+                                            <label>Chuyên mục chính:</label><br />
+                                            <code id="chuyenmucchinh" ></code>
+                                        </div>
+                                        <div class="clearfix"></div>  <br />
+
+                                        <div class="col-md-16">
+                                            <label>Thể loại bài viết:</label><br />
+                                            <code id="theloaibaiviet" ></code>
+                                        </div>
+                                        <!--<div class="clearfix"></div>  <br />
+                                        <div class="col-md-16">
+                                            <label>Mẫu hiển thị nội dung :</label><br />
+                                            <code id="mauhienthinoidung"></code>
+                                        </div> 
+                                        <div class="clearfix"></div>  <br />
+                                        <div class="col-md-16">
+                                            <label>Gửi email tới người đăng ký:</label><br />
+                                            <code id="sendemail"></code>
+                                        </div>--> 
+                                        <div class="clearfix"></div>  <br />
+                                        <div class="col-md-16">
+                                            <label>Link bài viết :</label> <br />
+                                            <code id="linkbaiviet" ></code>
+                                        </div>  
+                                        <div class="clearfix"></div>  <br />             
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--//========================== BOTTOM NAVIGATION ================================//-->
+                <div class="ecm-panel hidden-xs" id="bottomPanel"></div>
+
+                <!--//========================== FOOTER ================================//-->
+                <div class="hidden-lg">
+                    <div class="btn-group btn-footer-xs" style="width: 100%">
+                        <a href="/home.htm" class="col-lg-8 col-xs-8 btn btn-primary"><code class="glyphicon glyphicon-home"></code>Trang chủ</a>
+                        <button type="button" class="col-lg-8 col-xs-8 btn btn-primary scrollToTopXs"><code class="glyphicon glyphicon-circle-arrow-up"></code>Lên đầu trang</button>
+                    </div>
+                </div>
+
+                <footer>
+                    <div class="row">
+                        <div class="col-md-16">
+                            <div class="footer-wrap">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3 col-xs-16 footer-wrap-icon ">
+                                        <img src="/assets-frontend/Images/SmallBanner/Footer_logo_new1512.png" style="" class="img-responsive" />
+                                    </div>
+                                    <div class="col-md-13 col-sm-13 col-xs-16 footer-wrap-content">
+                                        <h4 style="font-weight: bold">CỔNG THÔNG TIN ĐIỆN TỬ ỦY BAN DÂN TỘC</h4>
+                                        Người chịu trách nhiệm: Nguyễn Ngọc Hà, Giám đốc Trung tâm Thông tin, Ủy ban Dân tộc
+                                        <br />
+                                        Giấy phép số: 58/GP-TTĐT do Cục Quản lý phát thanh, truyền hình và thông tin điện tử cấp ngày 02/05/2013
+                                        <br />
+                                        Bản quyền thuộc Ủy ban Dân tộc
+                                        <br />
+                                        Địa chỉ: Ủy ban Dân tộc, Số 80, Phan Đình Phùng, Ba Đình, Hà Nội
+                                        <br />
+                                        Điện thoại: 04 37349540/ 04 37222626 - Fax: 04 3823112 - Email: banbientap@cema.gov.vn<br />
+                                        <code style="font-style: italic">Ghi rõ nguồn "Cổng Thông tin điện tử Ủy ban Dân tộc" hoặc "www.ubdt.gov.vn" khi phát hành lại thông tin từ các nguồn này.</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script type="text/javascript">
+        var contentJson = localStorage.getItem("StorylineHistory");
+        var content = $.parseJSON(contentJson);
+        console.log(content);
+        $(document).ready(function () {
+            var fullDate = new Date();
+
+            $('#txtShowTimer').text(fullDate);
+
+
+            if (content.StorylineType === 0)
+                $('#theloaibaiviet').text("Tin Tổng Hợp");
+            else if (content.StorylineType === 1)
+                $('#theloaibaiviet').text("Phóng sự ảnh");
+            else if (content.StorylineType === 2)
+                $('#theloaibaiviet').text("Phóng sự video");
+            else if (content.StorylineType === 3)
+                $('#theloaibaiviet').text("Bản tin");
+
+            $('#linkbaiviet').text(content.URI);
+            $('#chuyenmucchinh').text(content.PrimaryTerm.Name);
+            for (var i = 0; i < content.ListTermObj.length; i++) {
+                $('#chuyenmuc').html(content.ListTermObj[i].Name + "<br/>" + $('#chuyenmuc').html());
+            }
+            $("#content").append(content.ContentRendered);
+        });
+    </script>
+
+    <!-- Scroll top function -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Check to see if the window is top if not then display button
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollToTop').fadeIn();
+                } else {
+                    $('.scrollToTop').fadeOut();
+                }
+            });
+
+            //Click event to scroll to top
+            $('.scrollToTop').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 800);
+                return false;
+            });
+
+            $('.scrollToTopXs').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 800);
+                return false;
+            });
+
+        });
+    </script>
+
+    <a href="#" class="scrollToTop hidden-xs"></a>
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52e0e44c60008c5c"></script>
+    <script type="text/javascript" src="/assets-frontend/Plugins/Slick/slick.min.js"></script>
+    <script type="text/javascript" src="/assets-frontend/Plugins/Bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets-frontend/Plugins/Jwplayer/jwplayer.js"></script>
+    <script type="text/javascript">jwplayer.key = "ndWqj2I3yv7HKvYBdlZ0UmdnMkWE5ci2UMV0vid8S44=";</script>
+    <script type="text/javascript" src="/assets-frontend/Scripts/main.js"></script>
+    <script type="text/javascript" src="/assets-frontend/Scripts/jquery.slimscroll.min.js"></script>
+
+    <script type="text/javascript" src="/assets-frontend/Plugins/DownloadPlugin/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="/assets-frontend/Plugins/DownloadPlugin/select2/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="/assets-frontend/Plugins/DownloadPlugin/bootstrap-datepicker-master/dist/locales/bootstrap-datepicker.vi.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+    <!--
+    FileCatalyst TransferAgent download with remote browse example.
+    Before customizing this page, you must edit /js/configuration.js and set the host, port, username and password
+    -->
+
+    <head>
+        <title>FileCatalyst TransferAgent Download Demo</title>
+
+        <!--The following meta tags must be always present-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, chrome=1">
+        <meta name="viewport" content="width=device-width">
+
+        <!--The following css links must be always present-->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+         <!-- Optional CSS to hide specific email input fields
+        <style>
+            /* starting comment
+            #formGroup-emailAddress { display: none }
+            #formGroup-emailBody { display: none }
+            #formGroup-includeList { display: none }
+            ending comment */
+        </style>
+        -->
+
+    </head>
+    <body class="menu-top">
+	<nav class="navbar-default navbar  navbar-fixed-top top-nav-header">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<i class="fa fa-list"></i>
+				</button>
+				<a class="navbar-brand" href="/"></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active" id="downloadHeader"><a href="download_app.html" data-i18n="common.downloadLabel" class="">Download</a></li>
+					<li id="uploadHeader"><a href="upload_app.html" data-i18n="common.uploadBtn" class="">Upload</a></li>
+					<li><a href="https://localhost.filecatalyst.net:12680/help/TransferAgent/help.html#webui" data-i18n="common.help" class="">Help</a></li>
+				</ul>
+				<span id="removeSavedLogin"><a><i id="iconRemoveCredentials" class="fa fa-key"></i></a> </span>
+			</div>
+		</div>
+	</nav>
+        <div id="mainContainer" class="container">
+            <!-- Row containing the output of the FileCatalyst application, required by bootstrap grid -->
+            <div class="row">
+                <!--Minimum download UI identified by div id="server1"-->
+                <div id="server1" class="col-lg-6"></div>
+                <div class="col-lg-6">
+                    <!--optional placement of the remote file list controls identified by div id="server1-controls"-->
+                    <div id="server1-controls"></div>
+                    <!--optional placement of the download queue identified by div id="server1-queue"-->
+                    <div id="server1-queue"></div>
+                    <!--optional placement of the status of ongoing downloads (progress bar) identified by div id="server1-info".
+                    The specific fields seen are configurable in configuration.js, but typically include such information as the current
+                    filename, the average rate, and a transfer progress bar.
+                    In the sample pages, this area uses the "hide" class and becomes visible only when transfer is initiated.-->
+                    <div id="server1-info" class="hide"></div>
+                    <!--optional placement of the email notification pane identified by div id="server1-email"
+                    Prerequisites:
+                    - Outgoing email server (SMTP) settings must be set on the FileCatalyst Direct Server
+                    - in /js/configuration.js, email must be enabled. -->
+                    <div id="server1-email"></div>
+                    
+                    <!-- to hide the email panel, delete the above div element and uncomment the one below: -->
+                    <!-- <div id="server1-email" class="hide"></div> -->
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- The following JavaScript includes must be always present-->
+        <script src="js/vendor/jquery-1.10.2.min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/vendor/tooltip.js"></script>
+		<script src="js/vendor/i18next.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/localization.js"></script>
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/configuration.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

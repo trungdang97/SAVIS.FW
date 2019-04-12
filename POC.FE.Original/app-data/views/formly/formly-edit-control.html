@@ -1,0 +1,590 @@
+﻿<style type="text/css">
+    .CodeMirror pre {
+        padding: 0px 42px;
+    }
+</style>
+<form name="formly_form" ng-submit="btnSve()">
+    <div class="portlet light" style="padding-bottom:0;">
+        <div class="portlet-title tabbable-line">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>
+                <span class="caption-subject bold uppercase">Control </span>
+                <span class="caption-helper">cấu hình...</span>
+            </div>
+            
+            <ul class="nav nav-tabs">
+                <li ng-class="Mode==1?'active':''">
+                    <a href="javascript:;" data-toggle="tab" ng-click="Mode=1">Thông tin cơ bản</a>
+                </li>
+
+                <li ng-class="Mode==2?'active':''">
+                    <a href="javascript:;" data-toggle="tab" ng-click="Mode=2">Thông tin thêm</a>
+                </li>
+                <li ng-class="Mode==3?'active':''">
+                    <a href="javascript:;" data-toggle="tab" ng-click="Mode=3">Xem trước</a>
+                </li>
+            </ul>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div ng-if="Mode==1">
+                    
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label  text-bold col-md-4">Loại control: </label>
+                                <div class="col-md-8 ">
+                                    <ui-select ng-model="Item.data.key" style="width: 100%" theme="selectize" ng-change="ChangeControl()">
+                                        <ui-select-match placeholder="Chọn control">{{$select.selected.Name}}</ui-select-match>
+                                        <ui-select-choices group-by="'Group'"
+                                                           repeat="option.Name as option in ListAvailAbleControl | filter: $select.search">
+                                            <small ng-bind-html="option.Name | highlight: $select.search"></small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                        <div class="clearfix"></div><br />
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Tên trường: </label>
+                                    <div class="col-md-8 ">
+
+                                        <input type="text" class="form-control input-sm" ng-model="Item.key">
+                                        <div class="my-messages error" ng-if="ListKey.indexOf(Item.key)>=0">
+                                           <span>Tên trường đã tồn tại</span>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Giá trị mặc định: </label>
+                                    <div class="col-md-8 ">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.defaultValue">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-bold col-md-4">Định dạng dữ liệu: </label>
+                                    <div class="col-md-8">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control input-sm" aria-label="" ng-model="Item.data.dbType">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu pull-right" style="max-height:350px;overflow-x:scroll;width:100%">
+                                                    <li ng-repeat="option in ListAvailAbleDbType | filter:Item.data.dbType"
+                                                        ng-click="Item.data.dbType = option">
+                                                        <a href="javascript:;" ng-bind-html="option | highlight:  Item.data.dbType"></a>
+                                                    </li>
+                                                    <li ng-repeat="option in ListAvailAbleDbType | filter:'!' +Item.data.dbType"
+                                                        ng-click="Item.data.dbType = option">
+                                                        <a href="javascript:;" ng-bind-html="option | highlight:  Item.data.dbType"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="checkbox" ng-model="Item.templateOptions.required" value="Bắt buộc">
+                                        <label class="control-label text-bold">Bắt buộc</label>
+                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                        <input type="checkbox" ng-model="Item.templateOptions.index" value="Index">
+                                        <label class="control-label text-bold">Index</label>
+                                        <span>&nbsp;&nbsp;&nbsp;</span>
+
+                                        <input type="checkbox" ng-model="Item.templateOptions.disabled" value="Chỉ đọc">
+                                        <label class="control-label text-bold">Chỉ đọc</label>
+                                        <span>&nbsp;&nbsp;&nbsp;</span>
+                                        <input type="checkbox" ng-model="Item.templateOptions.isSearch" value="T.kiếm">
+                                        <label class="control-label text-bold">T.kiếm</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr />
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Tiêu đề: </label>
+                                    <div class="col-md-8 ">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.label">
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="checkbox" ng-model="Item.templateOptions.horizontalLabel">
+                                        <label class="control-label  text-bold">Hiển thị chiều ngang: </label>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div> <br />
+                                <div class="form-group" ng-show="Item.type=='textarea'">
+                                    <label class="control-label  text-bold col-md-4">Số dòng: </label>
+                                    <div class="col-md-8 ">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.line">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="Item.type=='radio'">
+                                    <label class="control-label  text-bold col-md-3">Hiển thị theo hàng: </label>
+                                    <div class="col-md-1 ">
+                                        <input type="checkbox" ng-model="Item.templateOptions.inline">
+                                    </div>>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-bold col-md-4">Css Class: </label>
+                                    <div class="col-md-8">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" class="form-control input-sm" aria-label="" ng-model="Item.className">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu pull-right" style="max-height:350px;overflow-x:scroll;width:100%">
+                                                    <li ng-repeat="option in ListAvailAbleClass | filter:Item.className"
+                                                        ng-click="Item.className = option">
+                                                        <a href="javascript:;" ng-bind-html="option | highlight:  Item.className"></a>
+                                                    </li>
+                                                    <li ng-repeat="option in ListAvailAbleClass | filter:'!' +Item.className"
+                                                        ng-click="Item.className = option">
+                                                        <a href="javascript:;" ng-bind-html="option | highlight:  Item.className"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div><br />
+                                <div class="form-group" ng-if="Item.templateOptions.horizontalLabel">
+                                    <label class="control-label  text-bold col-md-4">Kích thước: </label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.labelSize">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.controlSize">
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div><br />
+
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Từ gợi ý: </label>
+                                    <div class="col-md-8 ">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.placeholder">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br />
+                        <div class="col-md-12" ng-if="Item.data.group === 'input'">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-bold col-md-4">Icon trái: </label>
+                                    <div class="col-md-6 ">
+                                        <input type="text" class="form-control input-sm" ng-change="ChangeAddonLeft()" ng-model="Item.templateOptions.addonLeft.class">
+                                    </div>
+                                    <div class="col-md-2"><i class="{{Item.templateOptions.addonLeft.class}}"></i></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Icon phải: </label>
+                                    <div class="col-md-6 ">
+                                        <input type="text" class="form-control input-sm" ng-change="ChangeAddonRight()" ng-model="Item.templateOptions.addonRight.class">
+                                    </div>
+                                    <div class="col-md-2"><i class="{{Item.templateOptions.addonRight.class}}"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"
+                             ng-if="Item.data.key ==='InputTextControl'">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Ký tự tối đa: </label>
+                                    <div class="col-md-3 ">
+                                        <input type="number" class="input-sm form-control input-sm" ng-model="Item.templateOptions.maxlength">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-bold col-md-4">Ký tự tối thiểu: </label>
+                                    <div class="col-md-3 ">
+                                        <input type="number" class="input-sm form-control input-sm" ng-model="Item.templateOptions.minlength">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"
+                             ng-if="Item.data.key==='InputRangeControl'||Item.data.key==='InputNumberControl'">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Tối đa: </label>
+                                    <div class="col-md-3 ">
+                                        <input type="number" class="input-sm form-control input-sm" ng-model="Item.templateOptions.max">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-bold col-md-4">Tối thiểu: </label>
+                                    <div class="col-md-3 ">
+                                        <input type="number" class="input-sm form-control input-sm" ng-model="Item.templateOptions.min">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="Item.data.key==='ToggleControl'">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold col-md-4">Nhãn bật: </label>
+                                    <div class="col-md-8 ">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.trueLabel">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label text-bold col-md-4">Nhãn tắt: </label>
+                                    <div class="col-md-8 ">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.trueLabel">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="Item.data.group==='upload'">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label  text-bold col-md-4">Tiêu đề nút: </label>
+                                        <div class="col-md-8 ">
+                                            <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.uploadText">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label text-bold col-md-4">Kích thước tối đa: </label>
+                                        <div class="col-md-8 ">
+                                            <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.maxsize">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label  text-bold col-md-4">Định dạng cho phép: </label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.accept">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label text-bold col-md-4">Upload api: </label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.apiUrl">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label  text-bold col-md-4">Thuộc tính sử dụng: </label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.returnProp">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label text-bold col-md-4">Dữ liệu kèm: </label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.optionalData">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div ng-show="Mode==2">
+                    <div class="col-md-12" ng-if="ListKey.length>0">
+                        <div class="form-group">
+                            <label class="control-label text-bold">
+                                Danh sách trường đã có:
+                            </label>
+                            <div class="col-md-12">
+                                <ul>
+                                    <li ng-repeat="item in ListKey">
+                                        {{item}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="col-md-12">
+                        Điều kiện ẩn:&nbsp; <input type="checkbox" name="" ng-model="Item.templateOptions.isUseHideExpression">
+                    </h4>
+                    <div class="col-md-12" ng-show="Item.templateOptions.isUseHideExpression">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label text-bold">
+                                    Điều kiện(return true|false):
+                                    <small class="text-danger">'$viewValue'= giá trị ô nhập|'$modelValue'= giá trị model|'$scope.model.key'= truy cập tới trường khác ('key') '</small>
+                                </label>
+                                <div class="col-md-12">
+                                    <textarea id="txtHideExpression" class="input-sm form-control input-sm" ng-model="Item.templateOptions.hideExpression"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="col-md-12">
+                        Điều kiện vô hiệu hóa:&nbsp; <input type="checkbox" name="" ng-model="Item.templateOptions.isUseDisabledExpression">
+                    </h4>
+                    <div class="col-md-12" ng-show="Item.templateOptions.isUseDisabledExpression">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label text-bold">
+                                    Điều kiện(return true|false):
+                                    <small class="text-danger">'$viewValue'= giá trị ô nhập|'$modelValue'= giá trị model|'$scope.model.key'= truy cập tới trường khác ('key') '</small>
+                                </label>
+                                <div class="col-md-12">
+                                    <textarea id="txtDisabledExpression" class="input-sm form-control input-sm" ng-model="Item.templateOptions.disabledExpression"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="Item.data.group ==='input'">
+                        <h4 class="col-md-12">
+                            Xác thực theo mẫu (parttern):&nbsp; <input type="checkbox" name="" value="Parttern validate" ng-model="Item.templateOptions.isValidateByParttern">
+                        </h4>
+                        <div class="col-md-12" ng-show="Item.templateOptions.isValidateByParttern">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">Mẫu(regex parttern): </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.partternValidate">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">Thông báo hiển thị lỗi: </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.partternValidateError">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="col-md-12">
+                            Xác thực theo API:&nbsp; <input type="checkbox" name="" value="API validate" ng-model="Item.templateOptions.isValidateByApi">
+                        </h4>
+                        <div class="col-md-12" ng-show="Item.templateOptions.isValidateByApi">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">
+                                        API URL:
+                                        <small class="text-danger">'$viewValue'= giá trị ô nhập</small>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.apiValidate">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label text-bold">
+                                        Điều kiện (return true|false):
+                                        <small class="text-danger">'$response'= biến api trả về |'$viewValue'= giá trị ô nhập|'$modelValue'= giá trị model|'$scope.model.key'= truy cập tới trường khác ('key') '</small>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <textarea id="txtapiValidateCondition" class="input-sm form-control input-sm" ng-model="Item.templateOptions.apiValidateCondition"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">Thông báo lỗi: </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.apiValidateError">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="col-md-12">
+                            Xác thực tùy chỉnh:&nbsp; <input type="checkbox" name="" value="CUSTOM validate" ng-model="Item.templateOptions.isValidateByCustom">
+                        </h4>
+                        <div class="col-md-12" ng-show="Item.templateOptions.isValidateByCustom">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">
+                                        Điều kiện(return true|false):
+                                        <small class="text-danger">'$viewValue'= giá trị ô nhập|'$modelValue'= giá trị model|'$scope.model.key'= truy cập tới trường khác ('key') '</small>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <textarea id="txtCustomValidate" class="input-sm form-control input-sm" ng-model="Item.templateOptions.customValidate"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">Thông báo lỗi: </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.customValidateError">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="Item.data.group ==='dropdown'||Item.data.group ==='checkbox'">
+                        <h4 class="col-md-12">
+                            Sử dụng từ API:&nbsp; <input type="checkbox" name="" value="API Option" ng-model="Item.templateOptions.isGetOptionByApi">
+                        </h4>
+                        <div class="col-md-12" ng-show="Item.templateOptions.isGetOptionByApi">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">
+                                        API URL:
+                                        <small class="text-danger">Địa chỉ api <span ng-show="Item.templateOptions.isApiDependent==true">|sử dụng khóa '$key%' là giá trị trường liên quan</span>  </small>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="input-sm form-control input-sm" ng-model="Item.templateOptions.apiGetOption">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">
+                                        Thuộc tính sử dụng từ dữ liệu trả về:
+                                        <small class="text-danger">'$response':dữ liệu trả về ...| vd : '$response.Data' ..etc</small>
+                                    </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.apiResponseData">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12" ng-show="Item.templateOptions.isGetOptionByApi">
+                            <div class="col-md-4  padding-left-none">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">Thuộc tính hiển thị: </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.labelProp">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label  text-bold">Thuộc tính sử dụng: </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.valueProp">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4  padding-right-none" ng-show="Item.data.group=='dropdown'">
+                                <div class="form-group">
+                                    <label class="control-label text-bold">Thuộc tính nhóm: </label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control input-sm" ng-model="Item.templateOptions.groupProp">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-hide="Item.templateOptions.isGetOptionByApi">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-bordered table-advance table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-show="Item.data.group=='dropdown'">Nhóm</th>
+                                            <th>Tên</th>
+                                            <th>Giá trị</th>
+                                            <th>
+                                                <button type="button" class="btn btn-xs btn-primary" ng-click="AddOptions()">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in Item.templateOptions.options">
+                                            <td ng-show="Item.data.group=='dropdown'">
+                                                <input class="form-control input-sm" ng-model="item[Item.templateOptions.groupProp]" name="">
+                                            </td>
+                                            <td>
+                                                <input class="form-control input-sm" ng-model="item[Item.templateOptions.labelProp]" name="">
+                                            </td>
+                                            <td>
+                                                <input class="form-control input-sm" ng-model="item[Item.templateOptions.valueProp]" name="">
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-xs btn-primary" ng-click="AddOptions($index)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-xs btn-danger" ng-click="DeleteOptions(item)">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="Mode==3">
+                    <div class="col-md-12">
+                        <formly-form fields="PreviewSheme" model="PreviewData">
+                        </formly-form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Lưu
+        </a>
+        <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
+            <i class="fa fa-ban"></i> Đóng
+        </a>
+    </div>
+    <div class="alerts" ng-show="notify.queue.length > 0">
+        <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
+            <button type="button" class="close" ng-click="closeAlert(m.body)" data-dismiss="alert">×</button>
+            <label>{{m.title}}</label>
+            <div>{{m.body}}</div>
+        </div>
+    </div>
+</form>

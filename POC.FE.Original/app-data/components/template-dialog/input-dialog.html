@@ -1,0 +1,25 @@
+﻿
+<div class="modal-header">
+    <h3 class="modal-title">{{Title}}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <span ng-bind-html="Message"></span>
+        </div>
+        <hr/>
+        <div class="col-md-12" ng-show="Type=='textarea'">
+            <textarea class="form-control" ng-model="Answer"></textarea>
+	    </div>
+        <div class="col-md-12" ng-show="Type!='textarea'">
+          <input type="{{Type}}" class="form-control" ng-model="Answer">
+        </div>
+	    </div>
+
+    
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="confirm()" ng-if="ButtonConfirm != ''">{{ButtonConfirm}}</button>
+    <button class="btn btn-warning" ng-click="cancel()" ng-if="ButtonCancel != ''">{{ButtonCancel}}</button>
+</div>   

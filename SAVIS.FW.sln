@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{362F3BDA-556E-4F35-BEB1-DFE9607A0D97}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.Data", "SAVIS.FW.Data\SAVIS.FW.Data.csproj", "{55453B3A-E652-4A4F-9D37-47F871D5358F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.Common", "SAVIS.FW.Common\SAVIS.FW.Common.csproj", "{75E3BA71-735F-406A-B9AF-63E09D0CDB5D}"
@@ -13,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.Business", "SAVIS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.API", "SAVIS.FW.API\SAVIS.FW.API.csproj", "{4F809E58-313F-491A-A0FD-E6F789D16776}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.Application", "SAVIS.FW.Application\SAVIS.FW.Application.csproj", "{497AE503-ECA0-4D24-BB79-4E389C553C16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC.FrontEnd", "POC.FrontEnd\POC.FrontEnd.csproj", "{DFBD80E3-06B9-42EB-AEF7-444096A62557}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{362F3BDA-556E-4F35-BEB1-DFE9607A0D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{362F3BDA-556E-4F35-BEB1-DFE9607A0D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{362F3BDA-556E-4F35-BEB1-DFE9607A0D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{362F3BDA-556E-4F35-BEB1-DFE9607A0D97}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55453B3A-E652-4A4F-9D37-47F871D5358F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{55453B3A-E652-4A4F-9D37-47F871D5358F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55453B3A-E652-4A4F-9D37-47F871D5358F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,10 +35,10 @@ Global
 		{4F809E58-313F-491A-A0FD-E6F789D16776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F809E58-313F-491A-A0FD-E6F789D16776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F809E58-313F-491A-A0FD-E6F789D16776}.Release|Any CPU.Build.0 = Release|Any CPU
-		{497AE503-ECA0-4D24-BB79-4E389C553C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{497AE503-ECA0-4D24-BB79-4E389C553C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{497AE503-ECA0-4D24-BB79-4E389C553C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{497AE503-ECA0-4D24-BB79-4E389C553C16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

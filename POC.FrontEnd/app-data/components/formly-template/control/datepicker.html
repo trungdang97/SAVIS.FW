@@ -1,0 +1,18 @@
+﻿ <p class="input-group">
+        <input  type="text"
+                id="{{::id}}"
+                name="{{::id}}"
+                ng-model="model[options.key]"
+                class="form-control input-sm"
+                ng-click="datepicker.open($event)"
+                uib-datepicker-popup="{{to.datepickerOptions.format}}"
+                datepicker-popup="{{to.datepickerOptions.format}}"
+                is-open="datepicker.opened"
+                datepicker-options="to.datepickerOptions"
+                ng-model-options="{timezone: 'utc'}"
+                close-text="Đóng" clear-text="Xóa" current-text="Hôm nay"
+                />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-sm btn-default" ng-click="datepicker.open($event)" ng-disabled="to.disabled"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>

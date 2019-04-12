@@ -1,0 +1,86 @@
+.news-slider-list-head {
+    display: inline-block;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    margin-top:5px;
+}
+.news-slider-list {
+    border-top: 3px solid #c70007;
+    padding-top: 0;/*07.10.2015 - TruongND - Fix for demonstration*/
+    /*height: 400px;*/
+    overflow: hidden;
+}
+.activity-list {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.activity-list-item p {
+    font-weight: 600;
+    padding: 5px 0 0 5px;
+}
+
+.newest-list {
+    background-color: #fff;
+}
+.newest-list .item {
+    width: 100% !important;
+    background: url('../Images/news_arrow.png') no-repeat 0px 5px;
+    padding-left: 15px;
+    padding-right: 5px;
+    cursor: pointer;
+    padding-bottom: 5px;
+}
+.newest-list .item a {
+    color : #000;
+}
+.newest-list .item a:hover {
+    color : #0461af;
+    text-decoration : none;
+}
+
+
+/********************* NEWS INFO ***************************** */
+.news-info {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding-left: 5px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 5px;
+}
+
+.breadcrumb {
+    background : none;
+    color : #333;
+    padding : 0px 0px 10px 0px;
+    margin-bottom : 0px;
+}
+
+.breadcrumb a {
+    color : #333;
+    text-decoration : none;
+    font-size : 16px;
+    font-weight : bold;
+}
+.breadcrumb a:hover {
+    color : #0461af;
+}
+
+.breadcrumb > li + li:before {
+    padding: 0 5px;
+    color: #333;
+    font-size: 14px;
+}
+
+/*IMAGE WRAPPER NEWS*/
+.news-info .editor-img-wrapper {
+    text-align : center;
+}
+.news-info .editor-img-wrapper .editor-img-desc p {
+    text-align : center;
+    font-style : italic;
+    font-size : 12px;
+}

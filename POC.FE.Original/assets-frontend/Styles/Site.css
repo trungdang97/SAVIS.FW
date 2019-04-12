@@ -1,0 +1,51 @@
+﻿body
+{
+    background-color : #f3f3f3 !important;
+}
+.container
+{
+    width : 1000px;
+    margin : 0px auto;
+    background-color : #fff;
+}
+
+.top 
+{
+    float : left;
+    width : 100%;
+    min-height : 100px;
+
+}
+.main 
+{
+    float : left;
+    min-height : 400px;
+    width : 600px;
+
+}
+
+.main-50
+{
+    float : left;
+    min-height : 300px;
+    width : 480px;
+    
+
+}
+
+
+.left
+{
+    float : left;
+    min-height : 400px;
+    width : 200px;
+
+}
+.right
+{
+    float : left;
+    min-height : 400px;
+    width : 200px;
+
+}
+

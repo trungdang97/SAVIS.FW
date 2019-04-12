@@ -1,0 +1,249 @@
+﻿<style type="text/css">
+    .CodeMirror pre {
+        padding: 0px 42px;
+    }
+</style>
+<form name="formly_form" ng-submit="btnSve()">
+    <div class="portlet light" style="padding-bottom:0;">
+        <div class="portlet-title tabbable-line">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>
+                <span class="caption-subject bold uppercase">Loại hình tài liệu</span>
+                <span class="caption-helper">cấu hình...</span>
+            </div>
+            <ul class="nav nav-tabs">
+                <li ng-class="Mode==1?'active':''">
+                    <a href="javascript:;" data-toggle="tab" ng-click="Mode=1">Thông tin cơ bản</a>
+                </li>
+
+                <li ng-class="Mode==2?'active':''">
+                    <a href="javascript:;" data-toggle="tab" ng-click="Mode=2">Phiếu tin hồ sơ </a>
+                </li>
+                <li ng-class="Mode==3?'active':''">
+                    <a href="javascript:;" data-toggle="tab" ng-click="Mode=3">Phiếu tin văn bản </a>
+                </li>
+            </ul>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div ng-show="Mode==1">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label  text-bold col-md-4">Tên: </label>
+                                <div class="col-md-8 ">
+                                    <input ng-model="Item.Name" type="text" ng-change="ChangeName()" class="form-control input-sm" />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div><br />
+                            <div class="form-group">
+                                <label class="control-label  text-bold col-md-4">Trạng thái: </label>
+                                <div class="col-md-8 "> 
+                                    <input type="checkbox" ng-model="Item.Status"  ng-true-value="1" ng-false-value="0"/>
+                                    <span class="label label-xs label-success" ng-if="Item.Status==1">Hoạt động</span>
+                                    <span class="label label-xs label-danger" ng-if="Item.Status==0">Không hoạt động</span> 
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label  text-bold col-md-4">Mã: </label>
+                                <div class="col-md-8 ">
+                                    <input ng-model="Item.Code" type="text" class="form-control input-sm" />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div><br />
+                            <div class="form-group">
+                                <label class="control-label  text-bold col-md-4">Số thứ tự: </label>
+                                <div class="col-md-8 ">
+                                    <input ng-model="Item.Order" type="number" class="form-control input-sm input-small" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div><br />
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label  text-bold col-md-2">Ghi chú: </label>
+                                <div class="col-md-10 col-md-10 padding-left-10">
+                                    <textarea ng-model="Item.Description" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="Mode==2">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="tabbable-line">
+                                            <ul class="nav nav-tabs pull-left" ng-init="Record.Mode =1">
+                                                <li ng-class="Record.Mode==1?'active':''">
+                                                    <a href="javascript:;" data-toggle="tab" ng-click="Record.ChageMode(1)">Cấu hình</a>
+                                                </li>
+
+                                                <li ng-class="Record.Mode==2?'active':''">
+                                                    <a href="javascript:;" data-toggle="tab" ng-click="Record.ChageMode(2)">Xem trước</a>
+                                                </li>
+                                            </ul> 
+                                        </div>
+                                        
+                                        <span class="pull-right" ng-show="Record.Mode==1">
+                                            <a href="javascript:;" class="btn btn-primary btn-xs" ng-click="Record.AddCommonField()">
+                                                <i class="fa fa-plus"></i> Thêm field dùng chung
+                                            </a>
+                                            <a href="javascript:;" class="btn btn-primary btn-xs" ng-click="Record.AddField()">
+                                                <i class="fa fa-plus"></i> Thêm mới field
+                                            </a>
+                                            <a href="javascript:;" class="btn btn-primary btn-xs" ng-click="Record.SelectField()">
+                                                <i class="fa fa-list-alt"></i> Chọn field có sẵn
+                                            </a>
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding:0px;min-height:400px">
+                                        <div ng-show="Record.Mode==1"> 
+                                            <script type="text/ng-template" id="record-lopp">
+                                                <div class="formly-block" style="height:60px;">
+                                                    <div class="formly-head">
+                                                        <div class="formly-title">
+                                                            {{field.Name}}
+                                                        </div>
+                                                        <div class="formly-tools">
+                                                            <button type="button" class="btn btn-xs btn-danger formly-btn" ng-click="Record.Delete(field)" title="Xóa hàng">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button><br />
+                                                            <button type="button" class="btn btn-xs btn-primary formly-btn" ng-class="Record.CheckSwapRow()" ng-click="Record.SwapRow(field)" title="Di chuyển">
+                                                                <i class="fa fa-exchange" aria-hidden="true"></i>
+                                                            </button><br />
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="formly-body" style="padding:0">
+                                                        <span>Hiển thị :</span>
+                                                        <input type="checkbox" ng-model="field.DisplayCategory" value="Hiển thị danh mục" /> <span>Danh mục</span> &nbsp;&nbsp;
+                                                        <input type="checkbox" ng-model="field.DisplaySearchCategory" value="Hiển thị tìm kiếm danh mục" /> <span>Tìm kiếm D.Mục</span>&nbsp;&nbsp;
+                                                        <input type="checkbox" ng-model="field.DisplayReport" value="Hiển thị báo cáo" /> <span>Báo cáo</span>&nbsp;&nbsp;
+                                                        <input type="checkbox" ng-model="field.DisplaySearchReport" value="Hiển thị tìm kiếm báo cáo" /> <span>Tìm kiếm B.Cáo</span>&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </script>
+                                            <div style="padding:10px;min-height:400px">
+                                                <ul class="sortablerow droppable">
+                                                    <li ng-repeat="field in ListRecordField" ng-include="'record-lopp'" class="{{field.FormlyContentObj[0].className}}"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div ng-if="Record.Mode==2">
+                                            <h4 class="col-md-12 text-bold text-center">Phiếu tin Hồ sơ</h4>
+                                            <formly-form fields="Record.PreviewSheme" model="data">
+                                            </formly-form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div ng-show="Mode==3">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="tabbable-line">
+                                            <ul class="nav nav-tabs pull-left" ng-init="Document.Mode =1">
+                                                <li ng-class="Document.Mode==1?'active':''">
+                                                    <a href="javascript:;" data-toggle="tab" ng-click="Document.ChageMode(1)">Cấu hình</a>
+                                                </li>
+
+                                                <li ng-class="Document.Mode==2?'active':''">
+                                                    <a href="javascript:;" data-toggle="tab" ng-click="Document.ChageMode(2)">Xem trước</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <span class="pull-right" ng-show="Document.Mode==1">
+                                            <a href="javascript:;" class="btn btn-primary btn-xs" ng-click="Document.AddCommonField()">
+                                                <i class="fa fa-plus"></i> Thêm field dùng chung
+                                            </a>
+                                            <a href="javascript:;" class="btn btn-primary btn-xs" ng-click="Document.AddField()">
+                                                <i class="fa fa-plus"></i> Thêm mới field
+                                            </a>
+                                            <a href="javascript:;" class="btn btn-primary btn-xs" ng-click="Document.SelectField()">
+                                                <i class="fa fa-list-alt"></i> Chọn field có sẵn
+                                            </a>
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding:0px;min-height:400px">
+                                        <div ng-show="Document.Mode==1">
+                                            <script type="text/ng-template" id="document-lopp">
+                                                <div class="formly-block" style="height:60px;">
+                                                    <div class="formly-head">
+                                                        <div class="formly-title">
+                                                            {{field.Name}}
+                                                        </div>
+                                                        <div class="formly-tools">
+                                                            <button type="button" class="btn btn-xs btn-danger formly-btn" ng-click="Document.Delete(field)" title="Xóa hàng">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button><br />
+                                                            <button type="button" class="btn btn-xs btn-primary formly-btn" ng-class="Document.CheckSwapRow()" ng-click="Document.SwapRow(field)" title="Di chuyển">
+                                                                <i class="fa fa-exchange" aria-hidden="true"></i>
+                                                            </button><br />
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="formly-body" style="padding:0">
+                                                        <span>Hiển thị :</span>
+                                                        <input type="checkbox" ng-model="field.DisplayCategory" value="Hiển thị danh mục" /> <span>Danh mục</span> &nbsp;&nbsp;
+                                                        <input type="checkbox" ng-model="field.DisplaySearchCategory" value="Hiển thị tìm kiếm danh mục" /> <span>Tìm kiếm D.Mục</span>&nbsp;&nbsp;
+                                                        <input type="checkbox" ng-model="field.DisplayReport" value="Hiển thị báo cáo" /> <span>Báo cáo</span>&nbsp;&nbsp;
+                                                        <input type="checkbox" ng-model="field.DisplaySearchReport" value="Hiển thị tìm kiếm báo cáo" /> <span>Tìm kiếm B.Cáo</span>&nbsp;&nbsp;
+                                                    </div>
+                                                </div>
+                                            </script>
+                                            <div style="padding:10px;min-height:400px">
+                                                <ul class="sortablerow droppable">
+                                                    <li ng-repeat="field in ListDocumentField" ng-include="'document-lopp'" class="{{field.FormlyContentObj[0].className}}"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div ng-if="Document.Mode==2"style="padding:10px;min-height:400px">
+                                            <h4 class="col-md-12 text-bold text-center">Phiếu tin Văn bản</h4>
+                                            <formly-form fields="Document.PreviewSheme" model="data">
+                                            </formly-form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Lưu
+        </a>
+        <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
+            <i class="fa fa-ban"></i> Đóng
+        </a>
+    </div>
+</form>
+<div class="alerts" ng-show="notify.queue.length > 0">
+    <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
+        <button type="button" class="close" ng-click="closeAlert(m.body)" data-dismiss="alert">×</button>
+        <label>{{m.title}}</label>
+        <div>{{m.body}}</div>
+    </div>
+</div>

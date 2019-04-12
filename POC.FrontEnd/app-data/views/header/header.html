@@ -1,0 +1,78 @@
+﻿<style type="text/css">
+    .lead-interaction {
+        font-weight: bold !important;
+    }
+    .menu-xs {
+        display: inline-block;
+        float: left;
+        margin: 23.5px 14px 0 6px;
+        background-image: url(assets/metronic/img/sidebar-toggler-light.jpg);
+        display: block;
+        cursor: pointer;
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+        width: 20px;
+        height: 14px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        text-shadow: none;
+        color: #5b9bd1;
+        background-color: transparent;
+    }
+</style>
+
+
+<!-- <div class="header navbar navbar-inverse navbar-fixed-top" data-ng-controller="HeaderCtrl">  -->
+<div class="page-header navbar navbar-fixed-top" data-ng-controller="HeaderCtrl">
+    <div class="page-header-inner">
+        <div class="page-logo">
+            <a href="#/home">
+                <div style="width: 50px; background: #ff0000; margin-top: 5px;">
+                    <img src="../../../assets/layouts/layout4/img/Logo-new-2014.png" alt="logo" style="width: 50px;margin-left:0px !important;">
+                </div>
+             
+                <h4 class="logo-default big-title" style="margin: 5px 0px 0px 0px;">{{'HeaderCtrl.Title' | translate}}<small>v{{appVersion}}</small></h4>
+                <span class="logo-default" style="margin: 5px 0px 0px 0px;">{{'HeaderCtrl.Description' | translate}}</span>
+            </a>
+            <div class="menu-toggler sidebar-toggler">
+            </div>
+        </div>
+        <!-- END PAGE LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        </a>
+        <div class="top-menu">
+        </div>
+        <div class="top-menu pull-right">
+            <ul class="nav navbar-nav pull-right">
+            
+                <li class="dropdown dropdown-language">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false">
+                        <img alt=""  ng-src="{{SelectedLanguage.IconSrc}}" />
+                        <span class="langname">  </span>
+                        <i class="fa fa-angle-down"></i>
+
+
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="lang in ListLanguage">
+                            <a href="javascript:;" ng-click="SelectLanguage(lang)">
+                                <img height="20" ng-src="{{lang.IconSrc}}" /> {{lang.Name}}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- END USER LOGIN DROPDOWN -->
+                <!-- BEGIN QUICK SIDEBAR DROPDOWN -->
+                <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                    <span class="sr-only">Toggle Quick Sidebar</span>
+                    <i class="icon-logout"></i>
+                </li>
+                <!-- END QUICK SIDEBAR DROPDOWN -->
+            </ul>
+        </div>
+        <!-- BEGIN PAGE LOGO -->
+        <!-- END RESPONSIVE MENU TOGGLER -->
+    </div>
+</div>
+

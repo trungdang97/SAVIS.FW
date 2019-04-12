@@ -1,0 +1,32 @@
+{
+  "name": "mb-scrollbar",
+  "version": "2.1.0",
+  "description": "Custom scrollbar plugin for AngularJS",
+  "author": {
+    "name": "Matt Balmer",
+    "email": "matt@mattbalmer.com"
+  },
+  "licenses": "MIT",
+  "filename": "mb-scrollbar.min.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattbalmer/mb-scrollbar"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "ng-scrollbar",
+    "mb-scrollbar",
+    "scrollbar"
+  ],
+  "readme": "mb-scrollbar\n============\n\nCustom scrollbar plugin for AngularJS\n\n## Description\n\nA small, unobtrusive plugin for AngularJS that allows placement of a custom scrollbar on any element. It will retain its size, but place any child elements into a scaling container div. The container's size can be set to automatically update, or can be called manually by broadcasting a 'recalculateMBScrollbars' event from your controller scope.\n\n## Usage\n\nUsing the plugin is very easy - simply add the attribute `mb-scrollbar`, where the attribute's value is the config for the scrollbar. Example:\n\n    <div class='roster' mb-scrollbar=\"scrollbarConfig\">\n      <div ng-repeat=\"person in roster\"> {{person.name}} </div>\n    </div>\n  \nThe roster div will stay at whatever dimensions your CSS dictates, and anything inside will expand infinitely in whatever direction you specify in the config.\n\nAlso don't forget to include the module in your own Angular app\n\n    var app = angular.module('YourApp', ['mb-scrollbar']);\n\n### Resizing\n\nOne option to recalculate the size of the container is to set the `autoResize` config option to `true`. When the plugin detects a child element has been added/removed, it will automatically recalculate.\n\nThis option is not always ideal, and in some older browsers, may not work as expected. Another option, to call the recalculate function manually. A small Service is provided to make this easy, though the `recalculateMBScrollbars` event may also be broadcast, if you prefer.\n\n    // Option 1\n    $scope.$broadcast('recalculateMBScrollbars');\n\n    // Option 2 - This option is preferred of the two. It wraps the call in a short timeout,\n    // which allows the scope to compile first. It also requires the 'mbScrollbar' Service to be injected\n    mbScrollbar.recalculate();\n\n## Configuration\n\nYou should pass an object as the value of `mb-scrollbar`. Here is an example with all of the attributes you may set. Shown values are the default values.\n\n    config = {\n      autoResize: false, // If true, will listen for DOM elements being added or removed inside the scroll container\n      direction: 'vertical', // The direction of the scrollbar\n      scrollbar: {  \n          width: 6, // Width (thickness. Is actually height on horizontal scrollbars) of the scrollbar\n          hoverWidth: 8, // Width on scrollbar hover\n          color: 'rgba(0,0,0, .6)', // Background color of the scrollbar\n          show: false // If true, scrollbar will always be visible\n      },\n      scrollbarContainer: {\n          width: 12, // Width of the container surrounding the scrollbar. Becomes visible on hover\n          color: 'rgba(0,0,0, .1)' // Background color of the scrollbar container\n      },\n      scrollTo: null // Scroll to the 'start' or 'end' on initialization and content changes. Pixel values may also be given.\n    }\n    \n## Compatibility\n\nThe plugin has not yet been rigorously tested, but should work in all modern browsers, and in IE9+\n    \n## Contact & License Info\n\nAuthor: Matthew Balmer  \nTwitter: [@mattbalmer](http://twitter.com/mattbalmer)  \nWebsite: [http://mattbalmer.com](http://mattbalmer.com)  \nLicense: MIT\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/mattbalmer/mb-scrollbar/issues"
+  },
+  "homepage": "https://github.com/mattbalmer/mb-scrollbar",
+  "_id": "mb-scrollbar@2.1.0",
+  "_shasum": "559a6d3dada15ae0d0f5605bad79441a3901ff49",
+  "_from": "mb-scrollbar@",
+  "_resolved": "https://registry.npmjs.org/mb-scrollbar/-/mb-scrollbar-2.1.0.tgz"
+}

@@ -1,0 +1,3 @@
+The FileCatalyst TransferAgent user-facing interface is created with a combination of open source projects.
+
+The starting point is initializr.com, which combines HTML5 Boilerplate, a responsive template, and Twitter Bootstrap into one distribution.

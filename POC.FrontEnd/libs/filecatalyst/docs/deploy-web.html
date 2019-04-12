@@ -1,0 +1,1152 @@
+﻿<html>
+  <head>
+    <title>FileCatalyst TransferAgent Usage and Deployment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="jquery.js"></script>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <div id="logo"><a id="top"></a>
+        <img src="images/header.jpg" alt="FileCatalyst Header Logo"/>
+        <h1>File<em>Catalyst</em> TransferAgent<br/>Usage and Deployment</h1>
+      </div>
+
+      <div id="tableOfContents">
+        <h2>Table of Contents</h2>
+        <ol id="TOC">
+          <li></li>
+        </ol>
+      </div>
+
+      <hr/> <!--not necessary once proper styles are built-->
+
+      <div id="mainContent">
+        <div class="section">
+          <h2 id="deployQuick">Deploying to Web Server (Quick Start)</h2>
+          <ol>
+            <li>Upload or publish the entire "filecatalyst" folder contained in FileCatalystTransferAgentDeployment.zip to the web root of your web server.
+              You will then be able to access a start page at http://mysite.com/filecatalyst which contains links to documentation and sample pages.
+              If you don't have a web server, see <a href='#localwebserver'>Deploying to the built-in, web server</a> section.
+            </li>
+            <li>Using your favourite text editor, edit /filecatalyst/js/configuration.js and define your host information under pg.config.remoteNodes. If you
+              plan to use download buttons (per download-button.html), you must also configure pg.config.downloadButtons.</li>
+            <li>Choose one of the following pages based on your desired functionality: upload.html, download.html or download-button.html</li>
+            <li>Using your favourite text editor, edit the desired page to customize the look. To change look and feel, the key files to edit are the selected
+              HTML page as well as css/main.css.</li>
+			<li>This step is not required for the local web server. The application serves a few files that might not have registered MIME types on your web server. These must be registered in order for the
+			application to function. They include: .pkg, .exe, and .json. The MIME type for .pkg and .exe is <span class="monospace">application/octet-stream</span>, 
+			and the MIME type for JSON is <span class="monospace">application/json</span>.
+              <ul>
+			    <li>In Apache, the mime types are defined in httpd.conf. For example, to register the <strong>.pkg</strong> file type, you will have to add the following line:<br/>
+                  <i>AddType application/x-octet-stream .pkg</i>
+		        </li>
+                <li>In Tomcat the mime types are defined in /conf/web.xml the lines to add are:<br>
+                  <i>&lt;mime-mapping><br>
+                  &lt;extension>pkg&lt;/extension>&lt;mime-type>application/octet-stream&lt;/mime-type>
+                  <br>&lt;/mime-mapping></i><br>
+			    </li>
+                <li>For other web servers, please consult the manual on how to define custom mime types.</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        <div class="section">
+          <h2 id="deploy">Deploying to Web Server (Detailed Instructions)</h2>
+          <p>The deployment package contains the files needed to deploy a sample
+            application to the web, as well as the separate JavaScript files which
+            encapsulate the underlying functionality of the application. If you don't have a web server, 
+            see <a href='#localwebserver'>Deploying to the built-in, web server</a> section.</p>
+          <p>The fastest way to get a single transfer page up an running is to follow the
+            instructions in the previous section. Deploying the full web application starts the
+            same way: move the contents of
+            the included "filecatalyst" directory to an appropriate location on the web server.
+            For example, for the application to be found at mysite.com/filecatalyst (case sensitive),
+            move the "filecatalyst" directory from the package to within mysite.com web root.
+            In addition to the single pages referenced in the previous section, an application
+            will be available at http://mysite.com/filecatalyst (case sensitive), which can optionally
+            be renamed.</p>
+          <p>It should be noted that in addition
+            to the usual collection of HTML, CSS, and JS files, the application provides
+            ".exe" files for Windows and ".pkg" files for Mac. The web server must be configured
+            to recognize these MIME types or end-users will see a web server error and fail
+            to download the required TransferAgent application.</p>
+          <p>The following files are included in the package in the following hierarchy.
+            Optional files are indicated as well as the conditions for the option. In the sample
+            application, minified versions of the files are included when appropriate and available. Only the
+            full OR the minified version of a given file needs to be included.
+          </p>
+          <ul class="fileStructure">
+            <li class="optional"><span class="directory">filecatalyst</span> - containing folder; application does not strictly need to be in a container
+              <ul>
+                <li class="optional"><span>*icon*.png, favicon.ico</span> - a series of favicon files; may be replaced with custom icons</li>
+                <li class="optional"><span>*.html</span> - files encapsulating a sample application. Since they are meant to run offline, repeated elements
+                  such as the main navigation are included with JavaScript includes. When using these files as a basis for a production application, efforts should be made
+                  to convert these includes to a server-side language. The HTML pages which comprise the application are index.html, upload_app.html, download_app.html,
+                  and download-button_app.html, as well as HTML provided by the scripts in the /includes directory.</li>
+                <li class="optional"><span>credits.txt</span> - Text file acknowledging 3rd-party sources</li>
+              </ul>
+              <ul>
+                <li class="optional"><span class="directory">css</span> - sample pages will refer to files in a "css" directory matching this name and place in the hierarchy
+                  <ul>
+                    <li class="optional"><span>bootstrap-theme.css</span> - full non-minified version of the theme CSS</li>
+                    <li class="optional"><span>bootstrap-theme.min.css</span> - minified version of bootstrap theme CSS, included on example pages</li>
+                    <li class="optional"><span>bootstrap.css</span> - full non-minified version of Bootstrap 3 CSS. May be periodically updated, so avoid modifying this file</li>
+                    <li class="optional"><span>bootstrap.min.css</span> - minified version of Bootstrap 3 CSS.</li>
+                    <li class="optional"><span>font-awesome.css</span> - full non-minified version of the CSS required to use "fontawesome" as an alternate icon set. Optional if not using Font Awesome</li>
+                    <li class="optional"><span>font-awesome.min.css</span> - minified version of the CSS required to use "fontawesome" as an alternate icon set.</li>
+                    <li class="optional"><span>main.css</span> - like all CSS, not strictly "required"; however, many UI conventions are established via the main application CSS
+                      which would need to be replicated or replaced if this is not included.</li>
+                  </ul>
+                </li>
+                <li class="optional"><span class="directory">docs</span> - this directory is intended for offline viewing by the administrator and is not required for web deployment</li>
+                <li><span class="directory">files</span> - this directory contains files which the end-user may need to download. The application may be configured to retrieve files from a different location.
+                  <ul><li><span>MacOSX/FileCatalystTransferAgent.pkg</span> - the downloadable install package for Mac OSX</li>
+                    <li><span>Windows/install_fc_transferagent.exe</span> - the downloadable installer for Windows</li>
+                  </ul>
+                </li>
+                <li class="optional"><span class="directory">fonts</span> - contains the actual font files (OTF, EOT, SVG, TTF, WOFF) used by web-font CSS.
+                  <ul>
+                    <li class="optional"><span>fontawesome.*</span> - all related files for rendering Font Awesome in the browser. Not required if not using Font Awesome icon set</li>
+                    <li class="optional"><span>glyphicons-halflings-regular.*</span> - all related files for rendering Bootstrap default icons. Not required if not using Bootstrap</li>
+                  </ul>
+                </li>
+				<li><span class="directory">i18n</span> - this directory contains internationalization files. By default, a subdirectory called "dev" containing a file called "translation.json"
+				is replaced during each application upgrade. The administrator may provide alternative or supplemental language files, each in their own subdirectory. See the 
+				<a href="#internationalization">Internationalization</a> section of this document for more details.</li>
+                <li><span class="directory">images</span> - sample pages will use inline HTML and CSS that refers to files in an "images" directory matching this name and place in the hierarchy
+                </li>
+                <li><span class="directory">js</span> - most JavaScript is considered required, and should be included in the order described in the <a href="#configuration_js">Configuring JavaScript</a>
+                  section of this document
+                  <ul>
+                    <li><span class="directory">vendor</span> - a folder containing 3rd-party scripts issued vendors and integral to the application
+                      <ul>
+                        <li><span>bootstrap.js</span> - full non-minified version of Bootstrap JavaScript, which enables interactive widgets provided in the Bootstrap framework.
+                          Optional if not using Bootstrap</li>
+                        <li><span>bootstrap.min.js</span> - minified version of Bootstrap JavaScript</li>
+                        <li><span>jquery-1.10.2.js</span> - full non-minified version of jQuery. jQuery itself is REQUIRED; however, an application may load jQuery 1.10.2+ from
+                          an alternative resource (eg. CDN or elsewhere on the web server)</li>
+                        <li><span>jquery-1.10.2.min.js</span> - minified version of jQuery</li>
+                        <li><span>jquery-1.10.2.min.map</span> - the map allow certain browser debuggers to properly process the minified version of jQuery. Optional if using the
+                          non-mindified version, loading from CDN, or when debugging is not required</li>
+                        <li><span>modernizr-2.6.2-respond-1.1.0.min.js</span> - a concatenation of modernizr and respond. The former provides useful classes after feature detection and
+                          the latter provides a shim for cross-browser responsive layouts. Optional if developing with different responsiveness and feature detection tools or if such
+                          tools are not required for the application. Required for the sample pages.</li>
+                      </ul>
+                    </li>
+                    <li><span>configuration.js</span> - web administrator MUST configure the application to enable connections. Configuration is done through this required script</li>
+                    <li><span>main.js</span> - the main functionality of the TransferAgent web front end. Without this file there is no application</li>
+                    <li><span>plugins.js</span> - plugins used by functions found in main.js. Application will fail without this file.</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+
+          <h2 id="html_document">Setting up HTML Document</h2>
+
+          <div class="subsection">
+            <h3 id="html_introduction">Introduction</h3>
+            <p>The basic shell for an HTML document is borrowed from initializr.com,
+              which which combines HTML5 Boilerplate, a responsive template, and
+              Twitter Bootstrap into one distribution. Some components are optional,
+              but unless your organization is invested in another framework or house
+              styles, it is highly recommended to use the defaults.</p>
+          </div>
+
+          <div class="subsection">
+            <h3 id="html_sample">Sample of Complete HTML Document</h3>
+            <p>Here are the basic components of a "default" HTML document for FileCatalyst TransferAgent being used as an upload tool:
+            </p>
+
+            <blockquote>
+              <pre>
+&lt;!DOCTYPE html>
+  &lt;head>
+    &lt;meta charset="utf-8">
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, chrome=1">
+    &lt;title>TransferAgent&lt;/title>
+    &lt;meta name="viewport" content="width=device-width">
+    &lt;link rel="stylesheet" href="css/bootstrap.min.css">
+    &lt;link rel="stylesheet" href="css/font-awesome.min.css">
+    &lt;link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    &lt;link rel="stylesheet" href="css/main.css">
+    &lt;script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">&lt;/script>
+  &lt;/head>
+
+  &lt;body>
+    &lt;!-- arbitrary markup for your page. Example shows a bare bones localfiles widget
+     embedded on the page -->
+    &lt;div id="localFiles" class="col-lg-6">&lt;/div>
+    &lt;div class="col-lg-6">Other markup in second column&lt;/div>
+
+    &lt;script src="js/vendor/jquery-1.10.2.min.js">&lt;/script>
+    &lt;script src="js/vendor/bootstrap.min.js">&lt;/script>
+    &lt;script src="js/plugins.js">&lt;/script>
+    &lt;script src="js/configuration.js">&lt;/script>
+    &lt;script src="js/main.js">&lt;/script>
+  &lt;/body>
+&lt;/html>
+              </pre>
+            </blockquote>
+          </div>
+
+          <div class="subsection">
+            <h3 id="html_breakdown">Breakdown of Sample Document</h3>
+            <p>The meta tags, CSS includes, body markup, and JavaScript includes
+              all play a role, though some components are optional.
+            </p>
+            <h4 id="html_metatags">Meta Tags</h4>
+            <ol>
+              <li><span class='monospace'>X-UA-Compatible</span> tag needs the content list provided in the example
+                in order for certain JavaScript components to function (primarily
+                the table header float function)</li>
+              <li><span class='monospace'>viewport</span> tag is required for the responsive layout.</li>
+            </ol>
+            <h4 id="html_cssincludes">CSS Includes</h4>
+            <p>The HTML document has no strict requirements for CSS. However, it
+              is recommended that you include at minimum <em>main.css</em> found in the zip archive.
+              Here are the default CSS files included, all found within the "css" subdirectory
+              of the web deployment:</p>
+            <ol>
+              <li><span class='monospace'>bootstrap.min.css:</span>  If you choose to use Bootstrap,
+                this stylesheet should be included before the others.</li>
+              <li><span class='monospace'>font-awesome.min.css:</span> FileCatalyst TransferAgent provides a mechanism
+                for using alternative icons, and Font Awesome is included as one such option
+                out of the box. To use Font Awesome, include this CSS file as well as the
+                related files from the <em>/fonts</em> subdirectory.<br/><br/>
+                Note: if you are not using Bootstrap, it is highly recommended to use Font Awesome
+                as the configured icon set.
+              </li>
+              <li><span class='monospace'>bootstrap-theme.min.css:</span> Theme files modify the default Bootstrap CSS.
+                The included theme file provides subtle variations to colors and gradients.
+                You may exclude this file, modify it, or include an alternative Bootstrap
+                theme file from another source.</li>
+              <li><span class='monospace'>main.css:</span> custom non-bootstrap styles used for laying
+                out the application widgets and overriding Bootstrap defaults when
+                necessary. In most cases, you should be including main.css</li>
+            </ol>
+            <h4 id="html_markup">Body Markup</h4>
+            <p>The FileCatalyst TransferAgent API may be accessed indirectly by using markup conventions. These are described in
+              detail in the <a href='#markupAPI'>HTML API</a> section. The bare minimum markup for a fully-functioning upload transfer
+              area is:</p>
+            <blockquote>
+              <pre>&lt;div id="localFiles">&lt;/div>
+              </pre>
+            </blockquote>
+            <h4 id="html_javascript_includes">JavaScript Includes</h4>
+            <p>The FileCatalyst TransferAgent uses an extensive API, the usage of which is described in the
+              <a href='javascriptAPI'>JavaScript API</a> section. The purpose of this section is to itemize and
+              describe the JavaScript files included within the HTML document.</p>
+            <p>Modernizr/Respond and Bootstrap are optional with caveats. The rest of the
+              JavaScript files are required for the application to function. JavaScript
+              files are found within the "js" subdirectory of the web deployment. A
+              server-side script could be used to concatenate and then minify these scripts;
+              however, such a mechanism is not provided in the TransferAgent distribution.</p>
+            <ol>
+              <li><span class='monospace'>/vendor/modernizr-{version}-respond-{version}.min.js:</span> the only JavaScript
+                file included in the document &lt;head> by default (the rest appear before the body closing tag),
+                the Modernizr.js portion provides
+                feature detection echoed into the HTML tag, while the Respond.js portion
+                provides a media queries shim for the responsive layout.</li>
+              <li><span class='monospace'>/vendor/jquery-{version}.min.js:</span> jQuery's utilities are used throughout
+                the application. You do not necessarily need to include the one bundled
+                in the deployment archive (for example, you may use a CDN). jQuery
+                must be included before the remaining scripts.</li>
+              <li><span class='monospace'>/vendor/bootstrap.min.js:</span> The Optional Bootstrap JavaScript utilities
+                may be used without the Bootstrap CSS; however, the functionality is
+                generally not correct until appropriate CSS is paired with the resulting
+                components (for example, a Bootstrap modal dialog will use Bootstrap
+                classes for the overlay, position, animation, and buttons. Without
+                Bootstrap CSS you will need to identify and provide analogies).</li>
+              <li><span class='monospace'>plugins.js:</span> JavaScript plugins used throughout the application for
+                things such as Growl notifications and a unified localStorage API.</li>
+              <li><span class='monospace'>configuration.js:</span> configuration of application behaviour and
+                node connections.</li>
+              <li><span class='monospace'>main.js:</span> the main application itself, containing all methods
+                required to process and display TransferAgent interactions.</li>
+            </ol>
+          </div>
+
+        </div>
+        <div class='section'>
+          <h2 id='configuration_js'>JavaScript Configuration</h2>
+          <p>Behaviour, appearance, and connection-related parameters are all configurable within
+            the <em>configuration.js</em> file in the <em>/js</em> subdirectory. Parameters are grouped in a sensible
+            way and are documented via comments. Some parameter groups are completely commented out; these parameters
+            have default values that TA will use and should only be un-commented when you wish to override the defaults.
+          </p>
+          <p>Since the configuration uses JavaScript, language rules must be respected. Most importantly, you must maintain
+            both sides of a key:value pair. To configure an empty string, for example, you must maintain empty quotation marks
+            as a value. Empty arrays such as the pgpMessage must maintain empty square braces. A comma must appear in-between
+            key:value pairs except the last one, which should drop the comma.</p>
+          <div class="subsection">
+            <h3 id="pg_config_remoteNodes">Remote Node Configuration (pg.config.remoteNodes)</h3>
+            <p>The TransferAgent may connect to a remote node which is stored in a JavaScript
+              object literal containing a nested object.</p>
+            <p>The "key" for each nested object is CRITICAL. It serves as the glue between
+              the JavaScript and the rendered HTML components. This key becomes the "ID" used in
+              the HTML layout engine. Here is a sample of a remote node
+              configuration object, using the key "server1":</p>
+            <blockquote><pre>pg.config.remoteNodes = {
+  server1: {
+    name: "Greg Server",
+    remoteServer: "192.168.1.139",
+    remotePort: 21,
+    username: "",
+    password: "",
+    usesSSL: false,
+    remoteDirectory: "",
+    lockInitialDirectory: false,
+	servletURL: "",
+    pgpMessage: []
+  }
+};
+}</pre></blockquote>
+            <p>In the markup, this remote node will be rendered into an element with an ID that matches the key "server1":</p>
+            <blockquote><pre>&lt;div id="server1">&lt;/div></pre></blockquote>
+            <p>The ID is also used for more granular placement of subcomponents. For example, you can place the queue
+              for this node anywhere on the page using this markup:</p>
+            <blockquote><pre>&lt;div id="server1-queue" class="ta-queue">&lt;/div></pre></blockquote>
+            <p>For more information on using the key/ID for HTML elements, read the <a href='markupAPI'>HTML API</a> section of this document.</p>
+            <p>The configurable parameters for a remote node are as follows:</p>
+            <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <tr>
+                <td>name</td>
+                <td>accepts: string<br/>default: &ldquo;&rdquo;</td>
+                <td><p>The "pretty" name visible to end users. This string is used for certain user-facing labels and headings. When not
+                    provided, the application will use the node id (in our example, "server1") in its place.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>remoteServer</td>
+                <td>accepts: string<br/>default: &ldquo;&rdquo;</td>
+                <td><p>IP or hostname of an active FileCatalyst Server. Please note that third-party FTP servers are not supported.</p>
+                  <p><em>Ignored when pgpMessage is provided; sent as clear text query string otherwise</em></p>
+                </td>
+              </tr>
+              <tr>
+                <td>remotePort</td>
+                <td>accepts: integer<br/>default: 21</td>
+                <td><p>The port used for the communication channel between TransferAgent and FileCatalyst Server. FileCatalyst Servers
+                    use 21 as the default non-secure port, and 990 for its secure port (when SSL is enabled).</p>
+                  <p><em>Ignored when pgpMessage is provided; sent as clear text query string otherwise</em></p>
+                </td>
+              </tr>
+              <tr>
+                <td>username</td>
+                <td>accepts: string<br/>default: &ldquo;&rdquo;</td>
+                <td><p>The username to be used for the connection to the remote server. The user is configured on the FileCatalyst
+				Direct Server. If left empty and pgpMessage is also left empty, the end user will be asked to provide it. </p>
+                  <p><em>Ignored when pgpMessage is provided; sent as clear text query string otherwise</em></p>
+                </td>
+              </tr>
+              <tr>
+                <td>password</td>
+                <td>accepts: string<br/>default: &ldquo;&rdquo;</td>
+                <td><p>Password to be used for the connection to the remote server. The password for the user is configured on the FileCatalyst
+				Direct Server. If left empty and pgpMessage is also left empty, the end user will be asked to provide it. </p>
+                  <p><em>Ignored when pgpMessage is provided; sent as clear text query string otherwise</em></p>
+                </td>
+              </tr>
+              <tr>
+                <td>usesSSL</td>
+                <td>accepts: boolean<br/>default: false</td>
+                <td><p>Instructs the connection whether to use SSL on the configured remotePort.</p>
+                  <p><em>Ignored when pgpMessage is provided; sent as clear text query string otherwise</em></p>
+                </td>
+              </tr>
+              <tr>
+                <td>remoteDirectory</td>
+                <td>accepts: string<br/>default: ""</td>
+                <td><p>Set a remote directory within the configured server account. If the directory does not already
+                    exist, it is created. Uploaded files will be written to this directory. For Download interfaces,
+                    user will start with a listing of this directory (even if it is empty and newly-created).</p>
+                </td>
+              </tr>
+              <tr>
+                <td>lockInitialDirectory</td>
+                <td>accepts: boolean<br/>default: false</td>
+                <td><p>If a "remoteDirectory" value is set, the user will start in that directory. For Download interfaces,
+                    this means that the "remoteDirectory" value is considered to be their root and they are restricted
+                    from navigating higher. For Upload interfaces, there is nothing exposed to the end user and
+                    this value is essentially meaningless.</p>
+                </td>
+              </tr>
+              <tr>
+                <td>servletURL</td>
+                <td>accepts: string<br/>default: &ldquo;&rdquo;</td>
+                <td><p>if you wish to use HTTP transfers, this value must be set with the servlet location from the FileCatalyst server</p>
+                </td>
+              </tr>
+              <tr>
+                <td>pgpMessage</td>
+                <td>accepts: array of strings<br/>default: [] (empty array)</td>
+                <td><p>The pgpMessage is an encoded string broken down into an array of lines. This message contains the
+                    credentials for a connection. When a pgpMessage is included&mdash;<em>valid or not</em>&mdash;the
+                    clear-test credentials such as "remotePort", "password", and the like are ignored completely and may be
+                    set to empty or arbitrary values.</p>
+                  <p>Please read <a href="#generatePgp">Generating a PGP Message</a> for more information on how to generate one and
+                    why it is essential to full security.</p></td>
+              </tr>
+            </table>
+          </div>
+          <div class="subsection">
+            <h3 id="pg_config_downloadButtons">Download Buttons (pg.config.downloadButtons)</h3>
+            <p>Download buttons are configured similarly to remote nodes, except that their objects
+              contain a "fileList", which is an array of files to be accessed
+              when the button is clicked. Just as with remote nodes, the key for each button in the
+              pg.config.downloadButtons object is tightly coupled to an div with a matching ID in the markup.
+              More importantly, the downloadButtons use this key to obtain connection credentials from
+              the pg.config.remoteNodes object.
+            </p>
+            <p>Here are a pair of download buttons ("button1", "button2") configured in the containing object:</p>
+            <blockquote><pre>pg.config.downloadButtons = {
+  button1: {
+    label: "Download Package", //the button label. If left blank, it will default to "Download":
+    sourceId: "server1", // must correspond to a connected remoteNode
+    destinationId: "", // if blank or not present, will default to "local"
+    fileList: ["/aa_testfile.mp4","/Colaboration/Email Setup.jpg"] // an array of strings representing
+              paths (either individual files or entire directories) to be downloaded
+  },
+button2: {
+    label: "Download Media", //the button label. If left blank, it will default to "Download":
+    sourceId: "server1", // must correspond to a connected remoteNode
+    destinationId: "", // if blank or not present, will default to "local"
+    fileList: ["/bb_testfile.mov"] // an array of strings representing paths (either individual files
+              or entire directories) to be downloaded
+  }
+};</pre></blockquote>
+            <p>With this configuration object, a page may contain one or more anchors
+              which have an ID set to reference the "key" in the object, and also
+              has the class "downloadButton":</p>
+            <blockquote>
+              <pre>&lt;a href="#" id="downbutton-button1" class="downloadButton">&lt;/a></pre>
+            </blockquote>
+            <p>This minimum requirement is often augmented by CSS classes and custom text which overrides the label (see below). For example:</p>
+            <blockquote>
+              <pre>&lt;a href="#" id="downbutton-button2" class="downloadButton btn btn-primary btn-lg">
+Download Pre-Configured Package&nbsp;&nbsp;&lt;i class="fa fa-download">&lt;/i>&lt;/a>
+              </pre>
+            </blockquote>
+            <p>The configurable parameters are as follows:</p>
+            <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <tr>
+                <td>label</td>
+                <td>accepts: string<br/>default: "download"</td>
+                <td>This string is rendered to the visible button if the markup does not already provide text</td>
+              </tr>
+              <tr>
+                <td>sourceId</td>
+                <td>accepts: string<br/>default: ""</td>
+                <td>The remote server from which files are to be downloaded. This string MUST correspond to the key of a pre-configured remote node (see previous section).</td>
+              </tr>
+              <tr>
+                <td>destinationId</td>
+                <td>accepts: string<br/>default: ""</td>
+                <td>This parameter will be used to initiate transfer between two arbitrary nodes; however, when not configured or when set to &ldquo;local&rdquo;, the download directory of the local TransferAgent install path is presumed to be the destination.</td>
+              </tr>
+              <tr>
+                <td>fileList</td>
+                <td>accepts: array of paths<br/>default: empty array</td>
+                <td><p>The fileList is an array of paths to files or directories which shall be downloaded by the button. The paths use the root of
+                    the configured remote server connection. Leaving the array empty will warn the user that there are no files available for download.
+                    For example, an array of paths will look similar to this:</p>
+                  <span class="monospace">["/file.txt","/subdir/subsubdir/file.doc","/subdir/dir_of_files"]</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class='subsection'>
+            <h3 id='pg_config_nodeDefaults'>Node Defaults (pg.config.nodeDefaults)</h3>
+            <p>Certain parameter defaults may be shared between the local and remote nodes. For example, whether browsing a local file system
+              or a remote list of files, you might expect the same default behaviour. The shared node defaults are grouped together in configuration.js:
+            </p>
+            <blockquote><pre>pg.config.nodeDefaults = {
+  sortOn: "name", // determines default sort column. Options are: name, type, size, lastmodified
+  invertSort: false, // default sort is A-Z, smallest-to-largest, and oldest-to-newest. invertSort reverses this
+  gridClass: "col-lg-6" // adds this class to each file listing "area" when the HTML is generated
+};
+}</pre></blockquote>
+            <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <tr>
+                <td>sortOn</td>
+                <td>accepts: string ("name", "size", "type", "lastmodified")<br/>default: "name"</td>
+                <td>Determines default sort column. Note that after a user has chosen to sort by a different column,
+                  their new chose will be remembered and the default will be ignored.</td>
+              </tr>
+              <tr>
+                <td>invertSort</td>
+                <td>accepts: boolean<br/>default: false</td>
+                <td>The default sort is A-Z, smallest-to-largest, and oldest-to-newest. Set invertSort to true to reverse these.</td>
+              </tr>
+              <tr>
+                <td>gridClass</td>
+                <td>accepts: string<br/>default: "col-lg-6"</td>
+                <td>Adds this class to each file listing "area" when the HTML is generated. The default class is used for Bootstrap-based
+                  layouts, and will typically have no effect when Bootstrap is not used. Just as with direct editing of HTML,
+                  you may add multiple classes by separating with a space. For example, "grid-6 large reverse"</td>
+              </tr>
+            </table>
+          </div>
+          <div class='subsection'>
+            <h3 id='pg_config'>Web application (pg.config.webapp)</h3>
+            <p>The parameters in this section influence the user interface of the web application, as well as certain interactions between
+              the web application and the installed FileCatalyst TransferAgent itself (the "native" tray icon application).</p>
+
+            <blockquote><pre>pg.config.webapp = {
+  deploy-web.html
+  showFileHeadings: true,
+  ...
+  doAfterTransfer: "",
+  statusFields: {
+    ...
+  }
+};</pre></blockquote>
+            <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <!--                            <tr>
+                                              <td>useBootstrap</td>
+                                              <td>accepts: boolean<br/>default: true</td>
+                                              <td>When enabled, will add Bootstrap-specific CSS classes where appropriate and use Bootstrap JavaScript for certain widgets</td>
+                                          </tr>-->
+              <tr>
+                <td>showFileHeadings</td>
+                <td>accepts: boolean<br/>default: true</td>
+                <td>When enabled, an &amp;lt;h2&amp;gt; tag will be rendered at the top of every file area, unless one has already been manually added to the HTML document.</td>
+              </tr>
+              <tr>
+                <td>animateRevealedComponents</td>
+                <td>accepts: boolean<br/>default: true</td>
+                <td>As components are needed, they are faded into the UI rather than abruptly appearing.</td>
+              </tr>
+              <tr>
+                <td>collapseEmailAccordion</td>
+                <td>accepts: boolean<br/>default: true</td>
+                <td>If configured to show an email widget, by default it is collapsed into a "bar". When this parameter is set to false, the widget is expanded instead of collapsed.</td>
+              </tr>
+              <tr>
+                <td>autoConnect</td>
+                <td>accepts: boolean<br/>default: true</td>
+                <td>Connects to and gets listing from any nodes found in the DOM (rendered HTML). When false, an API call must be made to pg.initialize();</td>
+              </tr>
+              <tr>
+                <td>appDownloadLinkWindows</td>
+                <td>accepts: URL string<br/>default: "files/Windows/<br/>install_fc_transferagent.exe"</td>
+                <td>Set the download location for the TransferAgent Java application Windows installer. Depending on your site's structure, you may need
+                  to change this to a fully-qualified URL such as "https://mysite.com/filecatalyst/files/install_fc_transferagent.exe". In order for download links
+                  to work, your web server must be configured to recognize the .exe MIME type.</td>
+              </tr>
+              <tr>
+                <td>appDownloadLinkMac</td>
+                <td>accepts: URL string<br/>default: "files/MacOSX/<br/>FileCatalystTransferAgent.pkg"</td>
+                <td>Set the download location for the TransferAgent Java application Mac OSX PKG file. Depending on your site's structure, you may need
+                  to change this to a fully-qualified URL such as "https://mysite.com/filecatalyst/files/FileCatalystTransferAgent.pkg". In order for download links
+                  to work, your web server must be configured to recognize the .pkg MIME type.</td>
+              </tr>
+              <tr>
+                <td>iconSet</td>
+                <td>accepts: string<br/>default: "fontawesome"</td>
+                <td>The &ldquo;glyphicons&rdquo; icon set is included with the deployment package. A &ldquo;glyphicons&rdquo; icon set is available
+                  to those who have included Bootstrap CSS. There is also the option to define a set of icons by following the same definition pattern.
+                  a sample is commented at the bottom of configuration.js. Uncomment and rename (if you wish) the sample to use it.</td>
+              </tr>
+              <tr>
+                <td>maxListHeight</td>
+                <td>accepts: integer<br/>default: 616</td>
+                <td>Maximum height, in pixels, for a given file list (local or remote file system browsing widget) before scroll bars appear.</td>
+              </tr>              
+              <tr>
+                <td>launchDetectTimeout</td>
+                <td>accepts: integer<br/>default: 20</td>
+                <td>Time, in seconds, that the web application will attempt to launch and detect a running TransferAgent application on page load.</td>
+              </tr>
+              <tr>
+                <td>doAfterSuccess</td>
+                <td>accepts: URL as a string OR function OR variable pointer to a predefined function OR any arbitrary JavaScript ex:javascript:alert('foo')<br/>default: ""</td>
+                <td>If set, an action to take upon successful completion of a transfer.
+                  A configured string is expected to be a functioning URL which the transfer page will redirect to. If a JavaScript function is set, that function
+                  must be defined and functioning. Any resulting success or error in custom functions are handled by whoever supplies them and not by the
+                  FileCatalyst TransferAgent. A data object containing the last known status update is automatically passed into the JavaScript call.</td>
+              </tr>
+              <tr>
+                <td>doAfterError</td>
+                <td>accepts: URL as a string OR function OR variable pointer to a predefined function OR any arbitrary JavaScript ex:javascript:alert('foo')<br/>default: ""</td>
+                <td>If set, an action to take upon completion of a transfer that contained errors.
+                  Behaviour is per doAfterSuccess, described above.</td>
+              </tr>
+              <tr>
+                <td>doAfterCancel</td>
+                <td>accepts: URL as a string OR function OR variable pointer to a predefined function OR any arbitrary JavaScript ex:javascript:alert('foo')<br/>default: ""</td>
+                <td>If set, an action to take upon cancellation of a file transfer.
+                  Behaviour is per doAfterSuccess, described above.</td>
+              </tr>
+              <tr>
+                <td>doAfterOtherError</td>
+                <td>accepts: URL as a string OR function OR variable pointer to a predefined function OR any arbitrary JavaScript ex:javascript:alert('foo')<br/>default: ""</td>
+                <td>If set, an action to take upon errors during which the native TransferAgent application stops responding.
+                  Behaviour is per doAfterSuccess, described above.</td>
+              </tr>
+              <tr>
+                <td>doAfterTransfer</td>
+                <td>accepts: URL as a string OR function OR variable pointer to a predefined function OR any arbitrary JavaScript ex:javascript:alert('foo')<br/>default: ""</td>
+                <td>Used as a catch-all action to take if you do not wish to specify individual action types.
+                  Behaviour is per doAfterSuccess, described above.</td>
+              </tr>
+              <tr>
+                <td>statusFields</td>
+                <td>accepts: special object<br/>default: see section on <a href="#pg_config_webapp_statusFields">statusFields</a></td>
+                <td>While a queue is being transferred, a number of status fields are available. The available fields are
+                  self-documented within configuration.js; describing each is beyond the scope of this document. See the below
+                  section on <a href="#pg_config_webapp_statusFields">statusFields</a> for more instructions.</td>
+              </tr>
+            </table>
+            <h4 id="pg_config_webapp_statusFields">statusFields</h4>
+            <p>Per the above configuration table, the administrator may set which status fields are visible, as well as whether these appear
+              as one table, or separate tables of current file and overall task statuses. statusFields accepts an object which contains two
+              arrays. In configuration.js, most of the values are commented out but documented. Removing the commented lines reduces this
+              object to the following default:</p>
+            <blockquote><pre>statusFields: {
+      current: ["currentFilename"],
+      overall: ["filesSoFar","overallTimeRemaining","rateAverageInKBperSecond","percentBar"]
+  }
+              </pre></blockquote>
+            <p>By default, the status update draws almost all information from the overall task status, with the exception of the current
+              filename. As you work with the two types of statuses, though, you may wish to visually divide them on the page. To do this,
+              edit your <a href="#internationalization">translation.json</a> file:</p>
+            <ol>
+              <li>Enter value for statusFields.current.heading to create a heading that will appear at the top of the status area</li>
+              <li>Enter value for statusFileds.overall.heading to create a heading that will divide "current file" and "overall task" areas</li>
+            </ol>
+          </div>
+          <div class="subsection">
+            <h3 id="pg_config_transfer">Transfer requests (pg.config.transfer)</h3>
+            <p>The pg.config.transfer section contains values that are sent from the TransferAgent application to
+              the FileCatalyst Server whenever a transfer task is requested. As such, it is considered to be for
+              advanced configuration only. It is "commented out" so that the administrator has a record of what the
+              default values are, and should only be uncommented when a value is to be set explicitly.</p>
+            <p>This configuration section is fairly expansive and describing each commented parameter is outside
+              the scope of this document. However, additional comments within configuration.js describe the function
+              of each parameter.</p>
+            <p>One sub-grouping is NOT commented out and is considered a candidate for the web administrator to
+              update and adjust as needed. That section is the email settings, which looks like this:</p>
+            <blockquote><pre>/* settings related to email */
+  SendEmailNotification: false,
+  EmailAddress: "",
+  EmailBody: "",
+  SentFilelistInEmail: false</pre></blockquote>
+            <p>The behaviour expected by adjusting these parameters is as follows:</p>
+            <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <tr>
+                <td>SendEmailNotification</td>
+                <td>accepts: boolean<br/>default: false</td>
+                <td>Enable the sending of a notification email upon completion of a transfer. This notification is independent and possibly in addition to
+                  any email notifications configured directly on the FileCatalyst Server.</td>
+              </tr>
+              <tr>
+                <td>EmailAddress</td>
+                <td>accepts: string<br/>default: ""</td>
+                <td>A semicolon-delimited list of email addresses receiving notifications upon completion of a transfer. If a user provides a list, it is
+                  added to this list.</td>
+              </tr>
+              <tr>
+                <td>EmailBody</td>
+                <td>accepts: string<br/>default: ""</td>
+                <td>Text to be sent in the email body along with some automatically-provided values. If a user also provides an email message, the value of
+                  EmailBody is separated with a heading and added after the user-provided message.</td>
+              </tr>
+              <tr>
+                <td>SentFilelistInEmail</td>
+                <td>accepts: boolean<br/>default: false</td>
+                <td>When true, adds a list of files that were sent successfully. Caution: a transfer of thousands of files may create an email which exceeds
+                  the mail server's limitations.</td>
+              </tr>
+            </table>
+            <p>There is another sub-grouping which IS commented out but which is considered a candidate for the web administrator to
+              update and adjust as needed. That section is the "Transfer Content Settings" section, which looks like this (full comments are omitted but appear in configuration.js):</p>
+            <blockquote><pre>    /* Begin Transfer Content Settings section -- for UPLOAD only */
+
+//    maxfiles                    : 0,
+//    maxsize                     : 0,
+//    minsize                     : 500000000000,
+//    maxtotalsize                : 9223372036854775807,
+
+...
+
+//    regex                       : "^.*\.(jpg|JPG|gif|GIF|doc|DOC|pdf|PDF)$",
+//    limitUploadToFiles          : false, 
+
+    /* end Transfer Content Settings section */</pre></blockquote>
+            <p>These parameters serve to filter whether files are allowed to be added to an <strong>upload</strong> file transfer queue or not. If filters are configured,
+              the files and directories will need to meet to specified criteria in order for the selection to be added. In the event of a failed filter,
+              the entire set of selected files is rejected and the user is given a reason for the failure.</p>
+            <p>To modify these filters, first un-comment (remove the leading double slashes) and then modify the value. The behaviour expected by adjusting these parameters is as follows:</p>
+          <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <tr>
+                <td>maxfiles</td>
+                <td>accepts: integer<br/>default: 0</td>
+                <td>The maximum number of files (including files nested in directories) that may be added to the queue.</td>
+              </tr>
+              <tr>
+                <td>maxsize</td>
+                <td>accepts: integer<br/>default: 0</td>
+                <td>The maximum size (in bytes) for an individual file to be added to the queue.</td>
+              </tr>
+              <tr>
+                <td>minsize</td>
+                <td>accepts: integer<br/>default: 0</td>
+                <td>The minimum size (in bytes) for an individual file to be added to the queue.</td>
+              </tr>
+              <tr>
+                <td>maxtotalsize</td>
+                <td>accepts: integer<br/>default: 9223372036854775807</td>
+                <td>The maximum size (in bytes) for the sum of all file sizes to be added to the queue. The default number is "max long" and represents more than 9 x 10^6 terabytes.</td>
+              </tr>
+              <tr>
+                <td>regex</td>
+                <td>accepts: string<br/>default: ""</td>
+                <td>The filename is evaluated against a regular expression and will pass or fail. The administrator is responsible for creating a valid regex.</td>
+              </tr>
+              <tr>
+                <td>limitUploadToFiles</td>
+                <td>accepts: boolean<br/>default: false</td>
+                <td>When true, only files are allowed in the transfer queue. In other words, adding directories becomes disallowed.</td>
+              </tr>
+            </table>
+          </div>
+          <div class="subsection">
+            <h3 id="pg_config_localAgent">Local agent (pg.config.localAgent)</h3>
+            <p>Within pg.config is the local configuration object, found at pg.config.localAgent. This object
+              contains the defaults (for overriding), options, and requirements for communication between
+              the web application and the local TransferAgent application.</p>
+            <table>
+              <tr>
+                <th class="colParameter">parameter</th>
+                <th class="colOptions">options</th>
+                <th class="colDescription">description</th>
+              </tr>
+              <tr>
+                <td>host</td>
+                <td>accepts: URL string<br/>default: &ldquo;https://localhost.filecatalyst.net&rdquo;</td>
+                <td>Currently, no value other than localhost over HTTPS will create a valid connection; however, the host is set by a parameter for possible changes in the future</td>
+              </tr>
+              <tr>
+                <td>port</td>
+                <td>accepts: integer<br/>default: 12680</td>
+                <td>For a fresh installation or if local configuration values are lost, this value is used to attempt a connection to the TransferAgent before further
+                  configuration is required. If a successful connection is made over the default port, the application can skip the configuration phase.</td>
+              </tr>
+            </table>
+          </div>
+          <div class="subsection">
+            <h3 id="pg_config_localAgent">Custom Icons (pg.config.customIcons)</h3>
+            <p>Icons are interchangeable in a similar way to localization. The application substitutes the provided markup where appropriate.
+              To use custom icons:</p>
+            <ol><li>Provide markup within each item found in pg.config.customIcons</li>
+              <li>Change the "key" of this set to whatever you wish. In pg.config.customIcons a sample empty set is pre-configured as "custom1"</li>
+              <li>Update the pg.config.webapp.iconSet parameter to reflect the name of your custom icon set. For example, "custom1"</li></ol>
+            <p>The markup provided is completely arbitrary, but certain conventions should be followed where possible. For example, some of the
+              application's markup expects the icon to be no wider than 20px and will cut off icons that are too large. If absolutely necessary,
+              some of these size limitations may be overcome with modifications to the CSS (<em>main.css</em>).</p>
+            <p>Example:</p>
+            <blockquote><pre>pg.config.customIcons = {
+    amazIcons: {
+      ...
+        directory: '&lt;img src="url_to_image"/>',
+        file: '&lt;span class='fileIcon'>&lt;/span>',
+      ...
+    }
+}</pre></blockquote>
+            <p>To use the above example, pg.config.webapp.iconSet would need to be changed to "amazIcons". Whenever a directory icon is called,
+              a particular image will be provided. Whenever a file icon is called, an empty span (which is likely styled with a background image) is called.</p>
+          </div>
+          <div class="subsection">
+            <h3 id="generatePgp">Generating a PGP Message</h3>
+            <p>In the <a href="#pg_config_remoteNodes">Remote Server Configuration</a>, a parameter
+              called "pgpMessage" is available to the web administrator. This parameter should be considered a
+              requirement for a fully secure environment. Electing to use the "remoteServer",
+              "username", "port", and "password" parameters is less secure, because credentials are
+              transmitted as clear text within a JavaScript file and also locally as a query string.
+              Using pgpMessage ensures end-to-end encryption of credentials.</p>
+            <p>Within the "filecatalyst" directory of the web deployment files is an HTML document named <a href="../encrypt.html">encrypt.html</a>. This may
+              be run locally or from the web server once the package is deployed.</p>
+            <p>Fields for connection information and credentials are provided, which are all required. If uncertain
+              about SSL requirements, leave the box checked to allow SSL. Once the form is completed,
+              press "Generate Parameter String" which will populate two text fields with encrypted text. The top
+              field ("Pre-formatted") is the important one and should look similar to this sample:</p>
+            <blockquote><pre>
+["-----BEGIN PGP MESSAGE-----",
+"Version: OpenPGP.js v0.6.0",
+"Comment: http://openpgpjs.org",
+"",
+"wYwDdjw46XMAoVEBBADJe+iUDrO/kAQq8kXOnM5e32z14sK3a3KQ666TDnpQ",
+"ztton76P7SBN7Pyu84/ZLcC1IhDlv40qA2HB9kkwkfn+0s17MALppeUbQh/l",
+"VxK6J0FBvwExpEB7nWwihLXRC+O0jwhPEzG7MBHOqJNzlCDnZcOrkNOqjqZ0",
+"KXJG9BQiUtKQAX3MXuY4nILoUKTyQxPG5CrKTmQMlofckrCE3c/pnHADyxkP",
+"yXmXVitPsaZ5Ql61bkvOb7NcAQ+Z2WRCjWPe8yhQxRgnPH8cMQPlZPlnJMFI",
+"HTLOifOLAgMayhBR0rotSXBH3YWDoKbhp9KFWQgDQOJmmLDq+RFTiE17YIry",
+"k8JeE4Q8CRx9hFEYvPZ0dHcK",
+"=Oa/p",
+"-----END PGP MESSAGE-----"]</pre></blockquote>
+            <p>Copy the generated text from the top field and paste it to the pgpMessage value in the configuration file.
+              The new array replaces the default empty one (the "[]" characters) or the
+              previous PGP Message.</p>
+            <p>The bottom text field ("Raw output") is not used by the application but is provided for your convenience. It contains
+              the PGP message without being converted to an array of strings.</p>
+          </div>
+        </div>
+        <div class="section">
+          <h2 id="markupAPI">HTML Markup API</h2>
+          <p>The underlying JavaScript API may optionally take advantage of layout characteristics determined by the markup itself. Every configured
+            node, including the local file system, has a related "ID" which is set in the JavaScript configuration. By referencing this ID in the markup,
+            you can granularly determine where each widget appears. The loose connection between the HTML and JavaScript forms an HTML API layer.</p>
+          <div class="subsection">
+            <h3 id="how_markupAPI_works">How it works</h3>
+            <p>The JavaScript will search the rendered document in order to decide where to place UI components. It follows this order:</p>
+            <ol>
+              <li>Looks for an element with an ID attribute that matches the ID of a configured node. <em>Local filesystem nodes have the ID "localFiles"</em>. This node
+                is considered the default container for the UI components. If such an element is not found, no UI will be rendered.</li>
+              <li>For each component type, the script will use the pattern "{id}-{componentType}" to find an element with a matching ID attribute. If found, it will
+                use that element to render the component. For example, the queue for "server1" would be "server1-queue".</li>
+              <li>If the component-specific element is not found, one will be created and appended to the default container.</li>
+              <li>If you wish to hide a component until it is needed, add "hide" to the class attribute. For example, &lt;div id="server1-info" class="hide"></li>
+            </ol>
+          </div>
+          <div class="subsection">
+            <h3 id="markupAPI_available_components">Available Components</h3>
+            <p>There are a number of UI components available to be rendered. For example to render
+              the local file list the div id must be: <i>localFiles-list</i> for the remote file list the div id must be: <i>server1-list</i>.
+              They are processed (and if need be, added to the default container) in the order below:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th class="colName">name</th>
+                  <th class="colSubstring">markup&nbsp;substring</th>
+                  <th>Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>File System Listing Heading</td>
+                  <td>heading</td>
+                  <td>This is a heading ("h2" if rendered by FileCatalyst) which describes the file listing. If
+                    rendered by the application automatically, it will be placed above the file listing and will follow
+                    be "Local Files" or "Remote Files: {name}" where {name} is either the configured name or
+                    the remote node's "ID".
+                  </td>
+                </tr>
+                <tr>
+                  <td>File System&nbsp;Listing</td>
+                  <td>list</td>
+                  <td>This is a filesystem "browsing" widget which is ultimately a list of the files available at the configured node. At render, a table is created showing a list of the files and
+                    directories, along with controls for sorting, selecting, and navigating items in the file system</td>
+                </tr>
+                <tr>
+                  <td>Controls</td>
+                  <td>controls</td>
+                  <td>A series of controls related to both the queue and the file listing. These are rendered as a series of buttons. Language may be updated in the localization
+                    file, but by default are: "Add selected files" (checkbox-selected items from the file system list, added to the transfer queue), "Remove selected from queue"
+                    (checkbox-selected items in the queue, removed from the queue), "Clear Queue", and "Upload/Download Queue" (initiate transfer).</td>
+                </tr>
+                <tr>
+                  <td>Transfer Queue</td>
+                  <td>queue</td>
+                  <td>Before an item can be transferred, it must be added to the file queue. This component shows a list of items that are currently queued for transfer. The
+                    queue may be modified by using the provided controls.</td>
+                </tr>
+                <tr>
+                  <td>Transfer Status</td>
+                  <td>info</td>
+                  <td>This component contains information about the status of ongoing transfers. The specific fields seen are configurable in configuration.js, but typically
+                    include such information as the current filename, the average rate, and a transfer progress bar. In the sample pages, this area uses the "hide" class and
+                    becomes visible only when transfer is initiated.</td>
+                </tr>
+                <tr>
+                  <td>Email&nbsp;Notification Options</td>
+                  <td>email</td>
+                  <td>This component will only appear if the application is configured to send email notifications. It contains a simplified email form which will request
+                    the FileCatalyst Server to send out an additional notification email to the specified recipients, with the specified contents.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="subsection">
+            <h3 id="markupAPI_examples">Examples</h3>
+            <p>The following examples assume that there is a remote node configured with the ID "server1". Local fileysystem always uses the ID "localFiles".</p>
+            <p>Minimum download UI:</p>
+            <blockquote><pre>&lt;div id="server1">&lt;/div></pre></blockquote>
+            <p>Minimum upload UI:</p>
+            <blockquote><pre>&lt;div id="localFiles">&lt;/div></pre></blockquote>
+            <p>Most components in the default location, but transfer status in a specific div:</p>
+            <blockquote><pre>&lt;div id="server1">&lt;/div>&lt;!-- contains most components -->
+...intervening markup is possible here...
+&lt;div id="server1-info">&lt;/div>&lt;!-- contains the transfer status info -->
+              </pre></blockquote>
+            <p>Using Bootstrap grid to separate the file list browser into one column and the rest of the components into another. This is the model used by the
+              sample applications</p>
+            <blockquote><pre>&lt;!-- Row containing the output of the FileCatalyst application -->
+&lt;div class="row">
+    &lt;div id="server1" class="col-lg-6">
+      &lt;div id="server1-list">&lt;/div>&lt;!--optional, since it will end up here by default anyhow-->
+    &lt;/div>
+    &lt;div class="col-lg-6">
+      &lt;div id="server1-controls">&lt;/div>
+      &lt;div id="server1-queue">&lt;/div>
+      &lt;div id="server1-info" class="hide">&lt;/div>
+    &lt;/div>
+&lt;/div></pre></blockquote>
+          </div>
+        </div>
+		
+		<div class="section">
+            <h2 id="internationalization">Internationalization</h2>
+			<p>The web application internationalization uses the well-known i18next JavaScript library. Full documentation can be found here: <a href="http://i18next.com/">i18next.com/</a>.
+			  The basic structure and process are as follows:</p>
+            <ol>
+            <li>On the web server that the web application is located on, find the i18n folder located at the {web.application.root}/i18n. 
+            <li>Navigate into the i18n folder, and create (if one doesn't already exist), a new folder with the ISO-8859-1 code that matches your current locale. For example if your current locale is
+                Canadian English, you would create a folder called "en-ca". Brazilian Portuguese would use a folder called "pt-br". If you wish to provide a language but not a region, the folder
+				will only need to have the two-character language code (for example, a generic French language file will require a directory called "fr").</li>
+            <li>The default language file is found inside the i18n folder at <span class="monospace">/dev/translation.json</span>. Copy this 
+			file into the new language folder, retaining the filename "translation.json". For example, you will now have a file at {web.application.root}/118n/en-us/translation.json.
+            <li>With the .json file copied into the new locale folder, change and edit the entries to match your language.</li>
+            </ol>
+			
+			<p>You can provide more than one language file; the application will be loaded in the following order:</p>
+			<ol>
+			  <li>the full region + language (ie. "i18n/<strong>en-gb</strong>/translation.json")</li>
+			  <li>the language (ie. "i18n/<strong>en</strong>/translation.json")</li>
+			  <li>the application default (ie. "i18n/<strong>dev</strong>/translation.json")</li>
+			</ol>
+			
+			<p>Because they are checked in this order, a default will ultimately always be provided. Any custom <span class="monospace">translation.json</span> files you provide 
+			will contain "overrides". For example, to provide a few English overrides for some of the UI's action buttons, you only need to provide
+            the changed text, not the entire set of language keys.</p>
+			<p>A sample <span class="monospace">i18n/en/translation.json</span> file with a few overrides might only contain something like the following:</p>
+			<blockquote><pre>{
+  "webDeployment" : {
+    "controlAreaUploadButton": "Upload",
+    "controlAreaDownloadButton": "Download",
+    "controlAreaTransferButton": "Send",
+    "clearQueueButton": "Clear the List",
+    "removeSelectedButton": "Remove selected items from list"
+  }
+}</pre></blockquote>           
+            <p><strong>Notes:</strong></p>
+			<ol>
+			  <li>The dev folder within the i18n folder will be replaced during each upgrade of the TransferAgent. Custom language folders will not.</li>
+			  <li>The JSON file must be edited and saved from an editor which will preserve UTF-8 encoding such as an IDE or a full-featured text-editor. Do not use
+              applications such as "Notepad" and "Wordpad" (included in Windows) since they do not typically preserve the correct encoding.</li>
+			</ol>
+		 </div>
+		 
+        <div class="section">
+          <h2 id="email_config">Email Notifications</h2>
+          <p>FileCatalyst TransferAgent can send email notifications automatically after a file transfer is complete for
+            both uploads and downloads. The email can contain a custom message from the user as well as the list of files that were transferred.
+            The email will NOT include a download link for the files, however a static html link can be added to the body.
+            The static link can point to another deployment of TransferAgent which in turn could expose download with browse functionality
+            so the uploaded files can be accessible.</p>
+          <div class="subsection">
+            <h3 id="email_prerequisites">Prerequisites</h3>
+            <p>The following settings must be completed to enable the email notification feature:</p>
+            <ul>
+              <li>Outgoing email server (SMTP) settings must be set on the FileCatalyst Direct Server</li>
+              <li>In /js/configuration.js, email must be enabled with the "SendEmailNotification" parameter by setting it to true.</li>
+              <li>Additional email addresses and the body text for the email may be optionally set in the configuration.js file. These are added to the
+              ones supplied by the user (if any).</li>
+              <li>Attach list of files to the email may also be enforced by setting "SentFilelistInEmail" to true. When not true, the user is given
+                the option (disabled by default) to include such a list via a checkbox. Note that if the file transfer consists of thousands of files
+                the size of the email may become too large.</li>
+            </ul>
+
+          </div>
+
+          <div class="subsection">
+            <h3 id="email_customization">Customizing Email Pane</h3>
+            <p>By default, email address and body set in /js/configuration.js will be automatically appended
+              to the text entered by the end user on the email pane.
+              It's possible to "lock" the address and body to only use the values set /js/configuration.js.
+              In order to do this the email address, body and send file names check box can be hidden from the email pane.
+              Below are a few HTML and CSS settings that can be applied to the email pane.
+            <ul>
+              <li>HTML: Add a "hide" class to the email component markup: <i>&lt;div id="{localFiles}OR{server1}-email" class="hide"></i> This will hide the entire email
+                pane and will only use the defaults set in /js/configuration.js. This also assumes that the div markup is explicitly available
+                in the HTML document. If it is not, it must be added in order to use the "hide" class.
+              </li>
+              <li>CSS: <i>#formGroup-emailAddress { display: none }</i> will hide the email address from the end user
+              </li>
+              <li>CSS: <i>#formGroup-emailBody  { display: none }</i>  will hide the email body from the end user
+              </li>
+              <li>CSS: <i>#formGroup-includeList  { display: none }</i>  will hide the "Include list of files" check-box from the end user
+              </li>
+            </ul>
+          </div>
+        </div>
+          <div class="section">
+          <h2 id="FileList">List of Files Transferred by the User</h2>
+          <p>The list of files either uploaded or downloaded by the end user can be included in the <a href="#email_config">email</a>.</p>
+          <p>To obtain the list of files programatically (via server side script), PostURL parameter under
+           pg.config.transfer must be set in /js/configuration.js.</p>
+           <p>Note: TransferAgent will continue to transfer files even after the browser/tab is closed. Therfore it's recommended to to use the PostURL for 
+		   any tasks after transfer. Using PostURL will ensure that the list of files is properly delivered to the web application even after the 
+		   browser/tab is closed.
+		   
+		   Consult <a href="PostURLTutorial.html">PostURLTutorial.html</a> for more details. 
+		   
+          </p>
+          </div>
+           <div class="section">
+          <h2 id="localwebserver">Deploying to the built-in, web server</h2>
+          <p>If you don't already have a web server to publish the contents of FileCatalystTransferAgentDeployment.zip, you can use FileCatalyst Direct server also as a web service.
+          To publish TransferAgent on the built-in web server you must follow these steps:</p>
+          <ol>
+              <li>In the FileCatalyst Server Administration, go to HTTP Settings Tab and make sure that Enable HTTP Access is checked. </li>
+              <li>On the same HTTP Settings Tab, note the IP address</li>
+              <li>On the same HTTP Settings Tab, configure the web port. The default is 12480</li>
+              <li>If your FileCatalyst Server is deployed behind NAT or Firewall, make sure that port 12480 is opened/forwarded to allow incoming TCP 
+                  traffic to the FileCatalyst Server</li>
+              <li>Unzip the filecatalyst folder in FileCatalystTransferAgentDeployment.zip to {INSTALL_PATH}/www where {INSTALL_PATH} is 
+                  the install path of the FileCatalsyst Server. For example on Windows the default path is: C:\Program Files\FileCatalyst Server<br>
+                  You must be an administrator to copy files into any folder under c:\Program Files on Windows 8 and higher</li>
+              <li>Open your web browser and visit the following link: http://{IP_ADRESS}:{PORT}/filecatalyst/&nbsp;&#8592;&nbsp;the&nbsp;forward&nbsp;slash at the end is required.<br>
+                  Example for localhost: <a href='http://127.0.0.1:12480/filecatalyst/'>http://127.0.0.1:12480/filecatalyst/</a> You will see TransferAgent
+                  Welcome Screen.<br>
+                  If you are behind NAT, you must use the public IP to get to the web server.
+                  
+                  
+              </li>
+              <li>Continue with the steps for either <a href='#deployQuick'>Quick Start</a> or <a href='#deploy'>Detailed Instructions</a>.</li>
+          </ol>
+          </div>
+		  <div class="section">
+          <h2 id="insecure">Running TransferAgent in headless insecure mode</h2>
+          <p>By default TransferAgent will only respond to REST calls originating from 'localhost'. In some specific deployment scenarios, it's required to have TransferAgent running in insecure mode 
+		  where REST calls can originate from other servers and applications. In this case TransferAgent acts as always-on headless application and can provide file transfer services for the machine it's installed on.
+		  The reason it's insecure is that REST calls will now be accepted from any outside computer to either request an upload or download of any arbitrary file on the machine TransferAgent is running on.
+		  Many types of automation workflows might require TransferAgent to run in this mode. To enable insecure headless mode follow these steps:</p>
+          <ol>
+   		      <li>Enable port 12680 for incoming TCP on your firewall so the REST calls can be sent from other comupters on the network.</li>
+              <li>In /{FileCatalyst TransferAgent Folder}/fcta.conf add the following line: <i>headless.and.insecure=true</i> following the convention of other properties set in that file.</li>
+			  <li>Edit /{FileCatalyst TransferAgent Folder}/origins.json and add the IP address of the remote server that will be making the remote REST call to whitelist ex: 
+			  <i>{"origin": "123.123.123.123"},</i> make sure to follow JSON syntax correctly, pay attention for the last comma in the set. Example of a the entire origins.json file, allowing 2 IP's:
+			  <i><pre>			  
+			  {"whitelist": [
+					{"origin": "1.1.1.1"},
+					{"origin": "1.2.3.4"}
+				]}
+			  </pre></i>
+			  <br> Note that the last entry in the list doesn't contain a comma
+			  </li>
+              <li>Start TransferAgent from command line using -headless-and-insecure flag ex: 
+			  <pre>
+			  <i>cd /{FileCatalyst TransferAgent Folder}</i> 
+			  <i>java -jar FileCatalsystTransferAgent.jar -headless-and-insecure</i></pre>
+			  </li>
+              <li>All REST calls must contain RESTAuthorization header set to "admin:system" base64 encoded</li>
+              <li>All REST calls must set Content-Type and Accept headers to application/json</li>              
+          </ol>
+          </div>
+          
+      </div>
+    </div>
+
+    <script>
+      /* ------------------------------------------------------------------- *
+       * Automatic numbering of sections and generation of table of contents *
+       * ------------------------------------------------------------------- */
+
+      // cache a jQuery object for the node of the Table of Contents
+      $TOC = $('#tableOfContents>ol');
+      $TOC.empty();
+
+      /*** Iterate through each section (h2). Within each, iterate subsections. Within those, iterate bullet points. ***/
+      $('div.section').each(function(sectionNumber) {
+        sectionNumber++;
+        subLetter = 'a'; // subsections are lettered. Each new section's subsections start with a lowercase 'a'.
+
+        // cache jQuery objects for section iterator
+        $section = $(this);
+        $sectionHeader = $section.find('h2');
+
+        // Time for the work: add this section to the TOC, then update its header to show section #
+        $TOC.append('<li><a href="#' + $sectionHeader.attr('id') + '">' + $sectionHeader.html() + '</a></li>');
+        $sectionHeader.prepend(sectionNumber + '&nbsp;');
+
+        /************************ Subsections *******************************/
+        $subSection = $section.find('div.subsection');
+
+        // work to be done only if there is one (or more) subsection(s)
+        if ($subSection.length > 0) {
+
+          // create a list within the last section's LI
+          $TOC.find('li').last().append('<ol class="subContents"></ol>');
+
+          $subSection.each(function(i) {
+            // cache jQuery objects to be used
+            $this = $(this);
+            $subHeader = $this.find('h3');
+            $TOCsub = $TOC.children('li').last().children('ol');
+
+            // add this subSection to the TOC, then update its header to show section # and letter
+            $TOCsub.append('<li><a href="#' + $subHeader.attr('id') + '">' + $subHeader.html() + '</a></li>');
+            $subHeader.prepend(sectionNumber + '.' + subLetter + '&nbsp;');
+
+            /*********** Points within Subsections **************/
+            $subPoint = $this.find('h4');
+
+            // Do the work only if there ARE points
+            if ($subPoint.length > 0) {
+              $TOCsub.find('li').last().append('<ol class="subContentsPoints"></ol>');
+
+              $subPoint.each(function(j) {
+                $this = $(this); // in this case, this is the h4
+                $TOCpoints = $TOCsub.children('li').last().children('ol');
+                $TOCpoints.append('<li><a href="#' + $this.attr('id') + '">' + $this.html() + '</a></li>');
+              });
+            }
+
+            // increment the subsection letter for the next pass of the iterator
+            subLetter = String.fromCharCode(subLetter.charCodeAt() + 1);
+          });
+        } // end subsection conditional
+      });
+
+    </script>
+
+  </body>
+</html>

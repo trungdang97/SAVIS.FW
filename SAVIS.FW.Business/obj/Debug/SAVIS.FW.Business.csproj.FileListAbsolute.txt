@@ -11,6 +11,5 @@ C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Data.
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\log4net.xml
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\HtmlAgilityPack.pdb
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\HtmlAgilityPack.xml
-C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\EntityFramework.xml
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.dll
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.pdb

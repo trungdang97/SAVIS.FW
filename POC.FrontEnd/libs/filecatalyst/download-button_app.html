@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, chrome=1">
+    <title>TransferAgent</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <style>
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  </head>
+  <body class="menu-top">
+    <!-- client-side includes are ideally replaced with server-side includes -->
+    <script src="includes/main_nav.js"></script>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div id="descriptionJumbo" class="jumbotron">
+      <div class="container">
+        <h1><img src="images/filecatalyst_small.png" title="FileCatalyst" style="display: inline-block; padding-right:20px;"/>TransferAgent Download</h1>
+        <p>This page serves as an example of a "button-only" download interface. Buttons like this may be placed on any page that also includes the
+          FileCatalyst TransferAgent JavaScript files. After the configuration file is updated so that it points
+        to a server with some known files on it, the end-user's download is only a click away.</p>
+      </div>
+    </div>
+
+    <div id="mainContainer" class="container">
+      <!-- Row containing the output of the FileCatalyst application -->
+      <div id="outputArea" class="row">
+        <div id="tester1" class="buttonContainer"></div>
+      </div>
+    </div>
+
+    <!-- client-side includes are ideally replaced with server-side includes -->
+    <script src="includes/footer.js"></script>
+
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/i18next.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/localization.js"></script>
+    <script src="js/configuration.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      // these work in conjunction with the main.js; however, they are not
+      // core functionality as not all pages will have an element with an ID
+      // of "descriptionJumbo".
+
+      // fire these when the window is fully loaded
+      $(window).load(function() {
+        if (pg.config.useBootstrap) {
+          $.bootstrapGrowl.default_options.offset.amount = pg.utils.calculateOffset('#descriptionJumbo', 55);
+        }
+      });
+
+// fire these on window resize
+      $(window).resize(function() {
+        if (pg.config.useBootstrap) {
+          $.bootstrapGrowl.default_options.offset.amount = pg.utils.calculateOffset('#descriptionJumbo', 55);
+        }
+      });
+
+// fire these on window scroll
+      $(window).scroll(function() {
+        if (pg.config.useBootstrap) {
+          $.bootstrapGrowl.default_options.offset.amount = pg.utils.calculateOffset('#descriptionJumbo', 55);
+        }
+      });
+    </script>
+  </body>
+</html>
