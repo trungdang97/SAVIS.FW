@@ -1,0 +1,180 @@
+﻿<style>
+    .zoom-85 {
+        zoom: 85%;
+    }
+</style>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <span class="caption-subject bold theme-font-color uppercase">Record Manager</span>
+            <span class="caption-helper">Quản lý hồ sơ ok</span>
+        </div>
+
+        <div class="inputs">
+            <div class="portlet-input input-small input-inline">
+
+                <div class="input-group input-group-sm">
+                    <div class="input-icon right">
+                        <i class="icon-magnifier" ng-click="Button.Search.Click()"></i>
+                        <input type="text" ng-model="TextSearch" ng-keyup="$event.keyCode == 13 && Button.Search.Click()" class="form-control form-control-solid" placeholder="Tìm kiếm...." ng-pattern="word" required ng-trim="true">
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="IsAdvancedSearch =!IsAdvancedSearch">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions margin-right-10">
+
+            <button type="button" class="btn btn-sm" title="Tải lại" ng-click="Button.Reload.Click()">
+                <i class="fa fa-refresh"></i>
+                <span>Tải Lại</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-primary" title="Thêm mới" ng-click="Button.Create.Click()">
+                <i class="fa fa-plus"></i>
+                <span>Thêm mới</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-primary" title="Cập nhật" ng-click="Button.Update.Click()" ng-if="ListSelected.length===1">
+                <i class="fa fa-edit"></i>
+                <span>Cập nhật</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger" title="Xóa đã chọn" ng-click="Button.DeleteMany.Click()" ng-if="ListSelected.length>1">
+                <i class="fa fa-trash"></i>
+                <span>Xóa đã chọn</span>
+            </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row" ng-show="IsAdvancedSearch">
+
+            <div class="portlet box blue ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        Tìm kiếm nâng cao
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form role="form">
+                                <div class="form-body">
+                                    <div class="col-md-12" ng-repeat="data in ListSearch">
+                                        <div class="col-md-2">
+                                            <ui-select ng-model="data.LinkOperator" style="width: 100%" theme="selectize" ng-if="!$first" ng-disabled="$index>1"  ng-change="onChangeLinkOperator(data)">
+                                                <ui-select-match placeholder="Chọn ...">{{$select.selected.Key}}</ui-select-match>
+                                                <ui-select-choices repeat="option.Value as option in ListLinkOperator | filter: $select.search">
+                                                    <small ng-bind-html="option.Key | highlight: $select.search"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select ng-model="data.FieldId" style="width: 100%" theme="selectize" ng-change="onChangeFieldItem(data)">
+                                                <ui-select-match placeholder="Chọn ...">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat="option.FieldId as option in ListField | filter: $select.search">
+                                                    <small ng-bind-html="option.Name | highlight: $select.search"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <ui-select ng-model="data.CompareExpression" style="width: 100%" theme="selectize">
+                                                <ui-select-match placeholder="Chọn ...">{{$select.selected.Key}}</ui-select-match>
+                                                <ui-select-choices repeat="option.Value as option in ListCompareExpression | filter: $select.search">
+                                                    <small ng-bind-html="option.Key | highlight: $select.search"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <formly-form fields="data.Field.FormlyContentObj" model="data.PreviewData">
+                                            </formly-form>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button ng-if="!$first||ListSearch.length>1" type="button" ng-click="Button.DeleteOperator.Click($index)" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                            <button ng-if="$last" type="button" ng-click="Button.AddOperator.Click(data)" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" ng-click="Button.ResetSearchAdvance.Click()" class="btn btn-sm btn-default">Reset</button>
+                                    <button type="button" ng-click="Button.SearchAdvance.Click()" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="clearfix"></div><br />
+            <div class="col-md-12 col-lg-12">
+                <table class="table table-striped table-hover dataTable table-bordered">
+                    <thead>
+                        <tr style="background-color: #eeeeee;">
+                            <th class="table-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                <div class="checker">
+                                    <span ng-class="SelectAll?'checked':''">
+                                        <input type="checkbox" class="group-checkable" ng-click="SelectAllItem()" ng-model="SelectAll">
+                                    </span>
+                                </div>
+                            </th>
+                            <th ng-repeat="header in Headers" width="{{header.Width}}" align="{{header.Align}}">
+                                {{header.Value}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in ListData" ng-class="data.Selecting?'selected':''">
+                            <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                <div class="checker">
+                                    <span ng-class="data.Selecting?'checked':''">
+                                        <input type="checkbox" ng-click="SelectItem(data)" ng-model="data.Selecting" class="checkboxes">
+                                    </span>
+                                </div>
+                            </th>
+                            <td>
+                                <a href="javascript:;" class="item-title">{{data.Name}}</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-xs btn-primary" ng-click="Button.Update.Click(data)"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="Button.Delete.Click(data)"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="col-md-12" ng-show="ListData.length>0">
+                <div class="pull-left">
+                    <pre>{{FromRecord}} - {{ToRecord}} / {{TotalCount}}</pre>
+                </div>
+                <div class="pull-right">
+                    <ul uib-pagination total-items="TotalCount"
+                        ng-model="PageNumber"
+                        max-size="MaxSizePage"
+                        items-per-page="PageSize"
+                        class="pagination-sm"
+                        boundary-link-numbers="true"
+                        rotate="true"
+                        ng-change="GoToPageNumber()"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+</div>
+<div class="alerts" ng-show="notify.queue.length > 0">
+    <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
+        <button type="button" class="close" ng-click="closeAlert(m.body)" data-dismiss="alert">×</button>
+        <label>{{m.title}}</label>
+        <div>{{m.body}}</div>
+    </div>
+</div>
+
+

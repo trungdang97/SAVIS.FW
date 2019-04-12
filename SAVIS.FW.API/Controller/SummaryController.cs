@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace SAVIS.FW.API.Controller
 {
@@ -21,6 +22,7 @@ namespace SAVIS.FW.API.Controller
         #region Total quantities
         [HttpGet]
         [Route("api/v1/summary/class/quantity")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public int TotalClassQuantity()
         {
             //ILogService logService = BusinessServiceLocator.Instance.GetService<ILogService>();
@@ -28,6 +30,7 @@ namespace SAVIS.FW.API.Controller
         }
         [HttpGet]
         [Route("api/v1/summary/student/quantity")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public int TotalStudentQuantity()
         {
             //ILogService logService = BusinessServiceLocator.Instance.GetService<ILogService>();
@@ -35,6 +38,7 @@ namespace SAVIS.FW.API.Controller
         }
         [HttpGet]
         [Route("api/v1/summary/teacher/quantity")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public int TotalTeacherQuantity()
         {
             //ILogService logService = BusinessServiceLocator.Instance.GetService<ILogService>();

@@ -1,0 +1,16 @@
+<div class="page-footer" ng-controller="FooterCtrl">
+    <div class="page-footer-inner">
+            2017 © By SAVIS Vietnam Corp. <br>
+            {{'FooterCtrl.Address' | translate}} <br>
+            Website : <a href="http://savis.vn/" target="_blank">{{'FooterCtrl.WebSite' | translate}}</a>
+            <br>
+    </div>
+    <div class="page-footer-tools">
+        .<br/>
+        {{Clock| date :'mediumTime'}}<br/>
+        {{Clock|date : 'fullDate'}}
+    </div>
+    <div class="scroll-to-top" style="display: block;">
+        <i class="icon-arrow-up"></i>
+    </div>
+</div>

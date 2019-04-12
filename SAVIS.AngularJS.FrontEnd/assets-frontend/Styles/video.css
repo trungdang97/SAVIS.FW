@@ -1,0 +1,232 @@
+.divider-title {
+    border-bottom: 30px solid #c70007;
+    border-right: 20px solid transparent;
+    height: 0;
+    width: 130px;
+    margin-bottom: 10px;
+}
+.divider-title h4 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 7px 5px 0 7px;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .icon-thumbnail-default-w {
+        background-image: url("../icons/icon-play.png") !important;
+	    background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .video-item a {
+        font-size: 14px !important;
+    }
+}
+
+.icon-thumbnail-default-w {
+	position: absolute;
+	top: 0px;
+	left: 0;
+	background-image: url("../icons/play_icon_20.png");
+	background-position: center center;
+    background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	float: left;
+    z-index: 1;
+}
+
+.icon-thumbnail-default-w-nodivice {
+	position: absolute;
+	top: 0px;
+	left: 0;
+	background-image: url("../icons/icon-play.png");
+	background-position: center center;
+    background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	float: left;
+    z-index: 1;
+}
+
+/** VIDEO SLIDER
+**************************************/
+.video-slider {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+.video-slider-big-wrap .item p {
+    background: #000;
+    margin-bottom: 0;
+    padding: 10px 15px;
+    color: #fff;
+}
+.video-slider-list-action .slick-prev {
+    position: absolute;
+    left: 5px;
+    top: 32%;
+    border: none;
+    background: none;
+    padding: 0;
+}
+.video-slider-list-action .slick-next {
+    position: absolute;
+    right: 5px;
+    top: 32%;
+    border: none;
+    background: none;
+    padding: 0;
+}
+.video-slider-list-item a {
+    color: #333;
+    text-decoration: none;
+}
+.video-slider-list {
+    margin-top: 20px;
+}
+#video-news-tab .item a {
+    color: #333;
+    text-decoration: none;
+}
+
+
+.video-item {
+    margin-bottom: 20px;
+    /*height: 80px;*/
+}
+.video-item a:hover {
+    color : #0461af;
+}
+.video-item img {
+    /*width: 140px;*/
+    margin-right: 10px;
+    /*height: 80px;*/
+}
+.video-item a {
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+}
+.video-item .date {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+}
+.video-item .view-count {
+    font-size: 12px;
+    padding-left: 20px;
+    background: url("../Images/video_eye_icon.png") no-repeat 0px 2px;
+}
+
+
+
+.album {
+    position: relative;
+}
+.album-wrap {
+    margin-bottom: 15px;
+}
+.album-wrap .album-item .item-head {
+    position: relative;
+}
+.album-wrap .album-item .item-head img {
+    width: 100%;
+}
+.album-wrap .album-item .lead {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding: 10px 15px;
+    color: #fff;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+}
+.album-wrap .album-item .lead a {
+    color : #fff;
+}
+.album-wrap .album-item .lead a:hover {
+    color : #f3f3f3;
+    text-decoration : none;
+}
+.album-wrap .album-item .desc {
+    padding: 10px
+}
+
+.album-wrap {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.album-navigation .slick-prev {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 40px;
+    height: 60px;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+}
+.album-navigation .slick-next {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    width: 40px;
+    height: 60px;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+}
+
+.small-album {
+    position: relative;
+}
+.small-album img {
+    width: 100%;
+}
+.small-album .lead {
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding: 10px 15px;
+    color: #fff;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+}
+.small-album .lead a {
+    color : #fff;
+}
+.small-album .lead a:hover {
+    text-decoration : none;
+    color : #0461af;
+}
+.small-album.first {
+    margin-bottom: 30px;
+}
+
+
+#images-tab p {
+    margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

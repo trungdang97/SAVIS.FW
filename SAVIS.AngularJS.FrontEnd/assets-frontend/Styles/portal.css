@@ -1,0 +1,451 @@
+﻿
+
+
+
+/**
+    PAGE LINKS ********************************/
+.all-page-link {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px 20px;
+    margin-bottom: 10px;
+}
+.page-link {
+    border-bottom: 1px solid #ddd;
+    font-size : 14px;
+    font-weight: 300;
+    height: 65px;
+    padding-top: 10px;
+}
+.page-link:hover {
+    background-color: #eee; 
+}
+.page-link img {
+    max-height: 40px;
+}
+
+.page-link a {
+    color: #000;
+}
+
+/**
+    INFORMATIONS ********************************/
+.information-wrap {
+    border: 1px solid #ddd;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.information-wrap-head {
+    border-top: 3px solid #c70007;
+}
+
+.information-wrap-head h4 {
+    display: inline-block;
+    padding: 10px;
+    background: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.information-wrap-content {
+    padding: 15px 70px;
+    background: #fff;
+}
+.information-wrap-content .item {
+    font-size: 11px;
+    text-align: center;
+    position: relative;
+    padding: 5px;
+}
+.information-wrap-content .item p {
+    margin-top: 10px;
+}
+.information-wrap-navigation .slick-prev {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    border: none;
+    background: none;
+    padding: 0;
+}
+.information-wrap-navigation .slick-next {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.information-wrap-content .item .title {
+    position: static;
+    margin: 0px 5px 5px 0px;
+    padding: 1px;
+    width: 100%;
+    float: left;
+    height: 45px;
+    color: #fff;
+    background: url(../Images/bg/bg-70.png);
+    /* bottom: 0px; */
+}
+/**
+    FUNCTIONAL LINK ********************************/
+.functional-link {
+    padding: 5px 5px;
+    background: #fff;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+.functional-link p {
+    padding-left: 10px;
+    padding-top: 10px;
+    color: #000;
+}
+.functional-link p:hover {
+    color: #0461af;
+}
+
+p {}
+
+
+.new-block-title {
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/**
+    IMAGE GALLERY ********************************/
+.img-gallery-content .item {
+    position: relative;
+}
+.img-gallery-content .item p {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding: 10px;
+    color: #fff;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+/**
+    STATISTICS ********************************/
+.statistics-wrap-content .text {
+    display: inline-block;
+    width: 75%;
+}
+.statistics-wrap-content .value {
+    display: inline-block;
+    width: 25%;
+}
+
+
+/* Large Devices, Wide Screens */
+@media (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media (max-width : 768px) {
+    
+}
+
+/* Extra Small Devices, Phones */ 
+@media (max-width : 480px) {
+    
+}
+
+/* Custom, iPhone Retina */ 
+@media (max-width : 320px) {
+    
+}
+
+/** NEWS SLIDER ********************************/
+.title-slider {
+    font-size: large;
+    padding: 5px 0 0 5px;
+    background-color: #fff;
+    font-weight: bold;
+}
+.news-slider {
+    margin-bottom: 20px;
+    background: #f2f2f2;
+    border: 1px solid #ddd;
+}
+.news-slider-imgs .item .item-head {
+    position: relative;
+}
+.news-slider-imgs .item .item-head img {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .news-slider-imgs .item-head-content, .page-link {
+        font-size: 13px !important;
+    }
+
+    .news-slider-list .item.active {
+        background-image: url('../icons/arrown-black-left.png') !important;
+        background-repeat:  no-repeat;
+        background-position: 3px 10px;
+    }
+
+    .news-slider-imgs .item-head-content .link-text {
+        font-size: 15px !important;
+    }
+
+    .news-slider-imgs .item-head-content {
+        height: 70px !important;
+    }
+
+    .new-block-title {
+        font-size: 14px !important;
+    }
+}
+
+.news-slider-imgs .item-head-content {
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    padding: 0px 10px 10px 10px;
+    color: #fff;
+    background: url(../Images/bg/bg-70.png);
+    width: 100%;
+    height: 75px;
+}
+.news-slider-imgs .item-head-content .link-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+.news-slider-imgs .item .desc {
+    padding: 10px
+}
+
+.news-slider-imgs {
+    position: relative;
+    background-color: #fff;
+}
+
+.news-slider-imgs-wrap .slick-prev {
+    position: absolute;
+    left: 10px;
+    top: 40%;
+    width: 30px;
+    height: 50px;
+    background: none;
+    background-image: url(../icons/pre.png);
+    border: none;
+        z-index: 999;
+                    background-position-x: -1px;
+            background-repeat: no-repeat;
+    background-position-y: center;
+}
+.news-slider-imgs-wrap .slick-next {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    width: 30px;
+    height: 50px;
+    background: none;
+    background-image: url(../icons/next.png);
+    border: none;
+        z-index: 999;
+                background-position-x: 3px;
+            background-repeat: no-repeat;
+    background-position-y: center;
+}
+
+.news-slider-imgs-navigation .slick-prev {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 30px;
+    height: 50px;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+}
+.news-slider-imgs-navigation .slick-next {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    width: 30px;
+    height: 50px;
+    background: rgb(0, 0, 0); /* fallback in case rgba is not supported */
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+}
+.news-slider-list {
+    /*padding: 10px 0px;*/
+}
+.news-slider-list .item {
+    width: 100% !important;
+    /*background: url('../icons/arrown-black.png') no-repeat 3px 10px;*/
+    padding: 5px 10px 5px 14px;
+    cursor: pointer;
+    border-bottom: 1px dashed #eaeaea;
+    text-align: justify;
+    margin: 0px;
+    min-height: 40px;
+}
+
+.news-slider-list .item.active {
+    color: #000;
+    background-color: aliceblue;
+    font-weight: bold;
+    background: url('../icons/arrown-black.png') no-repeat 3px 10px;
+    /* font-size: 14px; */
+}
+.news-slider-imgs .title-heading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+.news-slider-imgs-wrap .link-text {
+    color: #fff;
+}
+
+.scrollToTop{
+   width:60px;
+   height: 60px;  
+   background-image: url(../icons/top.png);
+   background-repeat: no-repeat;
+   position:fixed;
+   right:30px;
+   bottom:30px;
+   display:none;
+}
+
+/*Rss feed*/
+#listrss {
+    margin-left: 250px;
+}
+ul, li {
+    list-style: none;
+}
+#listrss ul li {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: url(../icons/nc-rss.png) no-repeat 0 3px;
+    text-align: left;
+    padding-left: 50px;
+    font-weight: bold;
+    list-style: none;
+}
+
+#listrss ul li.child {
+    padding-left: 90px;
+    font-weight: normal;
+}
+
+#listrss ul li.child_child {
+    padding-left: 110px;
+    font-weight: normal;
+}
+
+.rss_info
+{
+    padding:20px 20px 5px;
+}
+/*End rss*/
+
+/*Css Danh bạ điện thoại*/
+.search {
+    /* margin-top: 10px; */
+    height: 60px;
+    padding: 15px;
+}
+
+.border {
+    border-right: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.border-all {
+    border: 1px solid #d5d5d5;
+}
+
+.btnSearch {
+    height: 33px;
+    background-color: chocolate;
+    color: white;
+    margin-top: 0px;
+    border-radius:4px !important;
+}
+
+.text-search
+{
+    border-radius:4px !important;
+}
+
+.divHead {
+    background-color: #EEEEEE;
+    height: 50px;
+    line-height: 45px;
+}
+
+.phongbanbg {
+    background-color: antiquewhite;
+    padding-left: 30px; 
+    font-weight:normal !important;
+}
+
+.donvi {
+    color: royalblue; 
+    height: 50px; 
+    line-height: 45px;
+    font-weight: bold;
+    font-size: 16px; 
+}
+
+.donvipd {
+    padding-left: 20px; 
+    background-color: azure;
+}
+
+.danhba {
+    border-right: 1px solid #eeeeee; 
+    border-bottom: 1px solid #eeeeee; 
+    vertical-align: top; 
+    padding: 5px; 
+    height: 50px
+}
+
+.tenchucvu {
+    font-weight: bold; 
+    font-size: 15px
+}
+
+/*End css danh bạ điện thoại*/
+.content_color
+{
+    background:#fff;
+}
+
+.icon-thumbnail-default-w {
+	position: absolute;
+	top: -35px;
+	left: 0;
+	background: url("../icons/icon-play.png") no-repeat center center;
+	width: 100%;
+	height: 100%;
+	float: left;
+    z-index: 1;
+}
+
+/*.slidernoibat .slimScrollDiv {
+    position: absolute;
+    margin-left: -10px;
+    padding-left: 10px;
+}*/

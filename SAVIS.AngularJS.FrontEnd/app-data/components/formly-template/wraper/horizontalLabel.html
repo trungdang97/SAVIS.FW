@@ -1,0 +1,9 @@
+﻿<div class="form-group">
+    <label for="{{::id}}" class="control-label" style="float:left;text-align:start;width:{{to.labelSize}};">
+        {{to.label}} {{to.required&&to.label ? "*" : ""}}
+    </label>
+    <div style="float:left;text-align:start;width:{{to.controlSize}};">
+        <formly-transclude></formly-transclude>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,61 @@
+﻿<style type="text/css">
+    .CodeMirror pre {
+        padding: 0px 42px;
+    }
+</style>
+<form name="formly_form" ng-submit="btnSve()">
+    <div class="portlet light" style="padding-bottom:0;">
+        <div class="portlet-title tabbable-line">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>
+                <span class="caption-subject bold uppercase">{{Item.data.name}}</span>
+                <span class="caption-helper">cấu hình...</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row"> 
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label text-bold col-md-4">Css Class: </label>
+                        <div class="col-md-8">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control input-sm" aria-label="" ng-model="Item.className">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" style="max-height:350px;overflow-x:scroll;width:100%">
+                                        <li ng-repeat="option in ListAvailAbleClass | filter:Item.className"
+                                            ng-click="Item.className = option">
+                                            <a href="javascript:;" ng-bind-html="option | highlight:  Item.className"></a>
+                                        </li>
+                                        <li ng-repeat="option in ListAvailAbleClass | filter:'!' +Item.className"
+                                            ng-click="Item.className = option">
+                                            <a href="javascript:;" ng-bind-html="option | highlight:  Item.className"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <div class="form-group">
+                        <label class="control-label text-bold">Style: </label>
+                        <div class="col-md-12">
+                            <textarea id="txtStyle" class="input-sm form-control"
+                                      ng-model="Item.templateOptions.style"></textarea>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Lưu
+        </a>
+        <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
+            <i class="fa fa-ban"></i> Đóng
+        </a>
+    </div>
+</form>

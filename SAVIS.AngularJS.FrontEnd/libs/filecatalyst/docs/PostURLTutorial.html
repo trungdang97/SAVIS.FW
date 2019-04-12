@@ -1,0 +1,311 @@
+﻿<html>
+    <head>
+        <title>FileCatalyst TransferAgent Post URL Tutorial</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="shortcut icon" href="images/favicon.ico"/>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <script src="jquery.js"></script>
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div id="logo"><a id="top"></a>
+                <img src="images/header.jpg" alt="FileCatalyst Header Logo"/>
+                <h1>File<em>Catalyst</em> PostURL<br/>Tutorial</h1>
+            </div>
+
+            <div id="tableOfContents">
+                <h2>Table of Contents</h2>
+                <ol id="TOC">
+                    <li></li>
+                </ol>
+            </div>
+
+            <hr/> <!--not necessary once proper styles are built-->
+
+            <div id="mainContent">
+                <div class="section">
+                    <h2 id="whatisposturl">What is HTTP POST in the PostURL?</h2>
+                    <P>PostURL is a feature used in FileCatalyst TransferAgent that enables web applications to
+                        retrieve the list of files that were uploaded to FileCatalyst server.
+                        Instead appending file names to the URL via the HTTP GET method the HTTP POST is used instead.
+                        On most browsers HTTP GET is limited to about 2000 characters,
+                        thus if hundreds of files are uploaded, the GET URL
+                        can be truncated and the server side script will only receive a partial list of uploaded files.
+                        The limit of HTTP POST is usually around 10MB which is large
+                        enough for even several thousands of file names to be sent to the web application. </P>
+                    <P>PostURL parameter must be always set with <b>ABSOLUTE</b> URL starting with http:// or https://.
+                       For example, "doAfter..." can be set to a path relative to the location of the TransferAgent
+                       however PostURL must contain the entire absolute path to the script that will process the PostURL.
+                    </P>
+					<P>TransferAgent will continue to transfer files even after the browser/tab is closed. Therfore it's recommended to to use the PostURL for 
+		   any tasks after transfer. Using PostURL will ensure that the list of files is properly delivered to the web application even after the 
+		   browser/tab is closed.</p>
+                </div>
+                <div class="section">
+                    <h2 id="posturlproblem">PostURL and unique sessions in a web application</h2>
+                    <P>There is a common problem with web applications. When a user logs
+                        into a web application, a unique sessionID is usually created.
+                        This ID is usually stored either via a session cookie or if cookies are disabled it can be append
+                        to the URL. To bring the list of files transferred into a user's session,
+                        a special page for retrieving postURL information has to be created.</P>
+                    <P> The problem is that the TransferAgent will not have access to the session cookie stored by the browser.
+                        Therefore a new session is created by the server every time the TransferAgent does an
+                        HTTP POST to a PostURL. Because sharing of information between sessions is usually not
+                        permitted, the following workarounds can be used: </P>
+                    <ol>
+                        <li>Using a server side script to write the contents of the HTTP POST into a
+                            file then retrieving the contents of that file by the server side script
+                            contained in "doAfter..." :- In this method, server side script in
+                            "PostURL" will read the parameters passed by the TransferAgent
+                            in HTTP POST and write this information to a file.
+                            Then another server side script in
+                            "doPost" reads the data from the saved file. <BR><BR><BR>For
+                            example: <BR>Let's assume that we set the following parameters: <BR><BR>
+                            PostURL : "postProcess.php" <BR>doAfterTransfer : "succeed.php"
+                            <BR><BR>The TransferAgent will do a HTTP POST to postProcess.php with the following
+                            parameters:
+                            <ul>
+
+                                <li>"f"- contains a | (pipe) delimited list of the full remote paths that were transferred or schedule to be transferred
+                                <li>"lf" - contains a | (pipe) delimited list of the full local paths that were transferred or schedule to be transferred
+                                <li>"s" - contains a | (pipe) delimited list of the sizes of each file
+                                <li>"status" - Status of each file transferred. "0" = File transfer was not attempted, "1" = File transfer was successful, "2" = File transfer was cancelled, "3" = File transfer failed with an error. For example, if the transfer included 5 files, and all files were transferred successfully, you would see status=11111. If the transfer was cancelled during the 3rd file, you would see status=11200.
+                                <li>"allfiles"- contains a | (pipe) delimited list of the full paths that were transferred or schedule to be transferred, this list has a 1 to 1 relationship with the status value where each status value corresponds to each value in allfiles
+                            </ul>
+                            <BR>postProcess.php is
+                            configured to retrieve all&nbsp;the file names and store the list of file names in some
+                            arbitrary text file (for example, succeeded.txt)
+                            <BR><BR>After the files are uploaded and PostURL is called,
+                            the TransferAgnet will  redirect the browser to a new URL set in doAfterTransfer (succeed.php)
+                            where the list of files can be retrieved from succeeded.txt
+                            <BR>succeed.php is configured to open succeed.txt and retrieve the data
+                            submitted by the TransferAgent via HTTP POST to postProcess.php. At this point the
+                            programmer will have full access to user's session and can do whatever is
+                            required by the web application with the list of the file names.
+                            Finally succeed.txt can be discarded once succeed.php has processed the list
+                            of all the file names.
+                        </li>
+                        <li>The second option is very similar to the first method but instead of writing the
+                            list of file names into a file on the server, the file list is stored in a server data object.
+                            For example In JSP/Servlet this can be done via getServletContext().setAttribute("ATTRIBUTE_NAME", {file_list_object});
+                            The {file_list_object} can then be retrieved from any JSP/Servlet with getServletContext().getAttribute("ATTRIBUTE_NAME");
+                        </li>
+                        <li>
+                            A less recommended option is to append the session ID to
+                            posturl - The syntax of how to append session ID to posturl varies with every
+                            technology. In general the posturl will look as follows: <BR>
+                            PostURL:"http://some-server.com/postProcess.php?session=&lt;SESSION-ID&gt;"
+                            This option is not always possible because re-writing of the session ID in the URL is not supported by all
+                            the server side technologies.
+                            Also some technologies don't allow attaching a sessionID to a URL
+                            due to security constraints. For example: Apache-Tomcat 6 allows, re-writing of the session ID in the URL
+                            but in Apache-Tomcat 7 this features is disabled.
+                        </li>
+                    </ol>
+
+                </div>
+                <div class="section">
+                    <h2 id="examples">Script Examples</h2>
+                    <P>Below are some script examples written in the most common web programming languages
+                        that can be used as a starting point for the PostURL parameter.
+                        The alternative way of re-writing the URL with the SessionID in the PostURL is also provided.
+                        The scripts below should be used as an example or simply as an illustration on how to properly
+                        implement PostURL.
+                    </P>
+                    <div class="subsection">
+                        <h3 id="php">PostURL in PHP</h2>
+                            <pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #666666; font-style: italic;">/* CODE TO PARSE AN HTTP POST REQUEST AND STORE THE DETAILS IN A FILE */</span>
+<span style="color: #666666; font-style: italic;">/* Script to Output File Names Received By Applet Author: Unlimi-Tech Software, Inc. */</span>
+<span style="color: #000088;">$filePostVariable</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'f'</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//The POST variable containing the file listing with full paths</span>
+<span style="color: #000088;">$fileDelimiter</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'|'</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//The delimiter that seperates the file list</span>
+<span style="color: #000088;">$fileOutput</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'succeeded.txt'</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//The file location to write the file list</span>
+<span style="color: #666666; font-style: italic;">/* Script Start */</span>
+<span style="color: #666666; font-style: italic;">//Get the file POST data</span>
+<span style="color: #000088;">$filePost</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$_POST</span><span style="color: #009900;">&#91;</span><span style="color: #000088;">$filePostVariable</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">//Break the file list into an array</span>
+<span style="color: #000088;">$filePost</span> <span style="color: #339933;">=</span> <span style="color: #990000;">explode</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$fileDelimiter</span><span style="color: #339933;">,</span> <span style="color: #000088;">$filePost</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">//Initialize the output variable</span>
+<span style="color: #000088;">$outputData</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">''</span><span style="color: #339933;">;</span>
+<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #990000;">is_array</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$filePost</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+	<span style="color: #666666; font-style: italic;">//Loop through the file list</span>
+	<span style="color: #b1b100;">foreach</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$filePost</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$fileName</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$fileName</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+			<span style="color: #666666; font-style: italic;">//Append the filename to the output variable</span>
+			<span style="color: #000088;">$outputData</span> <span style="color: #339933;">.=</span> <span style="color: #000088;">$fileName</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">&quot;<span style="color: #000099; font-weight: bold;">\r</span><span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="color: #666666; font-style: italic;">//Create and/or open the file with write permissions</span>
+<span style="color: #000088;">$handle</span><span style="color: #339933;">=</span> <span style="color: #990000;">fopen</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$fileOutput</span><span style="color: #339933;">,</span><span style="color: #0000ff;">'w'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">//Flush the output to the file</span>
+<span style="color: #990000;">fputs</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$handle</span><span style="color: #339933;">,</span> <span style="color: #990000;">trim</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$outputData</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">//Close the file</span>
+<span style="color: #990000;">fclose</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$handle</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">/* End Script */</span>
+<span style="color: #000000; font-weight: bold;">?&gt;</span>
+&lt;html&gt;
+&lt;!--TransferAgent ignores the response from the server. There is no need to redirect or output
+anything besides the empty HTML tag--&gt;
+&lt;/html&gt; </pre>
+                            <P>The above is one way of getting the file list. Another
+                                way in PHP would be to rewrite the URL. This can be done by hard coding the
+                                session id to the posturl link by adding
+                                ?&lt;session-name&gt;=&lt;session-id&gt; at the end of the link. Example,
+                                posturl :
+                                "http://www.something.com/home.php?&lt;session-name&gt;=&lt;session-id&gt;. </P>
+                            <P>Now the file list will be stored directly in your session object. URL re-writing option
+                                might be disabled on your server due to security constraints.
+                            </P>
+
+                    </div>
+
+                    <div class="subsection">
+                        <h3 id="jsp">PostURL using JSP</h2>
+                            <P>Save
+                                the script below in a .jsp file and specify that file name in the PostURL variable.
+                            </P>
+                            <pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;%</span><span style="color: #339933;">@</span> page language<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;java&quot;</span> import<span style="color: #339933;">=</span> <span style="color: #0000ff;">&quot;java.io.*,java.lang.*,java.util.*&quot;</span><span style="color: #000000; font-weight: bold;">%&gt;</span>
+<span style="color: #000000; font-weight: bold;">&lt;%</span>
+    String fileOutput <span style="color: #339933;">=</span> <span style="color: #0000ff;">&quot;succeeded.txt&quot;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//The file location to write the file list</span>
+    String test <span style="color: #339933;">=</span> request<span style="color: #339933;">.</span>getParameter<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;f&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//getting the file list from POST</span>
+    String delimiter<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;|&quot;</span><span style="color: #339933;">;</span>
+    try <span style="color: #009900;">&#123;</span>
+        <span style="color: #990000;">File</span> cf <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> <span style="color: #990000;">File</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;.&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        String sep <span style="color: #339933;">=</span> <span style="color: #990000;">System</span><span style="color: #339933;">.</span>getProperty<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;file.separator&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        String absPath <span style="color: #339933;">=</span> cf<span style="color: #339933;">.</span>getAbsolutePath<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        absPath <span style="color: #339933;">=</span> absPath<span style="color: #339933;">.</span>substring<span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #339933;">,</span> absPath<span style="color: #339933;">.</span>lastIndexOf<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'.'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        String currPath <span style="color: #339933;">=</span> absPath <span style="color: #339933;">+</span> fileOutput<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//getting the location to store the file</span>
+        BufferedWriter bw <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> BufferedWriter<span style="color: #009900;">&#40;</span><span style="color: #000000; font-weight: bold;">new</span> FileWriter<span style="color: #009900;">&#40;</span><span style="color: #000000; font-weight: bold;">new</span> <span style="color: #990000;">File</span><span style="color: #009900;">&#40;</span>currPath<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        StringTokenizer parser <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> StringTokenizer<span style="color: #009900;">&#40;</span>test<span style="color: #339933;">,</span> delimiter<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//tokenizing the string using the delimiter</span>
+        Vector a <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> Vector<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        String output <span style="color: #339933;">=</span> <span style="color: #0000ff;">&quot;&quot;</span><span style="color: #339933;">;</span>
+        <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>parser<span style="color: #339933;">.</span>hasMoreTokens<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">//parsing through the tokens and adding them to the vector</span>
+            a<span style="color: #339933;">.</span>add<span style="color: #009900;">&#40;</span>parser<span style="color: #339933;">.</span>nextToken<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        <span style="color: #009900;">&#125;</span>
+        <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>int y <span style="color: #339933;">=</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">;</span> y <span style="color: #339933;">&lt;</span> a<span style="color: #339933;">.</span>size<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> y<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">//iterating through the tokens</span>
+            String tmp <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>String<span style="color: #009900;">&#41;</span> a<span style="color: #339933;">.</span>elementAt<span style="color: #009900;">&#40;</span>y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+            <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>tmp<span style="color: #339933;">.</span>length<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+               output <span style="color: #339933;">+=</span> tmp <span style="color: #339933;">+</span> <span style="color: #0000ff;">&quot;<span style="color: #000099; font-weight: bold;">\r</span><span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">;</span>
+            <span style="color: #009900;">&#125;</span>
+        <span style="color: #009900;">&#125;</span>
+        bw<span style="color: #339933;">.</span>write<span style="color: #009900;">&#40;</span>output<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//writing to the file</span>
+        bw<span style="color: #339933;">.</span>close<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">//closing the file</span>
+    <span style="color: #009900;">&#125;</span> catch <span style="color: #009900;">&#40;</span>IOException e<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #009900;">&#125;</span>
+<span style="color: #000000; font-weight: bold;">%&gt;</span></pre>
+                            <P>If you prefer to use the URL re-writing method, (rewriting the
+                                URL with session ID), it can be done by hard coding the sessionID to the posturl
+                                link by adding ;jsessionid=session at the end of the link. This will force the
+                                applet to use that sessionID to communicate with the web server and thus save
+                                all the details in the same session object.
+                                <br>Note: URL re-writing might be disabled on the server side.
+                            </P>
+
+
+                    </div>
+
+
+                    <div class='subsection'>
+                        <h3 id='asp'>PostURL in ASP with C#</h2>
+
+                            <P>The following code is written in C#. Save it under an any filename you wish
+                                with a .aspx extension. Then specify the filename as the posturl parameter in
+                                the configuration.js file. </P>
+
+                            <pre class="asp" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;%</span><span style="color: #006600; font-weight: bold;">@</span> Page Language<span style="color: #006600; font-weight: bold;">=</span><span style="color: #cc0000;">&quot;C#&quot;</span> Debug<span style="color: #006600; font-weight: bold;">=</span><span style="color: #cc0000;">&quot;true&quot;</span> <span style="color: #000000; font-weight: bold;">%&gt;</span>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Post URL using ASP C#&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+<span style="color: #000000; font-weight: bold;">&lt;%</span>
+<span style="color: #990099; font-weight: bold;">String</span> info <span style="color: #006600; font-weight: bold;">=</span> <span style="color: #990099; font-weight: bold;">Request</span>.<span style="color: #330066;">Form</span><span style="color: #006600; font-weight:bold;">&#91;</span><span style="color: #cc0000;">&quot;f&quot;</span><span style="color: #006600; font-weight:bold;">&#93;</span><span style="color: #006600; font-weight: bold;">;</span>
+<span style="color: #ff6600;">// define which character is separating fields in this case it is ;</span>
+char<span style="color: #006600; font-weight:bold;">&#91;</span><span style="color: #006600; font-weight:bold;">&#93;</span> delimiter <span style="color: #006600; font-weight: bold;">=</span> <span style="color: #006600; font-weight:bold;">&#123;</span><span style="color: #008000;">'|'};</span>
+<span style="color: #990099; font-weight: bold;">String</span> output<span style="color: #006600; font-weight: bold;">=</span><span style="color: #cc0000;">&quot;&quot;</span><span style="color: #006600; font-weight: bold;">;</span>
+<span style="color: #990099; font-weight: bold;">string</span><span style="color: #006600; font-weight:bold;">&#91;</span><span style="color: #006600; font-weight:bold;">&#93;</span> arInfo <span style="color: #006600; font-weight: bold;">=</span> <span style="color: #0000ff; font-weight: bold;">new</span> <span style="color: #990099; font-weight: bold;">string</span><span style="color: #006600; font-weight:bold;">&#91;</span><span style="color: #800000;">30</span><span style="color: #006600; font-weight:bold;">&#93;</span><span style="color: #006600; font-weight: bold;">;</span>
+arInfo <span style="color: #006600; font-weight: bold;">=</span> info.<span style="color: #9900cc;">Split</span><span style="color: #006600; font-weight:bold;">&#40;</span>delimiter<span style="color: #006600; font-weight:bold;">&#41;</span><span style="color: #006600; font-weight: bold;">;</span>
+<span style="color: #990099; font-weight: bold;">for</span><span style="color: #006600; font-weight:bold;">&#40;</span><span style="color: #990099; font-weight: bold;">int</span> x <span style="color: #006600; font-weight: bold;">=</span> <span style="color: #800000;">0</span><span style="color: #006600; font-weight: bold;">;</span> x <span style="color: #006600; font-weight: bold;">&lt;</span> arInfo.<span style="color: #9900cc;">Length</span><span style="color: #006600; font-weight: bold;">;</span> x++<span style="color: #006600; font-weight:bold;">&#41;</span><span style="color: #006600; font-weight:bold;">&#123;</span>
+    output <span style="color: #006600; font-weight: bold;">=</span> output + arInfo<span style="color: #006600; font-weight:bold;">&#91;</span>x<span style="color: #006600; font-weight:bold;">&#93;</span> + System.<span style="color: #9900cc;">Environment</span>.<span style="color: #9900cc;">NewLine</span><span style="color: #006600; font-weight: bold;">;</span>
+<span style="color: #006600; font-weight:bold;">&#125;</span>
+System.<span style="color: #9900cc;">IO</span>.<span style="color: #9900cc;">TextWriter</span> tw <span style="color: #006600; font-weight: bold;">=</span> <span style="color: #0000ff; font-weight: bold;">new</span> System.<span style="color: #9900cc;">IO</span>.<span style="color: #9900cc;">StreamWriter</span><span style="color: #006600; font-weight:bold;">&#40;</span><span style="color: #cc0000;">&quot;C:\\succeed.txt&quot;</span><span style="color: #006600; font-weight:bold;">&#41;</span><span style="color: #006600; font-weight: bold;">;</span>
+tw.<span style="color: #9900cc;">WriteLine</span><span style="color: #006600; font-weight:bold;">&#40;</span>output<span style="color: #006600; font-weight:bold;">&#41;</span><span style="color: #006600; font-weight: bold;">;</span>
+tw.<span style="color: #330066;">Close</span><span style="color: #006600; font-weight:bold;">&#40;</span><span style="color: #006600; font-weight:bold;">&#41;</span><span style="color: #006600; font-weight: bold;">;</span>
+<span style="color: #000000; font-weight: bold;">%&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+                            <P>If you prefer the method of appending the session ID to
+                                the URL, get the current session id and append it to the url,
+                                succeed.asp?session-id=Session.SessionID thus the information from the post will
+                                be stored in the session object. </P>
+                    </div>
+                </div>
+            </div>
+            <script>
+                /* ------------------------------------------------------------------- *
+                 * Automatic numbering of sections and generation of table of contents *
+                 * ------------------------------------------------------------------- */
+
+                // cache a jQuery object for the node of the Table of Contents
+                $TOC = $('#tableOfContents>ol');
+                $TOC.empty();
+
+                /*** Iterate through each section (h2). Within each, iterate subsections. Within those, iterate bullet points. ***/
+                $('div.section').each(function(sectionNumber) {
+                    sectionNumber++;
+                    subLetter = 'a'; // subsections are lettered. Each new section's subsections start with a lowercase 'a'.
+
+                    // cache jQuery objects for section iterator
+                    $section = $(this);
+                    $sectionHeader = $section.find('h2');
+
+                    // Time for the work: add this section to the TOC, then update its header to show section #
+                    $TOC.append('<li><a href="#' + $sectionHeader.attr('id') + '">' + $sectionHeader.html() + '</a></li>');
+                    $sectionHeader.prepend(sectionNumber + '&nbsp;');
+
+                    /************************ Subsections *******************************/
+                    $subSection = $section.find('div.subsection');
+
+                    // work to be done only if there is one (or more) subsection(s)
+                    if ($subSection.length > 0) {
+
+                        // create a list within the last section's LI
+                        $TOC.find('li').last().append('<ol class="subContents"></ol>');
+
+                        $subSection.each(function(i) {
+                            // cache jQuery objects to be used
+                            $this = $(this);
+                            $subHeader = $this.find('h3');
+                            $TOCsub = $TOC.children('li').last().children('ol');
+
+                            // add this subSection to the TOC, then update its header to show section # and letter
+                            $TOCsub.append('<li><a href="#' + $subHeader.attr('id') + '">' + $subHeader.html() + '</a></li>');
+                            $subHeader.prepend(sectionNumber + '.' + subLetter + '&nbsp;');
+
+                            /*********** Points within Subsections **************/
+                            $subPoint = $this.find('h4');
+
+                            // Do the work only if there ARE points
+                            if ($subPoint.length > 0) {
+                                $TOCsub.find('li').last().append('<ol class="subContentsPoints"></ol>');
+
+                                $subPoint.each(function(j) {
+                                    $this = $(this); // in this case, this is the h4
+                                    $TOCpoints = $TOCsub.children('li').last().children('ol');
+                                    $TOCpoints.append('<li><a href="#' + $this.attr('id') + '">' + $this.html() + '</a></li>');
+                                });
+                            }
+
+                            // increment the subsection letter for the next pass of the iterator
+                            subLetter = String.fromCharCode(subLetter.charCodeAt() + 1);
+                        });
+                    } // end subsection conditional
+                });
+
+            </script>
+
+    </body>
+</html>

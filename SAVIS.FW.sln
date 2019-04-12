@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.Data", "SAVIS.FW.Data\SAVIS.FW.Data.csproj", "{55453B3A-E652-4A4F-9D37-47F871D5358F}"
 EndProject
@@ -11,7 +11,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.Business", "SAVIS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAVIS.FW.API", "SAVIS.FW.API\SAVIS.FW.API.csproj", "{4F809E58-313F-491A-A0FD-E6F789D16776}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC.FrontEnd", "POC.FrontEnd\POC.FrontEnd.csproj", "{DFBD80E3-06B9-42EB-AEF7-444096A62557}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SAVIS.AngularJS.FrontEnd", "SAVIS.AngularJS.FrontEnd\", "{77A7F527-7E01-472A-B9AF-F936BA084833}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54025"
+		Debug.AspNetCompiler.PhysicalPath = "SAVIS.AngularJS.FrontEnd\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54025\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54025"
+		Release.AspNetCompiler.PhysicalPath = "SAVIS.AngularJS.FrontEnd\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54025\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54025"
+		SlnRelativePath = "SAVIS.AngularJS.FrontEnd\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,12 +55,15 @@ Global
 		{4F809E58-313F-491A-A0FD-E6F789D16776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F809E58-313F-491A-A0FD-E6F789D16776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F809E58-313F-491A-A0FD-E6F789D16776}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFBD80E3-06B9-42EB-AEF7-444096A62557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A7F527-7E01-472A-B9AF-F936BA084833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A7F527-7E01-472A-B9AF-F936BA084833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A7F527-7E01-472A-B9AF-F936BA084833}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A7F527-7E01-472A-B9AF-F936BA084833}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B3B01E0-3643-4CE2-8C4E-A9D5F6DE091F}
 	EndGlobalSection
 EndGlobal

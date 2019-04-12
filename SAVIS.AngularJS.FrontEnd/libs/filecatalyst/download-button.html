@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<!--
+FileCatalyst TransferAgent download button example.
+To simplify the end user experience, you can package the file list to download into a single button.
+When the end user clicks on this button all the files as set in pg.config.downloadButtons in /js/configuration.js will be downloaded.
+The end user will not have to select which files to download.
+
+Before customizing this page, you must edit /js/configuration.js and set the host, port, username and password
+and pg.config.downloadButtons
+-->
+
+  <head>
+	<title>FileCatalyst TransferAgent Download Button Demo</title>
+
+	<!--The following meta tags must be always present-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, chrome=1">
+	<meta name="viewport" content="width=device-width">
+
+
+	<!--The following css links must be always present-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <div id="mainContainer" class="container">
+      <!-- Row containing the output of the FileCatalyst application, as required by bootstrap grid -->
+      <div class="row">
+		   <!--Minimum download button UI required as identified by div id="tester1" which in turn is configured
+		   in /js/configuration.js under pg.config.downloadButtons as tester1
+		   -->
+           <div id="tester1" class="buttonContainer"></div>
+      </div>
+    </div>
+
+    <!-- The following JavaScript includes must be always present-->
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/i18next.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/localization.js"></script>
+    <script src="js/configuration.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
