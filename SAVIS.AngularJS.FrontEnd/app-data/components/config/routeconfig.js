@@ -20,13 +20,6 @@ define(function () {
 
             // User profile
             $routeProvider
-
-                .when("/summary", angularAMD.route({
-                    templateUrl: baseUrl + 'views/TEST_VIEW/test.html',
-                    controller: 'TestCtrl',
-                    controllerUrl: 'views/TEST_VIEW/test'
-                }))
-
                 .when("/formly", angularAMD.route({
                     templateUrl: basedUrl + 'views/formly/formly.html',
                     controller: 'FormlyCtrl',
