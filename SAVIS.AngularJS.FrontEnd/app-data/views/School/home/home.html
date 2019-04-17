@@ -7,11 +7,15 @@
     
 </style>
 <!-- BEGIN PAGE CONTENT-->
-<div class="portlet light formly">
+<div class="portlet light formly" data-ng-init="init()">
     <div class="portlet-title tabbable-line">
-        <div class="caption col-md-9">
+        <div class="caption col-md-9 ng-scope">
             <strong>Tổng quan</strong>
         </div>
-        
+    </div>
+    <div>
+        Số lượng sinh viên: {{studentQuantity}} <br />
+        Số lượng giáo viên: {{teacherQuantity}} <br />
+        Số lượng lớp học: {{classQuantity}} <br />
     </div>
 </div>

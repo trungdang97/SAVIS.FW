@@ -4,7 +4,7 @@ define(['app', 'components/factory/factory'], function (app) {
 
         var service = {};
         var baseUrl = constantsFactory.ApiUrl;
-        var prefixCoreApiUrl = "api/field";
+        var prefixCoreApiUrl = "api/v1/summary";
 
         service.GetFilter = function (model) {
             var stringFilter = angular.toJson(model);

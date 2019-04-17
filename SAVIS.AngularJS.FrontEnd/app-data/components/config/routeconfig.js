@@ -26,7 +26,7 @@ define(function () {
                     controllerUrl: 'views/School/home/home'
                 }))
                 .when("/student-manager", angularAMD.route({
-                    templateUrl: basedUrl + 'view/School/student/student.html',
+                    templateUrl: basedUrl + 'views/School/student/student.html',
                     controller: 'StudentCtrl',
                     controllerUrl: 'views/School/student/student'
                 }))
