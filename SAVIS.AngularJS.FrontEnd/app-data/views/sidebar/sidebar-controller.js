@@ -32,25 +32,25 @@ define(['jquery', 'angularAMD', 'components/service/amdservice'], function (jQue
                 });
             };
             $scope.RootMenus = [{
-                UrlRewrite: "#/field-manager",
+                UrlRewrite: "#/home",
                 IconClass: "fa fa-bars",
-                NavCode: "FIELD",
-                NavName: "Trường động",
+                NavCode: "SUMMARY",
+                NavName: "Tổng quan",
             },{
-                UrlRewrite: "#/archivetype-manager",
+                UrlRewrite: "#/student-manager",
                 IconClass: "fa fa-map-signs",
-                NavCode: "ARCHIVETYPE",
-                NavName:"Loại hình tài liệu",
+                NavCode: "STUDENT",
+                NavName:"Sinh viên",
             }, {
-                UrlRewrite: "#/record-manager",
+                UrlRewrite: "#/teacher-manager",
                 IconClass: "fa fa-book",
-                NavCode: "RECORD",
-                NavName: "Hồ sơ",
+                NavCode: "TEACHER",
+                NavName: "Giáo viên",
             }, {
-                UrlRewrite: "#/document-manager",
+                UrlRewrite: "#/class-manager",
                 IconClass: "fa fa-file-word-o",
-                NavCode: "DOCUMENT",
-                NavName: "Văn bản",
+                NavCode: "CLASS",
+                NavName: "Lớp học",
             }];
             doTranslate($scope.RootMenus);
             $rootScope.$on('$translateChangeSuccess', function () {
