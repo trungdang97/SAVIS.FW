@@ -190,7 +190,7 @@ define(['app', 'components/factory/factory'], function (app) {
         service.DeleteMany = function (model) {
             var promise = $http({
                 method: 'DELETE',
-                url: baseUrl + prefixCoreApiUrl,
+                url: baseUrl + prefixCoreApiUrl + "/deletemany",
                 data: model
             });
             return promise;

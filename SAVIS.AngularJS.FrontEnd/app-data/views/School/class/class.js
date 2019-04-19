@@ -22,7 +22,7 @@
             };
             /*------------------------------------------------------------------**/
 
-            var itemDialogUrl = '/app-data/views/Document/Document-item.html';
+            var itemDialogUrl = '/app-data/views/School/class/class-item.html';
             $scope.ListSelected = [];
             $scope.SelectAll = false;
 
@@ -67,12 +67,11 @@
                 postData.TextSearch = $scope.TextSearch;
 
                 var promise = ClassService.GetFilter(postData);
+                $scope.count_req = 0;
                 promise.success(function (data) {
                     $log.debug(data)
                     if (data.Status != null) {
                         $scope.ListData = data.Data;
-
-
                         $scope.TotalCount = data.TotalCount;
                         $scope.MaxSizePage = 7;
                         $scope.FromDocument = 0;
@@ -80,6 +79,11 @@
                         if ($scope.TotalCount !== 0) {
                             $scope.FromDocument = parseInt(($scope.PageNumber - 1) * $scope.PageSize + 1);
                             $scope.ToDocument = $scope.FromDocument + $scope.ListData.length - 1;
+                            $scope.count_req++;
+                            console.log("This is " + $scope.count_req + " request");
+                            console.log("From: " + $scope.FromDocument);
+                            console.log("To: " + $scope.ToDocument);
+                            
                         }
                     }
                 }).error(function (response) {
@@ -144,6 +148,9 @@
                         },
                     }
                 });
+                //}).closed.then(function () {
+                //    loadData();
+                //});
 
                 modalInstance.result.then(function (response) {
                     loadData();
@@ -155,7 +162,7 @@
                 var infoResult = constantsAMD.OpenDialog('Bạn có chắc chắn muốn xóa lớp học này?', 'Chú ý', 'Đồng ý', 'Đóng', 'sm');
                 infoResult.result.then(function (modalResult) {
                     if (modalResult == 'confirm') {
-                        var promise = ClassService.Delete(item.DocumentId);
+                        var promise = ClassService.Delete(item.ClassId);
                         promise.success(function (response) {
                             $log.debug(response);
                             loadData();
@@ -169,7 +176,7 @@
                 var listDeleteting = [];
                 angular.forEach($scope.ListData, function (item) {
                     if (item.Selecting) {
-                        listDeleteting.push(item.DocumentId);
+                        listDeleteting.push(item.ClassId);
                     }
                 });
                 var infoResult = constantsAMD.OpenDialog('Bạn có chắc chắn muốn xóa những lớp này?', 'Chú ý', 'Đồng ý', 'Đóng', 'sm');
@@ -189,10 +196,22 @@
             $scope.Button.Reload.Click = function () {
                 $location.search("search", "");
                 $location.search("pn", "1");
-                $location.search("isDocument", "0");
-                $location.search("isDocument", "0");
+                //$location.search("isDocument", "0"); chua biet de lam gi
+                //$location.search("isDocument", "0");
                 loadData();
             };
+
+            $scope.GoToPageNumber = function () {
+                $location.search("pn", $scope.PageNumber);
+                //$location.search("pn", $scope.PageNumber);
+            };
+
+            $scope.Search = function () {
+                $location.search("search", $scope.filterText);
+                $location.search("pn", "1");
+            };
+
+
         }
     ]);
 });

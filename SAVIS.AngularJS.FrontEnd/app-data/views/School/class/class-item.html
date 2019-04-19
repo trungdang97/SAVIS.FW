@@ -10,10 +10,10 @@
                 <i class="fa fa-cogs"></i>
                 <span class="caption-subject bold uppercase">Tạo mới lớp học</span>
                 <!--<span class="caption-helper">cấu hình...</span>-->
-            </div> 
+            </div>
         </div>
         <div class="portlet-body">
-            <div class="row">  
+            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label  text-bold col-md-4">Tên: </label>
@@ -30,27 +30,22 @@
                     </div>
 
                 </div>
-                <div class="col-md-6"> 
-                    <div class="form-group">
-                        <label class="control-label  text-bold col-md-4">Loại hình tài liệu: </label>
-                        <div class="col-md-8 ">
-                            <ui-select ng-model="Item.ArchiveTypeId" style="width: 100%" theme="selectize" ng-change="ChangeArchive()">
-                                <ui-select-match placeholder="Chọn control">{{$select.selected.Name}}</ui-select-match>
-                                <ui-select-choices  repeat="option.ArchiveTypeId as option in ListArchiveType | filter: $select.search">
-                                    <small ng-bind-html="option.Name | highlight: $select.search"></small>
-                                </ui-select-choices>
-                            </ui-select>
-                        </div>
-                    </div>
+                <div class="col-md-6">
+
                 </div>
-                <div class="clearfix"></div><hr />
-                <div ng-show="Item.ArchiveTypeId"> 
-                    <h4 class="col-md-12 text-bold text-center">Phiếu tin văn bản</h4>
-                    <formly-form fields="PreviewSheme" model="Data">
-                    </formly-form>
-                </div> 
+                <div class="clearfix">
+                    
+                </div>
+                <hr />
             </div>
-        </div>
+            <div class="row">
+                <div class="col-md-6">
+                    Danh sách lớp
+                </div>
+                <div class="col-md-6">
+                    Danh sách học sinh
+                </div>
+            </div>
     </div>
     <div class="modal-footer">
         <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">

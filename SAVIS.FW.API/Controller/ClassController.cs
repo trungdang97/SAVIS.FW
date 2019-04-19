@@ -57,6 +57,13 @@ namespace SAVIS.FW.API.Controller
             return _classHandler.DeleteClass(classId);
         }
 
+        [HttpDelete]
+        [Route("api/v1/classes/deletemany")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<Class>> DeleteClass(List<Guid> lstClassId)
+        {
+            return _classHandler.DeleteMany(lstClassId);
+        }
         ////Nghiep vu yeu cau
 
         //Them bot giao vien chu nhiem cho lop

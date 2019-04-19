@@ -7,7 +7,7 @@ define(["app",
     app.controller("ClassItemCtrl", ["$scope", "$log", "$uibModalInstance", "item", "option", "$timeout",
         'FormlyFactory', 'ClassService', 'Notifications', 'constantsAMD', "FormlyService",
         function ($scope, $log, $uibModalInstance, item, option, $timeout,
-            FormlyFactory, DocumentService, Notifications, constantsAMD, FormlyService) {
+            FormlyFactory, ClassService, Notifications, constantsAMD, FormlyService) {
             /* Notification -----------------------------------------------------*/
             $scope.Notifications = Notifications;
             $scope.closeAlert = function (item) {
@@ -20,16 +20,19 @@ define(["app",
                 constantsAMD.setNotification(Notifications, 'danger', 'Thông báo', message);
             };
             $scope.Cancel = function () {
-                $uibModalInstance.dismiss();
+                $uibModalInstance.close();
             };
 
             //Save
-            var model = {};
-            //model.Code = $scope.Item.Code;
-            //model.Name = $scope.Item.Name;
-            
             $scope.Save = function () {
-                
+                var model = {};
+                model.Code = $scope.Item.Code;
+                model.Name = $scope.Item.Name;
+                var promise = ClassService.Create(model);
+                promise.success(function (response) {
+                    $log.debug(response);
+                    //loadData();
+                });
             };
         }
     ])

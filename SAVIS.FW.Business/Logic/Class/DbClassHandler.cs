@@ -186,15 +186,16 @@ namespace SAVIS.FW.Business.Logic.Class
                     {
                         if (filter.PageSize.Value <= 0)
                             filter.PageSize = 10;
-                        int excludedRows = (filter.PageNumber.Value - 1) * (filter.PageSize.Value - 1);
+                        int excludedRows = (filter.PageNumber.Value - 1) * filter.PageSize.Value;
                         if (excludedRows <= 0)
                             excludedRows = 0;
-                        data = data.Skip(excludedRows).Take(filter.PageSize.Value + 1).ToList();
+                        data = data.Skip(excludedRows).Take(filter.PageSize.Value).ToList();
                     }
 
                     return new Response<IList<Class>>(ConfigType.SUCCESS, "OK", ConvertClasses(data))
                     {
-                        DataCount = count
+                        TotalCount = count,
+                        DataCount = data.Count
                     };
                 }
             }
@@ -298,6 +299,32 @@ namespace SAVIS.FW.Business.Logic.Class
                 return new Response<Class>(ConfigType.ERROR, ex.Message, null);
             }
         }
+
+        public Response<IList<Class>> DeleteMany(List<Guid> lstClassId)
+        {
+            using(var unitOfWork = new UnitOfWork())
+            {
+                List<scf_Class> lstClass = new List<scf_Class>();
+                try
+                {
+                    foreach(var ClassId in lstClassId)
+                    {
+                        var model = unitOfWork.GetRepository<scf_Class>().GetById(ClassId);
+                        if (model != null)
+                        {
+                            lstClass.Add(model);
+                            unitOfWork.GetRepository<scf_Class>().Delete(model);
+                        }
+                    }
+                    unitOfWork.Save();
+                    return new Response<IList<Class>>(ConfigType.SUCCESS, "DELETED MANY", ConvertClasses(lstClass));
+                }
+                catch(Exception ex)
+                {
+                    return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
+                }
+            }
+        }
         #endregion
 
         #region CONVERT DATA
@@ -338,6 +365,8 @@ namespace SAVIS.FW.Business.Logic.Class
                 return new List<Class>();
             }
         }
+
+        
         #endregion
     }
 }
