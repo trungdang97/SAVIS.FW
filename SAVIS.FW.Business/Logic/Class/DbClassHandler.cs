@@ -158,6 +158,11 @@ namespace SAVIS.FW.Business.Logic.Class
                 using (var unitOfWork = new UnitOfWork())
                 {
                     var Class = unitOfWork.GetRepository<scf_Class>().GetById(id);
+                    if (Class.TeacherId != null)
+                    {
+                        var _teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(Class.TeacherId.Value);
+                        Class.scf_Teacher = _teacher;
+                    }
                     return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class));
                 }
             }
@@ -308,6 +313,10 @@ namespace SAVIS.FW.Business.Logic.Class
                 if (classEntity.TeacherId != null)
                 {
                     model.TeacherId = (Guid)classEntity.TeacherId;
+                }
+                if (classEntity.TeacherId != null)
+                {
+                    model.Teacher = DbTeacherHandler.ConvertTeacher(classEntity.scf_Teacher);
                 }
                 return model;
             }

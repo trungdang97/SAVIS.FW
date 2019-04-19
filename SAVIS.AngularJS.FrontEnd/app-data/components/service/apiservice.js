@@ -10,7 +10,22 @@ define(['app', 'components/factory/factory'], function (app) {
             var stringFilter = angular.toJson(model);
             var promise = $http({
                 method: 'GET',
-                url: baseUrl + prefixCoreApiUrl + "?stringFilter=" + stringFilter
+                url: baseUrl + prefixCoreApiUrl + "?filter=" + stringFilter
+            });
+            return promise;
+        }
+    }]);
+    app.service('StudentService', ['$http', 'constantsFactory', function ($http, constantsFactory) {
+
+        var service = {};
+        var baseUrl = constantsFactory.ApiUrl;
+        var prefixCoreApiUrl = "api/v1/students";
+
+        service.GetFilter = function (model) {
+            var stringFilter = angular.toJson(model);
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "?filter=" + stringFilter
             });
             return promise;
         }
@@ -41,11 +56,11 @@ define(['app', 'components/factory/factory'], function (app) {
             return promise;
 
         }
-         
+
         service.Delete = function (id) {
             var promise = $http({
                 method: 'DELETE',
-                url: baseUrl + prefixCoreApiUrl + "/" + id ,
+                url: baseUrl + prefixCoreApiUrl + "/" + id,
             });
             return promise;
         }
@@ -53,7 +68,7 @@ define(['app', 'components/factory/factory'], function (app) {
         service.DeleteMany = function (model) {
             var promise = $http({
                 method: 'DELETE',
-                url: baseUrl + prefixCoreApiUrl ,
+                url: baseUrl + prefixCoreApiUrl,
                 data: model
             });
             return promise;
@@ -61,232 +76,128 @@ define(['app', 'components/factory/factory'], function (app) {
         return service;
 
     }]);
+    app.service('TeacherService', ['$http', 'constantsFactory', function ($http, constantsFactory) {
 
-    //app.service('ArchiveTypeService', ['$http', 'constantsFactory', function ($http, constantsFactory) {
+        var service = {};
+        var baseUrl = constantsFactory.ApiUrl;
+        var prefixCoreApiUrl = "api/v1/teachers";
 
-    //    var service = {};
-    //    var baseUrl = constantsFactory.ApiUrl;
-    //    var prefixCoreApiUrl = "api/archivetype";
+        service.GetFilter = function (model) {
+            var stringFilter = angular.toJson(model);
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "?filter=" + stringFilter
+            });
+            return promise;
+        }
 
-    //    service.GetFilter = function (model) {
-    //        var stringFilter = angular.toJson(model);
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "?stringFilter=" + stringFilter
-    //        });
-    //        return promise;
-    //    }
+        service.GetById = function (id) {
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "/" + id
+            });
+            return promise;
+        };
 
-    //    service.GetById = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id
-    //        });
-    //        return promise;
-    //    };
+        service.Create = function (model) {
+            var promise = $http({
+                method: 'POST',
+                url: baseUrl + prefixCoreApiUrl,
+                data: model
+            });
+            return promise;
+        }
 
-    //    service.Create = function (model) {
-    //        var promise = $http({
-    //            method: 'POST',
-    //            url: baseUrl + prefixCoreApiUrl,
-    //            data: model
-    //        });
-    //        return promise;
-    //    }
+        service.Update = function (id, model) {
+            var promise = $http({
+                method: 'PUT',
+                url: baseUrl + prefixCoreApiUrl + "/" + id,
+                data: model
+            });
+            return promise;
 
-    //    service.Update = function (id, model) {
-    //        var promise = $http({
-    //            method: 'PUT',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id,
-    //            data: model
-    //        });
-    //        return promise;
+        }
 
-    //    }
+        service.Delete = function (id) {
+            var promise = $http({
+                method: 'DELETE',
+                url: baseUrl + prefixCoreApiUrl + "/" + id,
+            });
+            return promise;
+        }
 
-    //    service.Delete = function (id, isDeleteChild) {
-    //        var promise = $http({
-    //            method: 'DELETE',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id,
-    //        });
-    //        return promise;
-    //    }
+        service.DeleteMany = function (model) {
+            var promise = $http({
+                method: 'DELETE',
+                url: baseUrl + prefixCoreApiUrl,
+                data: model
+            });
+            return promise;
+        }
+        return service;
 
-    //    service.DeleteMany = function (model, isDeleteChild) {
-    //        var promise = $http({
-    //            method: 'DELETE',
-    //            url: baseUrl + prefixCoreApiUrl,
-    //            data: model
-    //        });
-    //        return promise;
-    //    }
+    }]);
+    app.service('ClassService', ['$http', 'constantsFactory', function ($http, constantsFactory) {
 
-    //    service.GetFieldByArchiveTypeId = function (id, type) {
-    //        if (id=="all") {
-    //            id ="00000000-0000-0000-0000-000000000000";
-    //        }
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id + "/field/" + type
-    //        });
-    //        return promise;
-    //    }
-    //    return service;
+        var service = {};
+        var baseUrl = constantsFactory.ApiUrl;
+        var prefixCoreApiUrl = "api/v1/classes";
 
-    //}]);
-    //app.service('RecordService', ['$http', 'constantsFactory', function ($http, constantsFactory) {
+        service.GetFilter = function (model) {
+            var stringFilter = angular.toJson(model);
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "?filter=" + stringFilter
+            });
+            return promise;
+        }
 
-    //    var service = {};
-    //    var baseUrl = constantsFactory.ApiUrl;
-    //    var prefixCoreApiUrl = "api/record";
+        service.GetById = function (id) {
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "/" + id
+            });
+            return promise;
+        };
 
-    //    service.GetFilter = function (model) {
-    //        var stringFilter = angular.toJson(model);
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "?stringFilter=" + stringFilter
-    //        });
-    //        return promise;
-    //    }
+        service.Create = function (model) {
+            var promise = $http({
+                method: 'POST',
+                url: baseUrl + prefixCoreApiUrl,
+                data: model
+            });
+            return promise;
+        }
 
-    //    service.GetById = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id
-    //        });
-    //        return promise;
-    //    };
+        service.Update = function (id, model) {
+            var promise = $http({
+                method: 'PUT',
+                url: baseUrl + prefixCoreApiUrl + "/" + id,
+                data: model
+            });
+            return promise;
 
-    //    service.Create = function (model) {
-    //        var promise = $http({
-    //            method: 'POST',
-    //            url: baseUrl + prefixCoreApiUrl,
-    //            data: model
-    //        });
-    //        return promise;
-    //    }
+        }
 
-    //    service.Update = function (id, model) {
-    //        var promise = $http({
-    //            method: 'PUT',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id,
-    //            data: model
-    //        });
-    //        return promise;
+        service.Delete = function (id) {
+            var promise = $http({
+                method: 'DELETE',
+                url: baseUrl + prefixCoreApiUrl + "/" + id,
+            });
+            return promise;
+        }
 
-    //    }
+        service.DeleteMany = function (model) {
+            var promise = $http({
+                method: 'DELETE',
+                url: baseUrl + prefixCoreApiUrl,
+                data: model
+            });
+            return promise;
+        }
+        return service;
 
-    //    service.Delete = function (id, isDeleteChild) {
-    //        var promise = $http({
-    //            method: 'DELETE',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id,
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.DeleteMany = function (model, isDeleteChild) {
-    //        var promise = $http({
-    //            method: 'DELETE',
-    //            url: baseUrl + prefixCoreApiUrl,
-    //            data: model
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.GetFieldByRecordId = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id + "/field"
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.GetAtributeById = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id + "/data/" 
-    //        });
-    //        return promise;
-    //    }
-    //    return service;
-
-    //}]);
-    //app.service('DocumentService', ['$http', 'constantsFactory', function ($http, constantsFactory) {
-
-    //    var service = {};
-    //    var baseUrl = constantsFactory.ApiUrl;
-    //    var prefixCoreApiUrl = "api/document";
-
-    //    service.GetFilter = function (model) {
-    //        var stringFilter = angular.toJson(model);
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "?stringFilter=" + stringFilter
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.GetById = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id
-    //        });
-    //        return promise;
-    //    };
-
-    //    service.Create = function (model) {
-    //        var promise = $http({
-    //            method: 'POST',
-    //            url: baseUrl + prefixCoreApiUrl,
-    //            data: model
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.Update = function (id, model) {
-    //        var promise = $http({
-    //            method: 'PUT',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id,
-    //            data: model
-    //        });
-    //        return promise;
-
-    //    }
-
-    //    service.Delete = function (id, isDeleteChild) {
-    //        var promise = $http({
-    //            method: 'DELETE',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id,
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.DeleteMany = function (model, isDeleteChild) {
-    //        var promise = $http({
-    //            method: 'DELETE',
-    //            url: baseUrl + prefixCoreApiUrl,
-    //            data: model
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.GetFieldByDocumentId = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id + "/field"
-    //        });
-    //        return promise;
-    //    }
-
-    //    service.GetAtributeById = function (id) {
-    //        var promise = $http({
-    //            method: 'GET',
-    //            url: baseUrl + prefixCoreApiUrl + "/" + id + "/data/"
-    //        });
-    //        return promise;
-    //    }
-    //    return service;
-
-    //}]);
+    }]);
+    
 });
 

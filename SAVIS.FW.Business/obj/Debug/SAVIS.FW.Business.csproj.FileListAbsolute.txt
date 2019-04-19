@@ -1,4 +1,3 @@
-C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csprojResolveAssemblyReference.cache
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Business.dll.config
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Business.dll
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Business.pdb
@@ -32,3 +31,8 @@ C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Busine
 C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csproj.CopyComplete
 C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.dll
 C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Common.dll.config
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\SAVIS.FW.Data.dll.config
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csprojAssemblyReference.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csproj.CoreCompileInputs.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csproj.CopyComplete

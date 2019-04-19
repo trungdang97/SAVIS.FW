@@ -25,7 +25,7 @@ namespace SAVIS.FW.API.Controller
         }
 
         [HttpGet]
-        [Route("api/v1/classes/filter/")]
+        [Route("api/v1/classes")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<IList<Class>> GetFilter(string filter)
         {

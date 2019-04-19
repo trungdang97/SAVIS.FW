@@ -1,0 +1,70 @@
+﻿<style type="text/css">
+    .CodeMirror pre {
+        padding: 0px 42px;
+    }
+</style>
+<form name="formly_form" ng-submit="btnSve()">
+    <div class="portlet light" style="padding-bottom:0;">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>
+                <span class="caption-subject bold uppercase">Tạo mới lớp học</span>
+                <!--<span class="caption-helper">cấu hình...</span>-->
+            </div> 
+        </div>
+        <div class="portlet-body">
+            <div class="row">  
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label  text-bold col-md-4">Tên: </label>
+                        <div class="col-md-8 ">
+                            <input ng-model="Item.Name" type="text" ng-change="ChangeName()" class="form-control input-sm" />
+                        </div>
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <div class="form-group">
+                        <label class="control-label  text-bold col-md-4">Mã: </label>
+                        <div class="col-md-8 ">
+                            <input ng-model="Item.Code" type="text" class="form-control input-sm" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6"> 
+                    <div class="form-group">
+                        <label class="control-label  text-bold col-md-4">Loại hình tài liệu: </label>
+                        <div class="col-md-8 ">
+                            <ui-select ng-model="Item.ArchiveTypeId" style="width: 100%" theme="selectize" ng-change="ChangeArchive()">
+                                <ui-select-match placeholder="Chọn control">{{$select.selected.Name}}</ui-select-match>
+                                <ui-select-choices  repeat="option.ArchiveTypeId as option in ListArchiveType | filter: $select.search">
+                                    <small ng-bind-html="option.Name | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div><hr />
+                <div ng-show="Item.ArchiveTypeId"> 
+                    <h4 class="col-md-12 text-bold text-center">Phiếu tin văn bản</h4>
+                    <formly-form fields="PreviewSheme" model="Data">
+                    </formly-form>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">
+            <i class="fa fa-save"></i> Lưu
+        </a>
+        <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
+            <i class="fa fa-ban"></i> Đóng
+        </a>
+    </div>
+</form>
+<div class="alerts" ng-show="notify.queue.length > 0">
+    <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
+        <button type="button" class="close" ng-click="closeAlert(m.body)" data-dismiss="alert">×</button>
+        <label>{{m.title}}</label>
+        <div>{{m.body}}</div>
+    </div>
+</div>
