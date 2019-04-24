@@ -60,9 +60,10 @@ namespace SAVIS.FW.API.Controller
         [HttpDelete]
         [Route("api/v1/classes/deletemany")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Class>> DeleteClass(List<Guid> lstClassId)
+        public Response<IList<Class>> DeleteClass(string jsonstring)
         {
-            return _classHandler.DeleteMany(lstClassId);
+            List<Guid> model = JsonConvert.DeserializeObject<List<Guid>>(jsonstring);
+            return _classHandler.DeleteMany(model);
         }
         ////Nghiep vu yeu cau
 

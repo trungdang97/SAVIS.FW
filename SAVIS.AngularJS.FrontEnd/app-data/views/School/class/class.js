@@ -192,6 +192,37 @@
                 });
             };
 
+            $scope.Button.Update = {};
+            $scope.Button.Update.Click = function (item) {
+                if (typeof (item) === "undefined") {
+                    item = $scope.ListSelected[0];
+                }
+                var modalInstance;
+                modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: itemDialogUrl,
+                    controller: 'ClassItemCtrl',
+                    size: 'lg',
+                    // windowClass :"modal-full",
+                    backdrop: 'static',
+                    // Set parameter to chidform (popup form)
+                    resolve: {
+                        item: function () {
+                            return item;
+                        },
+                        option: function () {
+                            var obj = {};
+                            obj.Mode = "update";
+                            return obj
+                        },
+                    }
+                });
+
+                modalInstance.result.then(function (response) {
+                    loadData();
+                }, function (response) { });
+            };
+
             $scope.Button.Reload = {};
             $scope.Button.Reload.Click = function () {
                 $location.search("search", "");
@@ -211,7 +242,8 @@
                 $location.search("pn", "1");
             };
 
-
+            /*Redirection methods*/
+            
         }
     ]);
 });

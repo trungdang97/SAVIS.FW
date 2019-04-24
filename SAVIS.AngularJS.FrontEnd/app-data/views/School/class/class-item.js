@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿ "use strict";
 define(["app",
     'components/service/amdservice',
     'components/service/apiservice',
@@ -31,6 +31,7 @@ define(["app",
                 var promise = ClassService.Create(model);
                 promise.success(function (response) {
                     $log.debug(response);
+                    $uibModalInstance.close();
                     //loadData();
                 });
             };

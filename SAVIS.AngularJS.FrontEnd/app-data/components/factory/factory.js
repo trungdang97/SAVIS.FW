@@ -3,7 +3,11 @@ define(['app'], function (app) {
     app.service('constantsFactory', function () {
          var factory = {};
         // Return factory
-         factory.ApiUrl = "http://localhost:9000/";
+        factory.ApiUrl = "http://localhost:9000/";
+
+        factory.Teacher = {};
+        factory.Class = {};
+        factory.Student = {};
 		return factory;
 
     });

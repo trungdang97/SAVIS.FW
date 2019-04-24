@@ -35,6 +35,11 @@ define(function () {
                     controller: 'TeacherCtrl',
                     controllerUrl: 'views/School/teacher/teacher'
                 }))
+                .when("/teacher-manager/detail/:code", angularAMD.route({
+                    templateUrl: basedUrl + 'views/School/teacher/teacher-detail.html',
+                    controller: 'TeacherDetailCtrl',
+                    controllerUrl: 'views/School/teacher/teacher-detail'
+                }))
                 .when("/class-manager", angularAMD.route({
                     templateUrl: basedUrl + 'views/School/class/class.html',
                     controller: 'ClassCtrl',

@@ -1,4 +1,3 @@
-C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.csprojResolveAssemblyReference.cache
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Data.dll.config
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Data.dll
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Data.pdb
@@ -35,3 +34,7 @@ C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.cspro
 C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.csproj.CopyComplete
 C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.dll
 C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\bin\Debug\SAVIS.FW.Common.dll.config
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.csprojAssemblyReference.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.csproj.CoreCompileInputs.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Data\obj\Debug\SAVIS.FW.Data.csproj.CopyComplete

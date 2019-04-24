@@ -58,7 +58,9 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     {
                         return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists", null);
                     }
-                    return new Response<Teacher>(ConfigType.SUCCESS, "OK", ConvertTeacher(model));
+                    var response = ConvertTeacher(model);
+                    response.Classes = DbClassHandler.ConvertClasses(unitOfWork.GetRepository<scf_Class>().GetMany(x=>x.TeacherId == response.TeacherId).ToList());
+                    return new Response<Teacher>(ConfigType.SUCCESS, "OK", response);
                 }
             }
             catch (Exception ex)

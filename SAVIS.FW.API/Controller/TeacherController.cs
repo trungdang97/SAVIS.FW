@@ -28,7 +28,7 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/teachers/filter")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Teacher>> GetFilterd(string filter)
+        public Response<IList<Teacher>> GetFilter(string filter)
         {
             var teacherFilter = JsonConvert.DeserializeObject<TeacherQueryFilter>(filter);
             return _teacherHandler.GetFilter(teacherFilter);
