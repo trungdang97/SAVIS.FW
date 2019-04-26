@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using SAVIS.FW.Business.Config;
-using SAVIS.FW.Business.Logic.Class;
 using SAVIS.FW.Business.Logic.Teacher;
 using SAVIS.FW.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -26,7 +22,7 @@ namespace SAVIS.FW.API.Controller
         }
 
         [HttpGet]
-        [Route("api/v1/teachers/filter")]
+        [Route("api/v1/teachers")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<IList<Teacher>> GetFilter(string filter)
         {

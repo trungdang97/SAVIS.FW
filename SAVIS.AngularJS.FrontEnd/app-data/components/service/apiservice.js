@@ -143,6 +143,14 @@ define(['app', 'components/factory/factory'], function (app) {
         var baseUrl = constantsFactory.ApiUrl;
         var prefixCoreApiUrl = "api/v1/classes";
 
+        service.GetAll = function () {
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "/all"
+            });
+            return promise;
+        }
+
         service.GetFilter = function (model) {
             var stringFilter = angular.toJson(model);
             var promise = $http({
@@ -158,7 +166,7 @@ define(['app', 'components/factory/factory'], function (app) {
                 url: baseUrl + prefixCoreApiUrl + "/" + id
             });
             return promise;
-        };
+        }
 
         service.Create = function (model) {
             var promise = $http({

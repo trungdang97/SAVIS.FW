@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SAVIS.FW.Business.Logic.Class;
 using System.Web.Http;
 using SAVIS.FW.Common;
@@ -22,6 +19,14 @@ namespace SAVIS.FW.API.Controller
         public Response<Class> GetClassById(Guid classId)
         {
             return _classHandler.GetClassById(classId);
+        }
+
+        [HttpGet]
+        [Route("api/v1/classes/all")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<Class>> GetClassById()
+        {
+            return _classHandler.GetAll();
         }
 
         [HttpGet]

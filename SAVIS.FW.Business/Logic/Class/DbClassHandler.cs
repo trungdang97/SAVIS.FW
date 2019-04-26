@@ -129,11 +129,7 @@ namespace SAVIS.FW.Business.Logic.Class
                         if (student.ClassRoleId != Guid.Empty)
                         {
                             var role = unitOfWork.GetRepository<scf_Class_Role>().GetById(student.ClassRoleId);
-                            student.Role = new ClassRole()
-                            {
-                                ClassRoleId = role.ClassRoleId,
-                                Name = role.Name
-                            };
+                            student.Role = new ClassRole(role);
                         }
                     }
                     response.Students = students.ToList();
@@ -202,6 +198,22 @@ namespace SAVIS.FW.Business.Logic.Class
             catch (Exception ex)
             {
                 return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
+            }
+        }
+
+        public Response<IList<Class>> GetAll()
+        {
+            using (var unitOfWork = new UnitOfWork())
+            {
+                try
+                {
+                    List<scf_Class> classes = unitOfWork.GetRepository<scf_Class>().GetAll().ToList();
+                    return new Response<IList<Class>>(ConfigType.SUCCESS, "OK", ConvertClasses(classes));
+                }
+                catch(Exception ex)
+                {
+                    return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
+                }
             }
         }
         #endregion
@@ -302,12 +314,12 @@ namespace SAVIS.FW.Business.Logic.Class
 
         public Response<IList<Class>> DeleteMany(List<Guid> lstClassId)
         {
-            using(var unitOfWork = new UnitOfWork())
+            using (var unitOfWork = new UnitOfWork())
             {
                 List<scf_Class> lstClass = new List<scf_Class>();
                 try
                 {
-                    foreach(var ClassId in lstClassId)
+                    foreach (var ClassId in lstClassId)
                     {
                         var model = unitOfWork.GetRepository<scf_Class>().GetById(ClassId);
                         if (model != null)
@@ -319,7 +331,7 @@ namespace SAVIS.FW.Business.Logic.Class
                     unitOfWork.Save();
                     return new Response<IList<Class>>(ConfigType.SUCCESS, "DELETED MANY", ConvertClasses(lstClass));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
                 }
@@ -366,7 +378,7 @@ namespace SAVIS.FW.Business.Logic.Class
             }
         }
 
-        
+
         #endregion
     }
 }

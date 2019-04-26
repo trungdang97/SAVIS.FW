@@ -197,6 +197,7 @@ namespace SAVIS.FW.Business.Logic.Student
                 {
                     string textSearch = filter.TextSearch;
                     List<scf_Student> data = unitOfWork.GetRepository<scf_Student>().GetMany(x => (x.Name.Contains(textSearch)) || (x.Code.Contains(textSearch))).ToList();// || (x.Birthday.ToString("d/M/yyyy").Contains(textSearch))).ToList();
+                    
                     int count = data.Count;
 
                     if (filter.PageSize.HasValue && filter.PageNumber.HasValue)
@@ -208,9 +209,24 @@ namespace SAVIS.FW.Business.Logic.Student
                             excludedRows = 0;
                         data = data.Skip(excludedRows).Take(filter.PageSize.Value + 1).ToList();
                     }
+                    foreach(var s in data)
+                    {
+                        if(s.ClassId != null)
+                        {
+                            s.scf_Class = unitOfWork.GetRepository<scf_Class>().Get(y => y.ClassId == s.ClassId);
+                        }
+                        if(s.ClassRoleId != null)
+                        {
+                            s.scf_Class_Role = unitOfWork.GetRepository<scf_Class_Role>().Get(y => y.ClassRoleId == s.ClassRoleId);
+                        }
+                    }
+                    
+                    
+
                     return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", ConvertStudents(data))
                     {
-                        DataCount = count
+                        TotalCount = count,
+                        DataCount = data.Count
                     };
                 }
             }
@@ -341,7 +357,11 @@ namespace SAVIS.FW.Business.Logic.Student
             };
             if (student.ClassId.HasValue)
             {
-                model.ClassId = student.ClassId.Value;
+                model.Class = DbClassHandler.ConvertClass(student.scf_Class);
+            }
+            if (student.ClassRoleId.HasValue)
+            {
+                model.Role = new ClassRole(student.scf_Class_Role);
             }
 
             return model;

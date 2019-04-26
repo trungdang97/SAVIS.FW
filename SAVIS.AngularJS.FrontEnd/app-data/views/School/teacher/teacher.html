@@ -1,3 +1,120 @@
-﻿<h1>
-    Teacher view
-</h1>
+﻿<style>
+    .zoom-85 {
+        zoom: 85%;
+    }
+</style>
+<div class="portlet light" data-ng-init="init()">
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <span class="caption-subject bold theme-font-color uppercase">Quản lý giáo viên</span>
+        </div>
+
+        <div class="inputs">
+            <div class="portlet-input input-small input-inline">
+                <div class="input-icon right">
+                    <i class="icon-magnifier" ng-click="Search()"></i>
+                    <input type="text" ng-model="filterText" ng-keyup="$event.keyCode == 13 && Search()" class="form-control form-control-solid" placeholder="Tìm kiếm...." ng-pattern="word" required ng-trim="true">
+                </div>
+            </div>
+        </div>
+
+        <div class="actions margin-right-10">
+            <button type="button" class="btn btn-sm" title="Tải lại" ng-click="Button.Reload.Click()">
+                <i class="fa fa-refresh"></i>
+                <span>Tải Lại</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-primary" title="Thêm mới" ng-click="Button.Create.Click()">
+                <i class="fa fa-plus"></i>
+                <span>Thêm mới</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-primary" title="Cập nhật" ng-click="Button.Update.Click()" ng-if="ListSelected.length===1">
+                <i class="fa fa-edit"></i>
+                <span>Cập nhật</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger" title="Xóa đã chọn" ng-click="Button.DeleteMany.Click()" ng-if="ListSelected.length>1">
+                <i class="fa fa-trash"></i>
+                <span>Xóa đã chọn</span>
+            </button>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="clearfix"></div><br />
+            <div class="col-md-12 col-lg-12">
+                <table class="table table-striped table-hover dataTable table-bordered">
+                    <thead>
+                        <tr style="background-color: #eeeeee;">
+                            <th class="table-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                <div class="checker">
+                                    <span ng-class="SelectAll?'checked':''">
+                                        <input type="checkbox" class="group-checkable" ng-click="SelectAllItem()" ng-model="SelectAll">
+                                    </span>
+                                </div>
+                            </th>
+                            <th ng-repeat="header in Headers" width="{{header.Width}}" class="{{header.Align}}">
+                                {{header.Value}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in ListData" ng-class="data.Selecting?'selected':''">
+                            <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                <div class="checker">
+                                    <span ng-class="data.Selecting?'checked':''">
+                                        <input type="checkbox" ng-click="SelectItem(data)" ng-model="data.Selecting" class="checkboxes">
+                                    </span>
+                                </div>
+                            </th>
+                            <td class="text-center">
+                                {{data.Code}}
+                            </td>
+                            <td>
+                                <a href="javascript:;" class="item-title">{{data.Name}}</a>
+                            </td>
+                            <td class="text-center">
+                                {{data.Birthday | date:'dd/MM/yyyy'}}
+                            </td>
+                            <td class="text-center">
+                                <!--<a href="#/teacher-manager/detail/{{data.Teacher.TeacherId}}" class="item-title">{{data.Teacher.Name}}</a>-->
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-xs btn-primary" ng-click="Button.Update.Click(data)"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="Button.Delete.Click(data)"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="col-md-12" ng-show="ListData.length>0">
+                <div class="pull-left">
+                    <pre>{{FromDocument}} - {{ToDocument}} / {{TotalCount}}</pre>
+                </div>
+                <div class="pull-right">
+                    <ul uib-pagination total-items="TotalCount"
+                        ng-model="PageNumber"
+                        max-size="MaxSizePage"
+                        items-per-page="PageSize"
+                        class="pagination-sm"
+                        boundary-link-numbers="true"
+                        rotate="true"
+                        ng-change="GoToPageNumber()"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul>
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+</div>
+<div class="alerts" ng-show="notify.queue.length > 0">
+    <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
+        <button type="button" class="close" ng-click="closeAlert(m.body)" data-dismiss="alert">×</button>
+        <label>{{m.title}}</label>
+        <div>{{m.body}}</div>
+    </div>
+</div>
+
+

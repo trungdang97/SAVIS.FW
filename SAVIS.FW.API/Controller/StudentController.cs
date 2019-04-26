@@ -23,7 +23,7 @@ namespace SAVIS.FW.API.Controller
             return _studentHandler.GetStudentById(studentId);
         }
         [HttpGet]
-        [Route("api/v1/students/filter")]
+        [Route("api/v1/students")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<IList<Student>> GetFilter(string filter)
         {

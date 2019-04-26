@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SAVIS.FW.Business.Logic.Class;
+using SAVIS.FW.Data;
 
 namespace SAVIS.FW.Business.Logic.Student
 {
@@ -64,5 +65,11 @@ namespace SAVIS.FW.Business.Logic.Student
     {
         public Guid ClassRoleId { get; set; }
         public string Name { get; set; }
+
+        public ClassRole(scf_Class_Role role)
+        {
+            ClassRoleId = role.ClassRoleId;
+            Name = role.Name;
+        }
     }
 }

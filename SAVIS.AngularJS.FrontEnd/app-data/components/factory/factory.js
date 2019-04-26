@@ -12,6 +12,8 @@ define(['app'], function (app) {
 
     });
 
+    
+
     app.factory('beforeUnload', function ($rootScope, $window) {
         // Events are broadcast outside the Scope Lifecycle
     

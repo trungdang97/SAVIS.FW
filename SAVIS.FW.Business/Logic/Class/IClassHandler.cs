@@ -14,6 +14,7 @@ namespace SAVIS.FW.Business.Logic.Class
         Response<Class> UpdateClass(ClassUpdateRequestModel Class);
         Response<Class> DeleteClass(Guid ClassId);
         Response<IList<Class>> GetFilter(ClassQueryFilter filter);
+        Response<IList<Class>> GetAll();
         Response<IList<Class>> DeleteMany(List<Guid> lstClassId);
         //specific 
         Response<Class> AssignToClass(Guid? teacherId, Guid classId);
