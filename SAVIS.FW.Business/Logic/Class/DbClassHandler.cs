@@ -263,7 +263,6 @@ namespace SAVIS.FW.Business.Logic.Class
                         ClassId = Class.ClassId,
                         Code = Class.Code,
                         Name = Class.Name,
-                        StudentQuantity = Class.StudentQuantity
                     };
                     if (Class.TeacherId != Guid.Empty)
                     {

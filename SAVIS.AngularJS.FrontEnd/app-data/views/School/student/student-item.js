@@ -32,9 +32,6 @@ define(["app",
                 model.Birthday = $scope.Birthday;
                 model.ClassId = $scope.Class.ClassId;
 
-                console.log(model);
-                return;
-
                 var promise = StudentService.Create(model);
                 promise.success(function (response) {
                     $log.debug(response);

@@ -51,7 +51,6 @@ namespace SAVIS.FW.Business.Logic.Class
         public Guid ClassId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public int StudentQuantity { get; set; }
         public Guid TeacherId { get; set; }
     }
 

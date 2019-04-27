@@ -1,13 +1,13 @@
-﻿ "use strict";
+﻿"use strict";
 define(["app",
     'components/service/amdservice',
     'components/service/apiservice',
     'components/formly-template/formly-factory',
 ], function (app) {
     app.controller("ClassItemCtrl", ["$scope", "$log", "$uibModalInstance", "item", "option", "$timeout",
-        'FormlyFactory', 'ClassService', 'Notifications', 'constantsAMD', "FormlyService",
+        'FormlyFactory', 'ClassService', 'Notifications', 'constantsAMD',
         function ($scope, $log, $uibModalInstance, item, option, $timeout,
-            FormlyFactory, ClassService, Notifications, constantsAMD, FormlyService) {
+            FormlyFactory, ClassService, Notifications, constantsAMD) {
             /* Notification -----------------------------------------------------*/
             $scope.Notifications = Notifications;
             $scope.closeAlert = function (item) {
@@ -23,17 +23,30 @@ define(["app",
                 $uibModalInstance.close();
             };
 
+
+            $scope.Item = item;
             //Save
             $scope.Save = function () {
                 var model = {};
                 model.Code = $scope.Item.Code;
                 model.Name = $scope.Item.Name;
-                var promise = ClassService.Create(model);
-                promise.success(function (response) {
-                    $log.debug(response);
-                    $uibModalInstance.close();
-                    //loadData();
-                });
+
+                if ($scope.Item.ClassId != null) {
+                    model.ClassId = $scope.Item.ClassId;
+                    var promise = ClassService.Update(model);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $uibModalInstance.close();
+                    });
+                }
+                else {
+                    var promise = ClassService.Create(model);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $uibModalInstance.close();
+                        //loadData();
+                    });
+                }
             };
         }
     ])
