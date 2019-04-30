@@ -173,18 +173,22 @@
             };
             $scope.Button.DeleteMany = {};
             $scope.Button.DeleteMany.Click = function () {
-                var listDeleteting = [];
+                var deleteModel = {};
+                var deleteItems = []
                 angular.forEach($scope.ListData, function (item) {
                     if (item.Selecting) {
-                        listDeleteting.push(item.ClassId);
+                        deleteItems.push(item.ClassId);
                     }
                 });
+                deleteModel.DeleteItems = deleteItems;
                 var infoResult = constantsAMD.OpenDialog('Bạn có chắc chắn muốn xóa những lớp này?', 'Chú ý', 'Đồng ý', 'Đóng', 'sm');
                 infoResult.result.then(function (modalResult) {
                     if (modalResult == 'confirm') {
-                        var promise = ClassService.DeleteMany(listDeleteting);
+                        var promise = ClassService.DeleteMany(deleteModel);
+                        
                         promise.success(function (response) {
                             $log.debug(response);
+                            var deleteResult = constantsAMD.OpenDialog('Xóa thành công', 'Chú ý', '', 'Đóng', 'sm');
                             loadData();
                         })
 

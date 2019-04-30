@@ -197,15 +197,21 @@ define(['app', 'components/factory/factory'], function (app) {
 
         service.DeleteMany = function (model) {
             var promise = $http({
+                headers: {
+                    'Accept': 'application/vnd.hal+json',
+                    'Content-Type': 'application/json'
+                }, // <--- content type
+                contentType: "application/json; charset=utf-8",
                 method: 'DELETE',
                 url: baseUrl + prefixCoreApiUrl + "/deletemany",
                 data: model
             });
+            console.log(JSON.stringify(model));
             return promise;
         }
         return service;
 
     }]);
-    
+
 });
 

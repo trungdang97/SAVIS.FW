@@ -28,6 +28,7 @@ namespace SAVIS.FW.Data
         public string Name { get; set; }
         public int StudentQuantity { get; set; }
         public Nullable<System.Guid> TeacherId { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual scf_Teacher scf_Teacher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

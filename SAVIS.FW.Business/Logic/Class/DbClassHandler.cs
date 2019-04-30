@@ -158,6 +158,7 @@ namespace SAVIS.FW.Business.Logic.Class
                     {
                         var _teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(Class.TeacherId.Value);
                         Class.scf_Teacher = _teacher;
+                        
                     }
                     return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class));
                 }
@@ -175,7 +176,7 @@ namespace SAVIS.FW.Business.Logic.Class
                 using (var unitOfWork = new UnitOfWork())
                 {
                     string textSearch = filter.TextSearch;
-                    List<scf_Class> data = unitOfWork.GetRepository<scf_Class>().GetMany(x => (x.Name.Contains(textSearch)) || (x.Code.Contains(textSearch))).ToList();
+                    List<scf_Class> data = unitOfWork.GetRepository<scf_Class>().GetMany(x => x.IsActive == true && (x.Name.Contains(textSearch) || x.Code.Contains(textSearch))).ToList();
                     int count = data.Count;
 
                     if (filter.PageSize.HasValue && filter.PageNumber.HasValue)
@@ -292,14 +293,8 @@ namespace SAVIS.FW.Business.Logic.Class
                         return new Response<Class>(ConfigType.ERROR, "Objects doesn't exists.", null);
                     }
                     scf_Class model = unitOfWork.GetRepository<scf_Class>().GetById(ClassId);
-                    unitOfWork.GetRepository<scf_Class>().Delete(model);
-                    //var deletedModel = new ClassDeleteResponseModel()
-                    //{
-                    //    ClassId = model.ClassId,
-                    //    Code = model.Code,
-                    //    Name = model.Name,
-                    //    Message = "OK"
-                    //};
+                    model.IsActive = false;
+                    unitOfWork.GetRepository<scf_Class>().Update(model);
                     unitOfWork.Save();
 
                     return new Response<Class>(ConfigType.SUCCESS, "DELETED", ConvertClass(model));
