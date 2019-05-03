@@ -24,6 +24,7 @@
     <EntitySetMapping Name="scf_Student">
       <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Student">
         <MappingFragment StoreEntitySet="scf_Student">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -49,6 +50,7 @@
     <EntitySetMapping Name="scf_Teacher">
       <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher">
         <MappingFragment StoreEntitySet="scf_Teacher">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />

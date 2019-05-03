@@ -271,7 +271,8 @@ namespace SAVIS.FW.Business.Logic.Student
                         Name = student.Name,
                         Birthday = student.Birthday,
                         ClassRoleId = null,
-                        ClassId = null
+                        ClassId = null,
+                        IsActive = true
                     };
                     if (student.ClassRoleId != Guid.Empty)
                     {

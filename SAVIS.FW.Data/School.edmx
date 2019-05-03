@@ -33,6 +33,7 @@
           <Property Name="Birthday" Type="date" Nullable="false" />
           <Property Name="ClassRoleId" Type="uniqueidentifier" />
           <Property Name="ClassId" Type="uniqueidentifier" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="scf_Student_History">
           <Key>
@@ -54,6 +55,7 @@
           <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="scf_Teacher_History">
           <Key>
@@ -242,6 +244,7 @@
           <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_Class" FromRole="scf_Student" ToRole="scf_Class" />
           <NavigationProperty Name="scf_Class_Role" Relationship="Self.FK_Student_Class_Role" FromRole="scf_Student" ToRole="scf_Class_Role" />
           <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student" ToRole="scf_Student_History" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="scf_Student_History">
           <Key>
@@ -268,6 +271,7 @@
           <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
           <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="scf_Teacher_History">
           <Key>
@@ -446,6 +450,7 @@
           <EntitySetMapping Name="scf_Student">
             <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Student">
               <MappingFragment StoreEntitySet="scf_Student">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -471,6 +476,7 @@
           <EntitySetMapping Name="scf_Teacher">
             <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Teacher">
               <MappingFragment StoreEntitySet="scf_Teacher">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

@@ -23,7 +23,18 @@ define(["app",
                 $uibModalInstance.close();
             };
 
+            $scope.Item = item;
             //Save
+
+            var loadData = function () {
+                var promise = TeacherService.TeacherDetail(item.TeacherId);
+                promise.success(function (response) {
+                    $log.debug(response);
+                    $scope.Detail = response.Data;
+                });
+            };
+            loadData();
+
             $scope.Save = function () {
                 var model = {};
                 model.Code = $scope.Item.Code;

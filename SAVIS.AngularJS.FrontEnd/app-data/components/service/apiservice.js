@@ -139,8 +139,16 @@ define(['app', 'components/factory/factory'], function (app) {
                 }, // <--- content type
                 contentType: "application/json; charset=utf-8",
                 method: 'DELETE',
-                url: baseUrl + prefixCoreApiUrl,
+                url: baseUrl + prefixCoreApiUrl + "/deletemany",
                 data: model
+            });
+            return promise;
+        }
+
+        service.TeacherDetail = function (id) {
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "/" + id + "/detail"
             });
             return promise;
         }
@@ -174,6 +182,13 @@ define(['app', 'components/factory/factory'], function (app) {
             var promise = $http({
                 method: 'GET',
                 url: baseUrl + prefixCoreApiUrl + "/" + id
+            });
+            return promise;
+        }
+        service.GetByCode = function (code) {
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "/code/" + code
             });
             return promise;
         }

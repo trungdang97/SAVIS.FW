@@ -10,6 +10,7 @@ namespace SAVIS.FW.Business.Logic.Class
     public interface IClassHandler
     {
         Response<Class> GetClassById(Guid id);
+        Response<Class> GetClassByCode(string code);
         Response<Class> CreateClass(ClassCreateRequestModel Class);
         Response<Class> UpdateClass(ClassUpdateRequestModel Class);
         Response<Class> DeleteClass(Guid ClassId);

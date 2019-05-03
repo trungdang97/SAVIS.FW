@@ -20,6 +20,13 @@ namespace SAVIS.FW.API.Controller
         {
             return _classHandler.GetClassById(classId);
         }
+        [HttpGet]
+        [Route("api/v1/classes/code/{classCode}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<Class> GetClassById(string classCode)
+        {
+            return _classHandler.GetClassByCode(classCode);
+        }
 
         [HttpGet]
         [Route("api/v1/classes/all")]

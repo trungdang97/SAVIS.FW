@@ -158,9 +158,36 @@ namespace SAVIS.FW.Business.Logic.Class
                     {
                         var _teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(Class.TeacherId.Value);
                         Class.scf_Teacher = _teacher;
-                        
+
                     }
-                    return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class));
+                    return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class))
+                    {
+                        DataCount = 1
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+            }
+        }
+        public Response<Class> GetClassByCode(string code)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork())
+                {
+                    var Class = unitOfWork.GetRepository<scf_Class>().Get(x => x.Code == code);
+                    if (Class.TeacherId != null)
+                    {
+                        var _teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(Class.TeacherId.Value);
+                        Class.scf_Teacher = _teacher;
+
+                    }
+                    return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class))
+                    {
+                        DataCount = 1
+                    };
                 }
             }
             catch (Exception ex)
@@ -211,7 +238,7 @@ namespace SAVIS.FW.Business.Logic.Class
                     List<scf_Class> classes = unitOfWork.GetRepository<scf_Class>().GetAll().ToList();
                     return new Response<IList<Class>>(ConfigType.SUCCESS, "OK", ConvertClasses(classes));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
                 }
@@ -232,7 +259,8 @@ namespace SAVIS.FW.Business.Logic.Class
                         ClassId = Guid.NewGuid(),
                         Code = Class.Code,
                         Name = Class.Name,
-                        StudentQuantity = 0
+                        StudentQuantity = 0,
+                        IsActive = true
                     };
                     //unitOfWork.GetRepository<scf_Class>().Add(model);
                     //db.Set<scf_Class>().Add(model);

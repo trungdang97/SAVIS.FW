@@ -12,7 +12,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
         public string Code { get; set; }
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
-        public List<Class.Class> Classes { get; set; }
+        public List<TeacherClassHistory> Classes { get; set; }
     }
 
     public class TeacherCreateRequestModel
@@ -40,5 +40,12 @@ namespace SAVIS.FW.Business.Logic.Teacher
             PageSize = 10;
             PageNumber = 1;
         }
+    }
+
+    public class TeacherClassHistory
+    {
+        public Class.Class Class { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
     }
 }

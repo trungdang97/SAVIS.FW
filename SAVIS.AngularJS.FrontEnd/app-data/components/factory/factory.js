@@ -10,7 +10,7 @@ define(['app'], function (app) {
         factory.Teacher = {};
         factory.Class = {};
         factory.Student = {};
-        
+        factory.ClassDetailId = null;
 
 		return factory;
 

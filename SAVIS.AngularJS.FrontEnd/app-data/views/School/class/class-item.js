@@ -25,10 +25,16 @@ define(["app",
 
             $scope.Item = item;
             $scope.modalName = "Tạo mới";
-            var Init = function(){
+            var Init = function () {
                 $scope.modalName = "Sửa thông tin";
             };
 
+            var Warnings = [
+                "Mã lớp đã tồn tại hoặc vượt quá 10 kí tự",
+                "Cần điền mã lớp"
+            ];
+            
+            $scope.error = false;
             //Save
             $scope.Save = function () {
                 var model = {};
@@ -44,17 +50,29 @@ define(["app",
                     });
                 }
                 else {
-                    var promise = ClassService.Create(model);
-                    promise.success(function (response) {
-                        $log.debug(response);
-                        $uibModalInstance.close();
-                        //loadData();
-                    });
+                    if ($scope.Item.Code == null) {
+                        $scope.Throw = Warnings[1];
+                        $scope.error = true;
+                    }
+                    else {
+                        var promise = ClassService.Create(model);
+                        promise.success(function (response) {
+                            $log.debug(response);
+                            if (response.Status == -1) {
+                                $scope.Throw = Warnings[0];
+                                $scope.error = true;
+                            }
+                            else {
+                                $uibModalInstance.close();
+                            }
+                            //loadData();
+                        });
+                    }
                 }
             };
 
-            var loadData = function(){
-                if(item != null){
+            var loadData = function () {
+                if (item != null) {
                     Init();
                 }
             };
@@ -62,12 +80,7 @@ define(["app",
 
 
             ///////// TABLES 
-            /* Header grid datatable */
-            $scope.Headers = [
-                { Key: '#', Value: "Mã sinh viên", Width: 'auto', Align: 'text-center' },
-                { Key: '#', Value: "Tên sinh viên", Width: 'auto', Align: 'text-center' },
-                { Key: '#', Value: "Ngày sinh", Width: '15%', Align: 'text-center' },
-            ];
+
             ////////////////
         }
     ])

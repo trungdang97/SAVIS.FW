@@ -28,6 +28,7 @@
     <Property Name="Birthday" Type="date" Nullable="false" />
     <Property Name="ClassRoleId" Type="uniqueidentifier" />
     <Property Name="ClassId" Type="uniqueidentifier" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="scf_Student_History">
     <Key>
@@ -49,6 +50,7 @@
     <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Birthday" Type="date" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="scf_Teacher_History">
     <Key>

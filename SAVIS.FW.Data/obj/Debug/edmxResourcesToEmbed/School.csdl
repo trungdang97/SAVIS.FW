@@ -37,6 +37,7 @@
     <NavigationProperty Name="scf_Class" Relationship="Self.FK_Student_Class" FromRole="scf_Student" ToRole="scf_Class" />
     <NavigationProperty Name="scf_Class_Role" Relationship="Self.FK_Student_Class_Role" FromRole="scf_Student" ToRole="scf_Class_Role" />
     <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_Student" FromRole="scf_Student" ToRole="scf_Student_History" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="scf_Student_History">
     <Key>
@@ -63,6 +64,7 @@
     <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
     <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="scf_Teacher_History">
     <Key>

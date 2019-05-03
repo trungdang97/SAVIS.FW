@@ -241,8 +241,9 @@
             };
 
             /*Redirection methods*/
-            $scope.RedirectToDetail = function(classCode){
-                $location.url("/class-detail/"+classCode)
+            $scope.RedirectToDetail = function (Class) {
+                constantsFactory.ClassDetailId = Class.ClassId;
+                $location.url("/class-detail/" + Class.Code + "/");
             };
         }
     ]);

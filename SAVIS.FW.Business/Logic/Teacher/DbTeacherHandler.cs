@@ -33,8 +33,18 @@ namespace SAVIS.FW.Business.Logic.Teacher
                         return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     var response = ConvertTeacher(teacher);
-                    var classes = unitOfWork.GetRepository<scf_Class>().GetMany(x => x.TeacherId == teacherId).ToList();
-                    response.Classes = classes.Select(DbClassHandler.ConvertClass).ToList();
+                    var history = unitOfWork.GetRepository<scf_Teacher_History>().GetMany(x => x.TeacherId == teacherId).ToList();
+                    response.Classes = new List<TeacherClassHistory>();
+                    foreach(var _history in history)
+                    {
+                        var _class = unitOfWork.GetRepository<scf_Class>().Get(x => x.ClassId == _history.ClassId);
+                        response.Classes.Add(new TeacherClassHistory()
+                        {
+                            Class = DbClassHandler.ConvertClass(_class),
+                            FromDate = _history.StartDate,
+                            ToDate = (_history.EndDate.HasValue == true) ? _history.EndDate.Value : DateTime.MinValue
+                        });
+                    }
 
                     return new Response<Teacher>(ConfigType.SUCCESS, "OK", response);
                 }
@@ -59,7 +69,15 @@ namespace SAVIS.FW.Business.Logic.Teacher
                         return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists", null);
                     }
                     var response = ConvertTeacher(model);
-                    response.Classes = DbClassHandler.ConvertClasses(unitOfWork.GetRepository<scf_Class>().GetMany(x=>x.TeacherId == response.TeacherId).ToList());
+                    response.Classes = new List<TeacherClassHistory>();//
+                    var lstHistory = unitOfWork.GetRepository<scf_Teacher_History>().GetMany(x => x.TeacherId == teacherId);
+                    foreach(var history in lstHistory)
+                    {
+                        if(!response.Classes.Exists(x=>x.Class.ClassId == history.ClassId))
+                        {
+
+                        }
+                    }
                     return new Response<Teacher>(ConfigType.SUCCESS, "OK", response);
                 }
             }
@@ -113,7 +131,8 @@ namespace SAVIS.FW.Business.Logic.Teacher
                         TeacherId = Guid.NewGuid(),
                         Code = teacher.Code,
                         Name = teacher.Name,
-                        Birthday = teacher.Birthday
+                        Birthday = teacher.Birthday,
+                        IsActive = true
                     };
                     unitOfWork.GetRepository<scf_Teacher>().Add(model);
                     unitOfWork.Save();

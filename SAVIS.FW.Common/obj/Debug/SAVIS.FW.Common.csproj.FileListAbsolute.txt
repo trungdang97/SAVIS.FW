@@ -24,3 +24,16 @@ C:\Users\trung\Desktop\Work\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.p
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.csprojAssemblyReference.cache
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.csproj.CoreCompileInputs.cache
 C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.csproj.CopyComplete
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\SAVIS.FW.Common.dll.config
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\SAVIS.FW.Common.dll
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\SAVIS.FW.Common.pdb
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\log4net.dll
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\bin\Debug\log4net.xml
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.csprojAssemblyReference.cache
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.csproj.CoreCompileInputs.cache
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.csproj.CopyComplete
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.dll
+C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Common\obj\Debug\SAVIS.FW.Common.pdb

@@ -25,6 +25,7 @@ namespace SAVIS.FW.Data
         public string Code { get; set; }
         public string Name { get; set; }
         public System.DateTime Birthday { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<scf_Class> scf_Class { get; set; }
