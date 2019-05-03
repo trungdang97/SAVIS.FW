@@ -14,7 +14,7 @@ namespace SAVIS.FW.Business.Logic.Student
         Response<Student> CreateStudent(StudentCreateRequestModel student);
         Response<Student> UpdateStudent(StudentUpdateRequestModel student);
         Response<Student> DeleteStudent(Guid studentId);
-
+        Response<IList<Student>> DeleteMany(List<Guid> deletedItems);
         //Nghiep vu
         Response<Student> JoinClass(Guid studentId, Guid? classId);
         //Response<Student> LeaveClass(Guid studentId, Guid? ToClassId);

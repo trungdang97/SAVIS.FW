@@ -45,6 +45,11 @@ namespace SAVIS.FW.API.Controller
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Student> Update([FromBody]StudentUpdateRequestModel student)
         {
+            if(student.Birthday.Hour == 17)
+            {
+                //UTC thi phai + 7 ve local
+                student.Birthday = student.Birthday.AddHours(7);
+            }
             return _studentHandler.UpdateStudent(student);
         }
 
@@ -54,6 +59,14 @@ namespace SAVIS.FW.API.Controller
         public Response<Student> Delete(Guid studentId)
         {
             return _studentHandler.DeleteStudent(studentId);
+        }
+
+        [HttpDelete]
+        [Route("api/v1/students/deletemany")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<Student>> DeleteMany([FromBody]List<Guid> model)
+        {
+            return _studentHandler.DeleteMany(model);
         }
 
         [HttpPut]

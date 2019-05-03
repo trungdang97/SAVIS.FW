@@ -14,6 +14,7 @@
     <NavigationProperty Name="scf_Student_History" Relationship="Self.FK_Student_History_FromClass" FromRole="scf_Class" ToRole="scf_Student_History" />
     <NavigationProperty Name="scf_Student_History1" Relationship="Self.FK_Student_History_ToClass" FromRole="scf_Class" ToRole="scf_Student_History" />
     <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Class" FromRole="scf_Class" ToRole="scf_Teacher_History" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="scf_Class_Role">
     <Key>

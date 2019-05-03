@@ -1,4 +1,4 @@
-﻿ "use strict";
+﻿"use strict";
 define(["app",
     'components/service/amdservice',
     'components/service/apiservice',
@@ -24,20 +24,45 @@ define(["app",
                 $uibModalInstance.close();
             };
 
+            $scope.modalName = "Tạo mới";
+            //init
+            var Init = function () {
+                $scope.modalName = "Sửa thông tin";
+                $scope.Item = item;
+                $scope.Birthday = item.Birthday;
+                if (item.Class != null) {
+                    $scope.Class = item.Class.ClassId;
+                }
+            }
+
             //Save
             $scope.Save = function () {
                 var model = {};
+                model.StudentId = $scope.Item.StudentId;
                 model.Code = $scope.Item.Code;
                 model.Name = $scope.Item.Name;
-                model.Birthday = $scope.Birthday;
-                model.ClassId = $scope.Class.ClassId;
 
+                //date
+                var date = $scope.Item.Birthday;
+                model.Birthday = date;
+                console.log(model.Birthday);
+                //
+                if ($scope.Class != null) {
+                    model.ClassId = $scope.Class;
+                }
+
+                if (model.StudentId != null) {
+                    var promise = StudentService.Update(model);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $uibModalInstance.close();
+                    });
+                    return;
+                }
                 var promise = StudentService.Create(model);
                 promise.success(function (response) {
                     $log.debug(response);
                     $uibModalInstance.close();
-                    
-                    //loadData();
                 });
             };
 
@@ -51,8 +76,10 @@ define(["app",
 
             //class
             var loadData = function () {
+                if (item != null) {
+                    Init();
+                }
                 var promise = ClassService.GetAll();
-                
                 promise.success(function (data) {
                     $log.debug(data);
                     $scope.Classes = data.Data;

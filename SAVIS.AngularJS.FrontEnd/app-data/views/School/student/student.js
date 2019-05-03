@@ -80,11 +80,6 @@
                             if ($scope.TotalCount !== 0) {
                                 $scope.FromDocument = parseInt(($scope.PageNumber - 1) * $scope.PageSize + 1);
                                 $scope.ToDocument = $scope.FromDocument + $scope.ListData.length - 1;
-                                $scope.count_req++;
-                                console.log("This is " + $scope.count_req + " request");
-                                console.log("From: " + $scope.FromDocument);
-                                console.log("To: " + $scope.ToDocument);
-                            
                             }
                         }
                     }).error(function (response) {
@@ -166,6 +161,7 @@
                         var promise = StudentService.Delete(item.StudentId);
                         promise.success(function (response) {
                             $log.debug(response);
+                            var deleteResult = constantsAMD.OpenDialog('Xóa thành công', 'Chú ý', '', 'Đóng', 'sm');
                             loadData();
                         })
 
@@ -186,6 +182,7 @@
                         var promise = StudentService.DeleteMany(listDeleteting);
                         promise.success(function (response) {
                             $log.debug(response);
+                            var deleteResult = constantsAMD.OpenDialog('Xóa thành công', 'Chú ý', '', 'Đóng', 'sm');
                             loadData();
                         })
 

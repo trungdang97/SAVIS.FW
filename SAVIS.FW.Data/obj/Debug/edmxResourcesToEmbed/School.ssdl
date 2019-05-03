@@ -9,6 +9,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="StudentQuantity" Type="int" Nullable="false" />
     <Property Name="TeacherId" Type="uniqueidentifier" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="scf_Class_Role">
     <Key>

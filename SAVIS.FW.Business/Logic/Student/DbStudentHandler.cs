@@ -316,6 +316,32 @@ namespace SAVIS.FW.Business.Logic.Student
                 return new Response<Student>(ConfigType.ERROR, ex.Message, null);
             }
         }
+        public Response<IList<Student>> DeleteMany(List<Guid> deletedItems)
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork())
+                {
+                    List<scf_Student> lstStudent = new List<scf_Student>();
+                    foreach(Guid guid in deletedItems)
+                    {
+                        var model = unitOfWork.GetRepository<scf_Student>().GetById(guid);
+                        if(model != null)
+                        {
+                            lstStudent.Add(model);
+                            unitOfWork.GetRepository<scf_Student>().Delete(model);
+                        }
+                    }
+                    unitOfWork.Save();
+                    return new Response<IList<Student>>(ConfigType.SUCCESS, "DELETED", ConvertStudents(lstStudent));
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
+            }
+        }
+
         public Response<Student> UpdateStudent(StudentUpdateRequestModel student)
         {
             try
@@ -329,8 +355,8 @@ namespace SAVIS.FW.Business.Logic.Student
                     }
                     model.Name = student.Name;
                     model.Birthday = student.Birthday;
-                    model.ClassId = (student.ClassId != Guid.Empty) ? null : student.ClassId;
-                    model.ClassRoleId = (student.ClassRoleId != Guid.Empty) ? null : student.ClassRoleId;
+                    model.ClassId = (student.ClassId != Guid.Empty) ? student.ClassId : null;
+                    model.ClassRoleId = (student.ClassRoleId != Guid.Empty) ? student.ClassRoleId : null;
 
                     unitOfWork.GetRepository<scf_Student>().Update(model);
                     unitOfWork.Save();

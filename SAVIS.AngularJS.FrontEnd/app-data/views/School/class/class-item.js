@@ -23,8 +23,12 @@ define(["app",
                 $uibModalInstance.close();
             };
 
-
             $scope.Item = item;
+            $scope.modalName = "Tạo mới";
+            var Init = function(){
+                $scope.modalName = "Sửa thông tin";
+            };
+
             //Save
             $scope.Save = function () {
                 var model = {};
@@ -48,6 +52,23 @@ define(["app",
                     });
                 }
             };
+
+            var loadData = function(){
+                if(item != null){
+                    Init();
+                }
+            };
+            loadData();
+
+
+            ///////// TABLES 
+            /* Header grid datatable */
+            $scope.Headers = [
+                { Key: '#', Value: "Mã sinh viên", Width: 'auto', Align: 'text-center' },
+                { Key: '#', Value: "Tên sinh viên", Width: 'auto', Align: 'text-center' },
+                { Key: '#', Value: "Ngày sinh", Width: '15%', Align: 'text-center' },
+            ];
+            ////////////////
         }
     ])
 });

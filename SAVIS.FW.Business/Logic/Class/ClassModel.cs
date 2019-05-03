@@ -61,9 +61,4 @@ namespace SAVIS.FW.Business.Logic.Class
         public string Name { get; set; }
         public string Message { get; set; }
     }
-
-    public class ClassDeleteRequestModel
-    {
-        public List<Guid> DeleteItems { get; set; }
-    }
 }

@@ -5,9 +5,13 @@ define(['app'], function (app) {
         // Return factory
         factory.ApiUrl = "http://localhost:9000/";
 
+        factory.Formatter = {};
+
         factory.Teacher = {};
         factory.Class = {};
         factory.Student = {};
+        
+
 		return factory;
 
     });

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="scf_Class">
       <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Class">
         <MappingFragment StoreEntitySet="scf_Class">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="ClassId" ColumnName="ClassId" />
           <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />

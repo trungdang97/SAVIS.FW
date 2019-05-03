@@ -8,7 +8,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-cogs"></i>
-                <span class="caption-subject bold uppercase">Tạo mới sinh viên</span>
+                <span class="caption-subject bold uppercase">{{modalName}} sinh viên</span>
                 <!--<span class="caption-helper">cấu hình...</span>-->
             </div>
         </div>
@@ -38,7 +38,8 @@
                                 <input type="text"
                                        id="StartDate"
                                        name="StartDate"
-                                       ng-model="Birthday"
+                                       ng-model="Item.Birthday"
+                                       ng-value = "Item.Birthday | date:'dd/MM/yyyy'"
                                        class="form-control input-sm"
                                        ng-click="open1($event)"
                                        uib-datepicker-popup="dd/MM/yyyy"
@@ -55,8 +56,12 @@
                     <div class="form-group">
                         <label class="control-label  text-bold col-md-4">Lớp </label>
                         <div class="col-md-8 ">
-                            <select ng-model="Class" ng-options="class.Name for class in Classes" class="form-control input-sm">
+                            <select ng-model="Class" ng-options="class.ClassId as class.Name for class in Classes" ng-selected="class.ClassId == Class" class="form-control input-sm">
+                                <option value="">Không</option>
                             </select>
+                            <!-- <select ng-model="Class" class="form-control input-sm">
+                                <option ng-repeat="class in Classes" value="{{class.ClassId}}" ng-selected="class.ClassId == Class">{{class.Name}}</option>
+                            </select> -->
                         </div>
                     </div>
                 </div>

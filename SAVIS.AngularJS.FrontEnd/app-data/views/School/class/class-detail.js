@@ -1,11 +1,11 @@
-﻿define(['jquery', 'app', 'angular-sanitize',
+define(['jquery', 'app', 'angular-sanitize',
     'components/factory/factory',
     'components/service/apiservice',
     'components/service/amdservice',
     'views/School/class/class-item',
     'components/formly-template/formly-factory',
 ], function (jQuery, app) {
-    app.controller('ClassCtrl', ['$scope', '$sce', '$timeout', '$location', '$log', '$http', '$uibModal', 'constantsFactory',
+    app.controller('ClassDetailCtrl', ['$scope', '$sce', '$timeout', '$location', '$log', '$http', '$uibModal', 'constantsFactory',
         'constantsAMD', '$routeParams', 'Notifications', 'ClassService', 'FormlyFactory',
         function ($scope, $sce, $timeout, $location, $log, $http, $uibModal, constantsFactory,
             constantsAMD, $routeParams, Notifications, ClassService, FormlyFactory) {
@@ -22,19 +22,13 @@
             };
             /*------------------------------------------------------------------**/
 
+            //params
+            var queryCode = $routeParams.ClassCode;
+            console.log(queryCode);
+
             var itemDialogUrl = '/app-data/views/School/class/class-item.html';
             $scope.ListSelected = [];
             $scope.SelectAll = false;
-
-            /* Header grid datatable */
-            $scope.Headers = [
-                { Key: '#', Value: "Mã lớp", Width: 'auto', Align: 'text-center' },
-                { Key: '#', Value: "Tên lớp", Width: 'auto', Align: 'text-center' },
-                { Key: '#', Value: "Số lượng sinh viên", Width: '15%', Align: 'text-center' },
-                { Key: '#', Value: "Giáo viên chủ nhiệm", Width: 'auto', Align: 'text-center' },
-                { Key: 'Handler', Value: "Xử Lý", Width: '10%', Align: 'text-center' },
-            ];
-
 
             var loadData = function () {
                 var qs = $location.search();
@@ -241,8 +235,8 @@
             };
 
             /*Redirection methods*/
-            $scope.RedirectToDetail = function(classCode){
-                $location.url("/class-detail/"+classCode)
+            $scope.RedirectToDetail = new function(classCode){
+                $location.url("class-detail/"+classCode);
             };
         }
     ]);

@@ -47,10 +47,10 @@ define(['app', 'components/factory/factory'], function (app) {
             return promise;
         }
 
-        service.Update = function (id, model) {
+        service.Update = function (model) {
             var promise = $http({
                 method: 'PUT',
-                url: baseUrl + prefixCoreApiUrl + "/" + id,
+                url: baseUrl + prefixCoreApiUrl,
                 data: model
             });
             return promise;
@@ -67,8 +67,13 @@ define(['app', 'components/factory/factory'], function (app) {
 
         service.DeleteMany = function (model) {
             var promise = $http({
+                headers: {
+                    'Accept': 'application/vnd.hal+json',
+                    'Content-Type': 'application/json'
+                }, // <--- content type
+                contentType: "application/json; charset=utf-8",
                 method: 'DELETE',
-                url: baseUrl + prefixCoreApiUrl,
+                url: baseUrl + prefixCoreApiUrl + "/deletemany",
                 data: model
             });
             return promise;
@@ -128,6 +133,11 @@ define(['app', 'components/factory/factory'], function (app) {
 
         service.DeleteMany = function (model) {
             var promise = $http({
+                headers: {
+                    'Accept': 'application/vnd.hal+json',
+                    'Content-Type': 'application/json'
+                }, // <--- content type
+                contentType: "application/json; charset=utf-8",
                 method: 'DELETE',
                 url: baseUrl + prefixCoreApiUrl,
                 data: model
@@ -206,7 +216,6 @@ define(['app', 'components/factory/factory'], function (app) {
                 url: baseUrl + prefixCoreApiUrl + "/deletemany",
                 data: model
             });
-            console.log(JSON.stringify(model));
             return promise;
         }
         return service;
