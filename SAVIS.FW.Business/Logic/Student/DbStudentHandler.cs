@@ -255,6 +255,24 @@ namespace SAVIS.FW.Business.Logic.Student
                 return new Response<Student>(ConfigType.ERROR, ex.Message, null);
             }
         }
+
+        public Response<IList<Student>> GetUnassignedStudents()
+        {
+            try
+            {
+                using(var unitOfWork = new UnitOfWork())
+                {
+                    var students = ConvertStudents(unitOfWork.GetRepository<scf_Student>().GetMany(x => x.ClassId == null && x.IsActive == true).ToList());
+                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", students) {
+                        TotalCount = students.Count
+                    };
+                }
+            }
+            catch(Exception ex)
+            {
+                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
+            }
+        }
         #endregion
 
         #region CUD

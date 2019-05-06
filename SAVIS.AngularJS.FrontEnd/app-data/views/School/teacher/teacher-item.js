@@ -23,6 +23,14 @@ define(["app",
                 $uibModalInstance.close();
             };
 
+            //Headers
+            $scope.Headers = [
+                { Key: '#', Value: "Mã lớp", Width: 'auto', Align: 'text-center' },
+                { Key: '#', Value: "Tên lớp", Width: 'auto', Align: 'text-center' },
+                { Key: '#', Value: "Từ ngày", Width: 'auto', Align: 'text-center' },
+                { Key: '#', Value: "Đến ngày", Width: 'auto', Align: 'text-center' },
+            ];
+
             $scope.Item = item;
             //Save
 
@@ -30,7 +38,7 @@ define(["app",
                 var promise = TeacherService.TeacherDetail(item.TeacherId);
                 promise.success(function (response) {
                     $log.debug(response);
-                    $scope.Detail = response.Data;
+                    $scope.Details = response.Data.Classes;
                 });
             };
             loadData();

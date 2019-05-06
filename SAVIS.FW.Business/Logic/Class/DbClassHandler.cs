@@ -37,43 +37,6 @@ namespace SAVIS.FW.Business.Logic.Class
                     }
                     teacher.TeacherId = (teacherId == Guid.Empty) ? null : teacherId;
                     unitOfWork.GetRepository<scf_Class>().Update(teacher);
-
-                    //log
-
-                    if (teacherHistory != null && teacherId == null)
-                    {
-                        //không quản lý lớp nữa và không có người tiếp nhận
-                        teacherHistory.EndDate = DateTime.Now;
-                        unitOfWork.GetRepository<scf_Teacher_History>().Update(teacherHistory);
-                    }
-                    else if (teacherId != _teacherId)
-                    {
-                        //có người tiếp nhận / chuyển giao
-                        teacherHistory.EndDate = DateTime.Now;
-                        unitOfWork.GetRepository<scf_Teacher_History>().Update(teacherHistory);
-                        teacherHistory = new scf_Teacher_History()
-                        {
-                            TeacherHistoryId = Guid.NewGuid(),
-                            TeacherId = teacherId.Value,
-                            StartDate = DateTime.Today,
-                            ClassId = classId
-                        };
-                        unitOfWork.GetRepository<scf_Teacher_History>().Add(teacherHistory);
-                    }
-                    else if (teacherHistory == null && teacherId != null)
-                    {
-                        //tiếp nhận lớp quản lý
-                        teacherHistory = new scf_Teacher_History()
-                        {
-                            TeacherHistoryId = Guid.NewGuid(),
-                            TeacherId = teacherId.Value,
-                            ClassId = classId,
-                            StartDate = DateTime.Today
-                        };
-                        unitOfWork.GetRepository<scf_Teacher_History>().Add(teacherHistory);
-                    }
-
-
                     unitOfWork.Save();
 
                     teacher = unitOfWork.GetRepository<scf_Class>().GetById(classId);
@@ -182,9 +145,12 @@ namespace SAVIS.FW.Business.Logic.Class
                     {
                         var _teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(Class.TeacherId.Value);
                         Class.scf_Teacher = _teacher;
-
+                        
                     }
-                    return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class))
+                    var response = ConvertClass(Class);
+                    response.Students = DbStudentHandler.ConvertStudents(unitOfWork.GetRepository<scf_Student>().GetMany(x => x.ClassId == Class.ClassId).ToList());
+
+                    return new Response<Class>(ConfigType.SUCCESS, "OK", response)
                     {
                         DataCount = 1
                     };

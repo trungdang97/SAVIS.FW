@@ -32,6 +32,14 @@ namespace SAVIS.FW.API.Controller
             return _studentHandler.GetFilter(studentFilter);
         }
 
+        [HttpGet]
+        [Route("api/v1/students/unassigned")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<Student>> GetUnassignedStudents()
+        {
+            return _studentHandler.GetUnassignedStudents();
+        }
+
         [HttpPost]
         [Route("api/v1/students")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]

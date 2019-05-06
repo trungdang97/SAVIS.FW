@@ -38,6 +38,14 @@ define(['app', 'components/factory/factory'], function (app) {
             return promise;
         };
 
+        service.GetUnassignedStudents = function () {
+            var promise = $http({
+                method: "GET",
+                url: baseUrl + prefixCoreApiUrl + "/unassigned"
+            });
+            return promise;
+        };
+
         service.Create = function (model) {
             var promise = $http({
                 method: 'POST',

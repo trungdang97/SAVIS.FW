@@ -33,7 +33,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                         return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     var response = ConvertTeacher(teacher);
-                    var history = unitOfWork.GetRepository<scf_Teacher_History>().GetMany(x => x.TeacherId == teacherId).ToList();
+                    var history = unitOfWork.GetRepository<scf_Teacher_History>().GetMany(x => x.TeacherId == teacherId).OrderByDescending(x=>x.StartDate).ThenByDescending(x=>x.EndDate).ToList();
                     response.Classes = new List<TeacherClassHistory>();
                     foreach(var _history in history)
                     {
@@ -42,7 +42,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                         {
                             Class = DbClassHandler.ConvertClass(_class),
                             FromDate = _history.StartDate,
-                            ToDate = (_history.EndDate.HasValue == true) ? _history.EndDate.Value : DateTime.MinValue
+                            ToDate = _history.EndDate
                         });
                     }
 

@@ -19,6 +19,7 @@ namespace SAVIS.FW.Business.Logic.Student
         Response<Student> JoinClass(Guid studentId, Guid? classId);
         //Response<Student> LeaveClass(Guid studentId, Guid? ToClassId);
         Response<Student> AssignToRole(Guid studentId, Guid classRoleId);
+        Response<IList<Student>> GetUnassignedStudents();
         int TotalQuantity();
     }
 }

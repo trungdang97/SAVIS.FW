@@ -74,3 +74,36 @@ begin
 end
 go
 -------------------------------
+
+--Teacher Log Triggers
+drop trigger if exists scf_Class_Insert_Trigger
+go
+create trigger scf_Class_Insert_Trigger on scf_Class
+after insert
+as
+begin
+	--declare @tbl_TeacherHistory as table(TeacherId uniqueidentifier, ClassId uniqueidentifier, StartDate date, EndDate date)
+	insert into scf_Teacher_History(TeacherId,ClassId,StartDate)
+	select A.TeacherId, A.ClassId, getdate()
+	from inserted as A
+	where A.TeacherId is not null
+end
+go
+
+drop trigger if exists scf_Class_Update_Trigger
+go
+create trigger scf_Class_Update_Trigger on scf_Class
+after update
+as
+begin
+	update scf_Teacher_History
+	set EndDate = getdate()
+	from deleted as A
+	inner join scf_Teacher_History as B on B.ClassId = A.ClassId and B.TeacherId = A.TeacherId
+	
+	insert into scf_Teacher_History(TeacherHistoryId,ClassId,TeacherId,StartDate)
+	select newid() ,ClassId, TeacherId, getdate()
+	from inserted
+	where TeacherId is not null
+end
+go

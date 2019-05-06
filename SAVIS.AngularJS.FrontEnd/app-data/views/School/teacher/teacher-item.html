@@ -40,31 +40,38 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    Danh sách lớp
+                    Danh sách lớp quản lý
                 </div>
             </div>
             <div class="row">
-                <table>
-                    <tr>
-                        <th>Mã lớp</th>
-                        <th>Tên lớp</th>
-                        <th>Từ ngày</th>
-                        <th>Đến ngày</th>
-                    </tr>
-                    <tr ng-repeat="">
-
-                    </tr>
-                </table>
+                <div class="col-md-6">
+                    <table class="table table-striped table-hover dataTable table-bordered">
+                        <thead>
+                            <tr style="background-color: #eeeeee;">
+                                <th ng-repeat="header in Headers" width="{{header.Width}}" class="{{header.Align}}">
+                                    {{header.Value}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="detail in Details">
+                            <td>{{detail.Class.Code}}</td>
+                            <td>{{detail.Class.Name}}</td>
+                            <td>{{detail.FromDate | date: "dd/MM/yyyy"}}</td>
+                            <td ng-if="detail.ToDate != null">{{detail.ToDate | date: "dd/MM/yyyy"}}</td>
+                            <td ng-if="detail.ToDate == null" align="center">Nay</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
-    <div class="modal-footer">
-        <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">
-            <i class="fa fa-save"></i> Lưu
-        </a>
-        <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
-            <i class="fa fa-ban"></i> Đóng
-        </a>
-    </div>
+        <div class="modal-footer">
+            <a href="javascript:;" ng-click="Save()" class="btn btn-sm btn-primary">
+                <i class="fa fa-save"></i> Lưu
+            </a>
+            <a href="javascript:;" ng-click="Cancel()" class="btn btn-sm btn-warning">
+                <i class="fa fa-ban"></i> Đóng
+            </a>
+        </div>
 </form>
 <div class="alerts" ng-show="notify.queue.length > 0">
     <div class="alert alert-{{(m.type)||'info'}} alert-dismissable fade in pull-right" ng-repeat="m in notify.queue">
