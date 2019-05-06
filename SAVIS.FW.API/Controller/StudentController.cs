@@ -80,7 +80,7 @@ namespace SAVIS.FW.API.Controller
         [HttpPut]
         [Route("api/v1/students/class")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Student> InAndOut(Guid studentId, Guid? classId)
+        public Response<IList<Student>> InAndOut(List<Guid> studentId, Guid? classId)
         {
             return _studentHandler.JoinClass(studentId, classId);
         }

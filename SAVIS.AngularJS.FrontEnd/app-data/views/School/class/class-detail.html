@@ -52,8 +52,8 @@
                             <tr style="background-color: #eeeeee;">
                                 <th class="table-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
                                     <div class="checker">
-                                        <span ng-class="SelectAll?'checked':''">
-                                            <input type="checkbox" class="group-checkable" ng-click="SelectAllItem()" ng-model="SelectAll">
+                                        <span ng-class="SelectAllOut?'checked':''">
+                                            <input type="checkbox" class="group-checkable" ng-click="SelectAllOutItem()" ng-model="SelectAllOut">
                                         </span>
                                     </div>
                                 </th>
@@ -63,11 +63,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="student in Class.Students" ng-class="data.Selecting?'selected':''">
+                            <tr ng-repeat="student in Class.Students" ng-class="student.Selecting?'selected':''">
                                 <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
                                     <div class="checker">
-                                        <span ng-class="data.Selecting?'checked':''">
-                                            <input type="checkbox" ng-click="SelectItem(data)" ng-model="data.Selecting" class="checkboxes">
+                                        <span ng-class="student.Selecting?'checked':''">
+                                            <input type="checkbox" ng-click="SelectOutItem(student)" ng-model="student.Selecting" class="checkboxes">
                                         </span>
                                     </div>
                                 </th>
@@ -88,7 +88,12 @@
             <div class="col-md-2">
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
-                        <input type="image" src="/assets/image/btn_left.jpg" class="control-button" />
+                        <input type="image" src="/assets/image/btn_left.png" ng-click="MoveIn()" class="control-button" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center;">
+                        <input type="image" src="/assets/image/btn_right.png" class="control-button" />
                     </div>
                 </div>
             </div>
@@ -99,8 +104,8 @@
                             <tr style="background-color: #eeeeee;">
                                 <th class="table-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
                                     <div class="checker">
-                                        <span ng-class="SelectAll?'checked':''">
-                                            <input type="checkbox" class="group-checkable" ng-click="SelectAllItem()" ng-model="SelectAll">
+                                        <span ng-class="SelectAllIn?'checked':''">
+                                            <input type="checkbox" class="group-checkable" ng-click="SelectAllInItem()" ng-model="SelectAllIn">
                                         </span>
                                     </div>
                                 </th>
@@ -110,11 +115,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="student in UnassignedStudents" ng-class="data.Selecting?'selected':''">
+                            <tr ng-repeat="student in UnassignedStudents" ng-class="student.Selecting?'selected':''">
                                 <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
                                     <div class="checker">
-                                        <span ng-class="data.Selecting?'checked':''">
-                                            <input type="checkbox" ng-click="SelectItem(data)" ng-model="data.Selecting" class="checkboxes">
+                                        <span ng-class="student.Selecting?'checked':''">
+                                            <input type="checkbox" ng-click="SelectInItem(student)" ng-model="student.Selecting" class="checkboxes">
                                         </span>
                                     </div>
                                 </th>

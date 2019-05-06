@@ -64,6 +64,16 @@ define(['app', 'components/factory/factory'], function (app) {
             return promise;
 
         }
+        service.InAndOut = function (models, id) {
+            var model = { studentId: models, classId: id }
+            var promise = $http({
+                method: 'PUT',
+                url: baseUrl + prefixCoreApiUrl + "/class",
+                data: model
+            });
+            return promise;
+
+        }
 
         service.Delete = function (id) {
             var promise = $http({

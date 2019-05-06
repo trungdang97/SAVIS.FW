@@ -16,121 +16,41 @@ namespace SAVIS.FW.Business.Logic.Student
         ILogService logger = BusinessServiceLocator.Instance.GetService<ILogService>();
 
         #region Nghiep vu
-        public Response<Student> JoinClass(Guid studentId, Guid? classId)
+        public Response<IList<Student>> JoinClass(List<Guid> studentId, Guid? classId)
         {
             try
             {
                 using (var unitOfWork = new UnitOfWork())
                 {
-                    var student = unitOfWork.GetRepository<scf_Student>().GetById(studentId);
-                    Guid? _classId = student.ClassId;
-                    if (classId == _classId)
+                    List<scf_Student> lstStudent = new List<scf_Student>();
+                    foreach (var id in studentId)
                     {
-                        if (classId == null) //không có lớp sẵn
+                        var student = unitOfWork.GetRepository<scf_Student>().GetById(id);
+                        Guid? _classId = student.ClassId;
+                        if (classId == _classId)
                         {
-                            // Trường hợp không có lớp => không có lớp
-                            return new Response<Student>(ConfigType.ERROR, "Student doesn't belong to any class.", null);
+                            if (classId == null) //không có lớp sẵn
+                            {
+                                // Trường hợp không có lớp => không có lớp
+                                return new Response<IList<Student>>(ConfigType.ERROR, "Student doesn't belong to any class.", null);
+                            }
+                            //Trường hợp lớp giống nhau
+                            return new Response<IList<Student>>(ConfigType.ERROR, "Student is in the class already.", null);
                         }
-                        //Trường hợp lớp giống nhau
-                        return new Response<Student>(ConfigType.ERROR, "Student is in the class already.", null);
-                    }
-                    student.ClassId = classId;
-
-                    string _className = "";
-                    //if (_classId != null)
-                    //{
-                    //    var _class = unitOfWork.GetRepository<scf_Class>().GetById(_classId.Value);
-                    //    if (classId == null)
-                    //    {
-                    //        _class.StudentQuantity--;
-                    //    }
-                    //    else if (classId != _classId)
-                    //    {
-                    //        _class.StudentQuantity++;
-                    //    }
-                    //    if (_class.StudentQuantity < 0) _class.StudentQuantity = 0;
-                    //    unitOfWork.GetRepository<scf_Class>().Update(_class);
-                    //    _className = _class.Name;
-                    //}
-
-                    var studentHistory = unitOfWork.GetRepository<scf_Student_History>().GetMany(x => x.StudentId == studentId).OrderByDescending(x => x.StartDate).FirstOrDefault();
-                    bool existed = true;
-                    
-                    if(studentHistory == null)
-                    {
-                        studentHistory = new scf_Student_History();
-                        studentHistory.StudentHistoryId = Guid.NewGuid();
-                        studentHistory.StudentId = student.StudentId;
-                        existed = false;
-                    }
-                    else if(studentHistory.EndDate != null)
-                    {
-                        studentHistory.EndDate = DateTime.Now;
-                        unitOfWork.GetRepository<scf_Student_History>().Update(studentHistory);
-                        studentHistory = new scf_Student_History();
-                        studentHistory.StudentHistoryId = Guid.NewGuid();
-                        studentHistory.StudentId = student.StudentId;
-                        existed = false;
-                    }
-                    if (classId == null)
-                    {
-                        //Ra khỏi lớp và không đi đến lớp nào
-                        var oldClass = unitOfWork.GetRepository<scf_Class>().GetById(_classId.Value);
-                        student.ClassId = null;
-                        studentHistory.EndDate = DateTime.Now;
-
+                        student.ClassId = classId;
+                        lstStudent.Add(student);
                         unitOfWork.GetRepository<scf_Student>().Update(student);
-                        unitOfWork.GetRepository<scf_Student_History>().Update(studentHistory);
-
-                        oldClass.StudentQuantity--;
-                        unitOfWork.GetRepository<scf_Class>().Update(oldClass);
-
-                        unitOfWork.Save();
-                        return new Response<Student>(ConfigType.SUCCESS, "Left class: " + _className, ConvertStudent(student));
                     }
-                    else if(_classId != null)
-                    {
-                        //Chuyển lớp
-                        var oldClass = unitOfWork.GetRepository<scf_Class>().GetById(_classId.Value);
-                        var nextClass = unitOfWork.GetRepository<scf_Class>().GetById(classId.Value);
-
-                        studentHistory.StartDate = DateTime.Now;
-                        studentHistory.FromClassId = _classId;
-                        studentHistory.ToClassId = classId.Value;
-                        oldClass.StudentQuantity--;
-                        nextClass.StudentQuantity++;
-
-                        unitOfWork.GetRepository<scf_Class>().Update(oldClass);
-                        unitOfWork.GetRepository<scf_Class>().Update(nextClass);
-                    }
-                    else if(_classId == null)
-                    {
-                        //Vào lớp
-                        var nextClass = unitOfWork.GetRepository<scf_Class>().GetById(classId.Value);
-                        studentHistory.StartDate = DateTime.Now;
-                        studentHistory.FromClassId = classId.Value;
-
-                        nextClass.StudentQuantity++;
-                        unitOfWork.GetRepository<scf_Class>().Update(nextClass);
-                    }
-
-                    if(existed)
-                        unitOfWork.GetRepository<scf_Student_History>().Update(studentHistory);
-                    else
-                        unitOfWork.GetRepository<scf_Student_History>().Add(studentHistory);
-
-                    unitOfWork.GetRepository<scf_Student>().Update(student);
                     unitOfWork.Save();
 
-                    var response = ConvertStudent(student);
-                    response.Class = DbClassHandler.ConvertClass(unitOfWork.GetRepository<scf_Class>().GetById(classId.Value));
+                    var response = ConvertStudents(lstStudent);
                     
-                    return new Response<Student>(ConfigType.SUCCESS, "Joined class: " + response.Class.Name, response);
+                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", response);
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Student>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
             }
         }
         //public Response<Student> LeaveClass(Guid studentId, Guid? classId)

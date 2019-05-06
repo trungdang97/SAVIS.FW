@@ -16,7 +16,7 @@ namespace SAVIS.FW.Business.Logic.Student
         Response<Student> DeleteStudent(Guid studentId);
         Response<IList<Student>> DeleteMany(List<Guid> deletedItems);
         //Nghiep vu
-        Response<Student> JoinClass(Guid studentId, Guid? classId);
+        Response<IList<Student>> JoinClass(List<Guid> studentId, Guid? classId);
         //Response<Student> LeaveClass(Guid studentId, Guid? ToClassId);
         Response<Student> AssignToRole(Guid studentId, Guid classRoleId);
         Response<IList<Student>> GetUnassignedStudents();

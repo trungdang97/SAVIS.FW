@@ -47,10 +47,106 @@ define(['jquery', 'app', 'angular-sanitize',
             };
             loadData();
 
-            $scope.ListSelected = [];
-            $scope.SelectAll = false;
+            $scope.InList = [];
+            $scope.OutList = [];
+            $scope.SelectAllIn = false;
+            $scope.SelectAllOut = false;
 
-            
+            $scope.SelectInItem = function (item) {
+                if (!item.Selecting) {
+                    var index = $scope.InList.indexOf(item);
+                    if (index >= 0) {
+                        $scope.InList.splice(index, 1);
+                    }
+                } else {
+                    $scope.InList.push(item);
+                }
+                if ($scope.InList.length === $scope.UnassignedStudents.length) {
+                    $scope.SelectAllIn = true;
+                } else {
+                    $scope.SelectAllIn = false;
+                }
+            }
+
+            $scope.SelectAllInItem = function () {
+                if ($scope.InList.length === $scope.UnassignedStudents.length) {
+                    $scope.InList = [];
+                    angular.forEach($scope.UnassignedStudents, function (file) {
+                        file.Selecting = false;
+                    });
+                    $scope.SelectAllIn = false;
+                } else {
+                    $scope.InList = [];
+                    angular.forEach($scope.UnassignedStudents, function (file) {
+                        file.Selecting = true;
+                        $scope.InList.push(file);
+                    });
+                    $scope.SelectAllIn = true;
+                }
+            }
+
+            $scope.SelectOutItem = function (item) {
+                if (!item.Selecting) {
+                    var index = $scope.OutList.indexOf(item);
+                    if (index >= 0) {
+                        $scope.OutList.splice(index, 1);
+                    }
+                } else {
+                    $scope.OutList.push(item);
+                }
+                if ($scope.OutList.length === $scope.Class.Students.length) {
+                    $scope.SelectAllOut = true;
+                } else {
+                    $scope.SelectAllOut = false;
+                }
+            }
+
+            $scope.SelectAllOutItem = function () {
+                if ($scope.OutList.length === $scope.Class.Students.length) {
+                    $scope.OutList = [];
+                    angular.forEach($scope.Class.Students, function (file) {
+                        file.Selecting = false;
+                    });
+                    $scope.SelectAllOut = false;
+                } else {
+                    $scope.OutList = [];
+                    angular.forEach($scope.Class.Students, function (file) {
+                        file.Selecting = true;
+                        $scope.OutList.push(file);
+                    });
+                    $scope.SelectAllOut = true;
+                }
+            }
+
+            $scope.Reload = function () {
+                //danh sach lop
+
+            }
+
+            $scope.MoveIn = function () {
+                var ListModels = [];
+                angular.forEach($scope.InList, function (value, key) {
+                    ListModels.push(value.StudentId);
+                    var promise = StudentService.InAndOut(ListModels, $scope.Class.ClassId);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                    });
+                    promise = ClassService.GetByCode(classCode);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $scope.Class = response.Data;
+                    });
+                });
+                console.log(ListModels);
+            }
+
+            $scope.MoveOut = function () {
+                var ListModels = [];
+                angular.forEach($scope.OutList, function (value, key) {
+                    ListModels.push(value.StudentId);
+
+                });
+            }
         }
     ]);
 });
