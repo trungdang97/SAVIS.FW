@@ -248,17 +248,13 @@ namespace SAVIS.FW.Business.Logic.Class
             {
                 using (var unitOfWork = new UnitOfWork())
                 {
-                    var db = unitOfWork.DataContext;
-                    if (db.Set<scf_Class>().FirstOrDefault(x => x.ClassId == Class.ClassId) == null)
+                    if (unitOfWork.GetRepository<scf_Class>().GetById(Class.ClassId) == null)
                     {
                         return new Response<Class>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
-                    scf_Class model = new scf_Class()
-                    {
-                        ClassId = Class.ClassId,
-                        Code = Class.Code,
-                        Name = Class.Name,
-                    };
+                    scf_Class model = unitOfWork.GetRepository<scf_Class>().GetById(Class.ClassId);
+                    model.Code = Class.Code;
+                    model.Name = Class.Name;
                     if (Class.TeacherId != Guid.Empty)
                     {
                         model.TeacherId = Class.TeacherId;

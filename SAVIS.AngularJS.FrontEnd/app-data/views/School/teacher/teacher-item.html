@@ -8,7 +8,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-cogs"></i>
-                <span class="caption-subject bold uppercase">Tạo mới giáo viên</span>
+                <span class="caption-subject bold uppercase">{{Action}} giáo viên</span>
                 <!--<span class="caption-helper">cấu hình...</span>-->
             </div>
         </div>
@@ -38,13 +38,13 @@
                 </div>
                 <hr />
             </div>
-            <div class="row">
+            <div class="row" ng-if="UpdatingStatus">
                 <div class="col-md-6">
                     Danh sách lớp quản lý
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6" ng-if="UpdatingStatus">
                     <table class="table table-striped table-hover dataTable table-bordered">
                         <thead>
                             <tr style="background-color: #eeeeee;">

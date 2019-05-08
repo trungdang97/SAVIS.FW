@@ -117,6 +117,25 @@ namespace SAVIS.FW.Business.Logic.Teacher
                 return new Response<IList<Teacher>>(ConfigType.ERROR, ex.Message, null);
             }
         }
+
+        public Response<IList<Teacher>> GetByText(string searchText)
+        {
+            try
+            {
+                using(var unitOfWork = new UnitOfWork())
+                {
+                    var teachers = unitOfWork.GetRepository<scf_Teacher>().GetMany(x => x.Code.Contains(searchText)||x.Name.Contains(searchText)).ToList();
+                    return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(teachers))
+                    {
+                        DataCount = teachers.Count()
+                    };
+                }
+            }
+            catch(Exception ex)
+            {
+                return new Response<IList<Teacher>>(ConfigType.ERROR, ex.Message, null);
+            }
+        }
         #endregion
 
         #region CUD

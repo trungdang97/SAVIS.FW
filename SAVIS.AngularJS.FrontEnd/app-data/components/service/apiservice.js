@@ -65,11 +65,10 @@ define(['app', 'components/factory/factory'], function (app) {
 
         }
         service.InAndOut = function (models, id) {
-            var model = { studentId: models, classId: id }
             var promise = $http({
                 method: 'PUT',
-                url: baseUrl + prefixCoreApiUrl + "/class",
-                data: model
+                url: baseUrl + prefixCoreApiUrl + "/class/" + id,
+                data: models
             });
             return promise;
 
@@ -105,6 +104,14 @@ define(['app', 'components/factory/factory'], function (app) {
         var baseUrl = constantsFactory.ApiUrl;
         var prefixCoreApiUrl = "api/v1/teachers";
 
+        service.GetByText = function(searchText){
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "?searchText=" + searchText
+            });
+            return promise;
+        }
+
         service.GetFilter = function (model) {
             var stringFilter = angular.toJson(model);
             var promise = $http({
@@ -134,7 +141,7 @@ define(['app', 'components/factory/factory'], function (app) {
         service.Update = function (id, model) {
             var promise = $http({
                 method: 'PUT',
-                url: baseUrl + prefixCoreApiUrl + "/" + id,
+                url: baseUrl + prefixCoreApiUrl,
                 data: model
             });
             return promise;
@@ -220,10 +227,10 @@ define(['app', 'components/factory/factory'], function (app) {
             return promise;
         }
 
-        service.Update = function (id, model) {
+        service.Update = function (model) {
             var promise = $http({
                 method: 'PUT',
-                url: baseUrl + prefixCoreApiUrl + "/" + id,
+                url: baseUrl + prefixCoreApiUrl,
                 data: model
             });
             return promise;

@@ -46,7 +46,7 @@ namespace SAVIS.FW.API.Controller
         }
 
         [HttpPost]
-        [Route("api/v1/classes/")]
+        [Route("api/v1/classes")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Class> CreateClass([FromBody]ClassCreateRequestModel Class)
         {
@@ -54,7 +54,7 @@ namespace SAVIS.FW.API.Controller
         }
 
         [HttpPut]
-        [Route("api/v1/classes/")]
+        [Route("api/v1/classes")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public Response<Class> CreateClass([FromBody]ClassUpdateRequestModel Class)
         {

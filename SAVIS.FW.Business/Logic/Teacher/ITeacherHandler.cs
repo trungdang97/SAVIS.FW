@@ -10,6 +10,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
     public interface ITeacherHandler
     {
         Response<Teacher> GetById(Guid teacherId);
+        Response<IList<Teacher>> GetByText(string searchText);
         Response<IList<Teacher>> GetFilter(TeacherQueryFilter filter);
         Response<Teacher> CreateTeacher(TeacherCreateRequestModel teacher);
         Response<Teacher> UpdateTeacher(TeacherUpdateRequestModel teacher);

@@ -1,4 +1,4 @@
-﻿ "use strict";
+﻿"use strict";
 define(["app",
     'components/service/amdservice',
     'components/service/apiservice',
@@ -31,15 +31,23 @@ define(["app",
                 { Key: '#', Value: "Đến ngày", Width: 'auto', Align: 'text-center' },
             ];
 
-            $scope.Item = item;
-            //Save
-
+            $scope.UpdatingStatus = false;
+            $scope.Action = "Tạo mới";
+            if (option.Mode == "update") {
+                $scope.UpdatingStatus = true;
+                $scope.Action = "Chi tiết/cập nhật";
+            }
+            
             var loadData = function () {
-                var promise = TeacherService.TeacherDetail(item.TeacherId);
-                promise.success(function (response) {
-                    $log.debug(response);
-                    $scope.Details = response.Data.Classes;
-                });
+                if (item != null) {
+                    $scope.Item = item;
+
+                    var promise = TeacherService.TeacherDetail(item.TeacherId);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $scope.Details = response.Data.Classes;
+                    });
+                }
             };
             loadData();
 
@@ -47,6 +55,14 @@ define(["app",
                 var model = {};
                 model.Code = $scope.Item.Code;
                 model.Name = $scope.Item.Name;
+                if (item.ClassId != null) {
+                    var promise = TeacherService.Update(model);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $uibModalInstance.close();
+                        //loadData();
+                    });
+                }
                 var promise = TeacherService.Create(model);
                 promise.success(function (response) {
                     $log.debug(response);

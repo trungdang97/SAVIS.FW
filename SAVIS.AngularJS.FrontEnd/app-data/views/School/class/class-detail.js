@@ -6,9 +6,9 @@ define(['jquery', 'app', 'angular-sanitize',
     'components/formly-template/formly-factory',
 ], function (jQuery, app) {
     app.controller('ClassDetailCtrl', ['$scope', '$sce', '$timeout', '$location', '$log', '$http', '$uibModal', 'constantsFactory',
-        'constantsAMD', '$routeParams', 'Notifications', 'ClassService', 'StudentService', 'FormlyFactory',
+        'constantsAMD', '$routeParams', 'Notifications', 'ClassService', 'StudentService', 'TeacherService', 'FormlyFactory',
         function ($scope, $sce, $timeout, $location, $log, $http, $uibModal, constantsFactory,
-            constantsAMD, $routeParams, Notifications, ClassService, StudentService, FormlyFactory) {
+            constantsAMD, $routeParams, Notifications, ClassService, StudentService, TeacherService, FormlyFactory) {
             /* Notification -----------------------------------------------------*/
             $scope.Notifications = Notifications;
             $scope.closeAlert = function (item) {
@@ -44,13 +44,19 @@ define(['jquery', 'app', 'angular-sanitize',
                     $log.debug(response);
                     $scope.UnassignedStudents = response.Data;
                 });
+
+                // promise = TeacherService.GetAll($scope.Class.TeacherId);
+                // promise.success(function(response){
+                //     $log.debug(response);
+                //     $scope.Teachers = response.Data;
+                // });
+
+                $scope.InList = [];
+                $scope.OutList = [];
+                $scope.SelectAllIn = false;
+                $scope.SelectAllOut = false;
             };
             loadData();
-
-            $scope.InList = [];
-            $scope.OutList = [];
-            $scope.SelectAllIn = false;
-            $scope.SelectAllOut = false;
 
             $scope.SelectInItem = function (item) {
                 if (!item.Selecting) {
@@ -117,34 +123,40 @@ define(['jquery', 'app', 'angular-sanitize',
                     $scope.SelectAllOut = true;
                 }
             }
-
-            $scope.Reload = function () {
+            $scope.Button = {};
+            $scope.Button.Reload = {};
+            $scope.Button.Reload.Click = function () {
                 //danh sach lop
-
+                //danh sach sinh vien
+                loadData();
+                //$scope.$apply();
             }
 
-            $scope.MoveIn = function () {
+            $scope.Button.MoveIn = {};
+            $scope.Button.MoveIn.Click = function () {
                 var ListModels = [];
                 angular.forEach($scope.InList, function (value, key) {
                     ListModels.push(value.StudentId);
-                    var promise = StudentService.InAndOut(ListModels, $scope.Class.ClassId);
-                    promise.success(function (response) {
-                        $log.debug(response);
-                    });
-                    promise = ClassService.GetByCode(classCode);
-                    promise.success(function (response) {
-                        $log.debug(response);
-                        $scope.Class = response.Data;
-                    });
+
                 });
-                console.log(ListModels);
+                var promise = StudentService.InAndOut(ListModels, $scope.Class.ClassId);
+                promise.success(function (response) {
+                    $log.debug(response);
+                    loadData();
+                });
             }
 
-            $scope.MoveOut = function () {
+            $scope.Button.MoveOut = {};
+            $scope.Button.MoveOut.Click = function () {
                 var ListModels = [];
                 angular.forEach($scope.OutList, function (value, key) {
                     ListModels.push(value.StudentId);
 
+                });
+                var promise = StudentService.InAndOut(ListModels, null);
+                promise.success(function (response) {
+                    $log.debug(response);
+                    loadData();
                 });
             }
         }
