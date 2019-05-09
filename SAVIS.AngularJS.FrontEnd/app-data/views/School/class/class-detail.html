@@ -54,13 +54,13 @@
                 <input type="text" class="form-control" ng-model="Class.Name" placeholder="Nhập tên lớp" />
             </div>
             <div class="col-md-6">
-                <!-- <label style="line-height:33px;">Tìm kiếm GVCN</label><br />
-                <input type="text" class="form-control" ng-model="Class.Teacher.Name" placeholder="Nhập từ khóa tìm kiếm" />
-                <label style="line-height:33px;">Giáo viên chủ nhiệm</label><br />
-                <select ng-model="Teachers" ng-options="teacher.TeacherId as teacher.Name for teacher in Teachers"
-                    ng-selected="teacher.TeacherId == Class.Teacher.TeacherId" class="form-control input-sm">
+                <label style="line-height:33px;">Tìm kiếm GVCN</label><br />
+                <input type="text" class="form-control" ng-model="textSearch" ng-change="TextSearchChange()" placeholder="Nhập mã/tên giáo viên cần tìm kiếm" />
+                <label style="line-height:33px;">Giáo viên chủ nhiệm <span ng-if="NewData">(hãy chọn giáo viên đã lọc theo tìm kiếm)</span></label><br />
+                <select ng-model="Class.Teacher" ng-options="teacher.TeacherId as teacher.Name+ ' - ' +(teacher.Birthday|date:'dd/MM/yyyy') for teacher in Teachers"
+                        ng-selected="teacher.TeacherId == Class.Teacher.TeacherId" class="form-control input-sm">
                     <option value="">Không</option>
-                </select> -->
+                </select>
             </div>
         </div>
         <hr />
@@ -68,6 +68,11 @@
             <div class="col-md-5">Danh sách lớp</div>
             <div class="col-md-2"></div>
             <div class="col-md-5">Danh sách sinh viên</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">Tìm kiếm sinh viên trong lớp</div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">Tìm kiếm sinh viên chưa có lớp</div>
         </div>
         <div class="row row-eq-height">
             <div class="col-md-5">
@@ -80,7 +85,7 @@
                                     <div class="checker">
                                         <span ng-class="SelectAllOut?'checked':''">
                                             <input type="checkbox" class="group-checkable" ng-click="SelectAllOutItem()"
-                                                ng-model="SelectAllOut">
+                                                   ng-model="SelectAllOut">
                                         </span>
                                     </div>
                                 </th>
@@ -95,7 +100,7 @@
                                     <div class="checker">
                                         <span ng-class="student.Selecting?'checked':''">
                                             <input type="checkbox" ng-click="SelectOutItem(student)"
-                                                ng-model="student.Selecting" class="checkboxes">
+                                                   ng-model="student.Selecting" class="checkboxes">
                                         </span>
                                     </div>
                                 </th>
@@ -117,13 +122,13 @@
                 <div class="row control-row">
                     <div class="col-md-12" style="text-align:center;">
                         <input type="image" src="/assets/image/btn_left.png" ng-click="Button.MoveIn.Click()"
-                            class="control-button" />
+                               class="control-button" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
                         <input type="image" src="/assets/image/btn_right.png" ng-click="Button.MoveOut.Click()"
-                            class="control-button" />
+                               class="control-button" />
                     </div>
                 </div>
             </div>
@@ -137,7 +142,7 @@
                                     <div class="checker">
                                         <span ng-class="SelectAllIn?'checked':''">
                                             <input type="checkbox" class="group-checkable" ng-click="SelectAllInItem()"
-                                                ng-model="SelectAllIn">
+                                                   ng-model="SelectAllIn">
                                         </span>
                                     </div>
                                 </th>
@@ -152,7 +157,7 @@
                                     <div class="checker">
                                         <span ng-class="student.Selecting?'checked':''">
                                             <input type="checkbox" ng-click="SelectInItem(student)"
-                                                ng-model="student.Selecting" class="checkboxes">
+                                                   ng-model="student.Selecting" class="checkboxes">
                                         </span>
                                     </div>
                                 </th>

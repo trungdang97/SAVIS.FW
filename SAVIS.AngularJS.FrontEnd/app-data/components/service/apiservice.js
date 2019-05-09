@@ -107,7 +107,7 @@ define(['app', 'components/factory/factory'], function (app) {
         service.GetByText = function(searchText){
             var promise = $http({
                 method: 'GET',
-                url: baseUrl + prefixCoreApiUrl + "?searchText=" + searchText
+                url: baseUrl + prefixCoreApiUrl + "/text?searchText=" + searchText
             });
             return promise;
         }

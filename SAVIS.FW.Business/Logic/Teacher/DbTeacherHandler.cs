@@ -124,6 +124,14 @@ namespace SAVIS.FW.Business.Logic.Teacher
             {
                 using(var unitOfWork = new UnitOfWork())
                 {
+                    if(searchText == null)
+                    {
+                        var allTeachers = unitOfWork.GetRepository<scf_Teacher>().GetAll().ToList();
+                        return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(allTeachers))
+                        {
+                            DataCount = allTeachers.Count
+                        };
+                    }
                     var teachers = unitOfWork.GetRepository<scf_Teacher>().GetMany(x => x.Code.Contains(searchText)||x.Name.Contains(searchText)).ToList();
                     return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(teachers))
                     {

@@ -30,6 +30,14 @@ namespace SAVIS.FW.API.Controller
             return _teacherHandler.GetFilter(teacherFilter);
         }
 
+        [HttpGet]
+        [Route("api/v1/teachers/text")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<Teacher>> GetByText(string searchText)
+        {
+            return _teacherHandler.GetByText(searchText);
+        }
+
         [HttpPost]
         [Route("api/v1/teachers")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]

@@ -36,6 +36,7 @@ define(['jquery', 'app', 'angular-sanitize',
                 var promise = ClassService.GetByCode(classCode);
                 promise.success(function (response) {
                     //$log.debug(response);
+                    console.log(response);
                     $scope.Class = response.Data;
                 });
 
@@ -45,11 +46,12 @@ define(['jquery', 'app', 'angular-sanitize',
                     $scope.UnassignedStudents = response.Data;
                 });
 
-                // promise = TeacherService.GetAll($scope.Class.TeacherId);
-                // promise.success(function(response){
-                //     $log.debug(response);
-                //     $scope.Teachers = response.Data;
-                // });
+                promise = TeacherService.GetByText('');
+                promise.success(function (response) {
+                    $log.debug(response);
+                    console.log(response);
+                    $scope.Teachers = response.Data;
+                });
 
                 $scope.InList = [];
                 $scope.OutList = [];
@@ -124,6 +126,15 @@ define(['jquery', 'app', 'angular-sanitize',
                 }
             }
             $scope.Button = {};
+            $scope.Button.Save = {};
+            $scope.Button.Save.Click = function () {
+                var model = $scope.Class;
+                var promise = ClassService.Update(model);
+                promise.success(function (response) {
+                    $log.debug(response);
+                });
+            }
+
             $scope.Button.Reload = {};
             $scope.Button.Reload.Click = function () {
                 //danh sach lop
@@ -158,6 +169,15 @@ define(['jquery', 'app', 'angular-sanitize',
                     $log.debug(response);
                     loadData();
                 });
+            }
+
+            $scope.TextSearchChange = function () {
+                var promise = TeacherService.GetByText($scope.textSearch);
+                promise.success(function (response) {
+                    $log.debug(response);
+                    $scope.Teachers = response.Data;
+                });
+                $scope.NewData = true;
             }
         }
     ]);
