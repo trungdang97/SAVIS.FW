@@ -37,6 +37,10 @@ define(["app",
             $scope.error = false;
             //Save
             $scope.Save = function () {
+                if ($scope.Existed == true) {
+                    var warningResult = constantsAMD.OpenDialog('Không được phép có hai mã lớp trùng nhau!', 'Chú ý', '', 'Đóng', 'sm');
+                    return;
+                }
                 var model = {};
                 model.Code = $scope.Item.Code;
                 model.Name = $scope.Item.Name;
@@ -63,6 +67,7 @@ define(["app",
                                 $scope.error = true;
                             }
                             else {
+                                var createResult = constantsAMD.OpenDialog('Tạo mới lớp học thành công', 'Chú ý', '', 'Đóng', 'sm');
                                 $uibModalInstance.close();
                             }
                             //loadData();
@@ -78,10 +83,31 @@ define(["app",
             };
             loadData();
 
+            $scope.Existed = false;
+            $scope.CheckClassExist = function (code) {
+                var promise = ClassService.GetByCode(code);
+                promise.success(function (response) {
+                    if (response.Data == null) {
+                        $scope.Existed = false;
+                    }
+                    else {
+                        $scope.Existed = true;
+                    }
+                });
+            }
+            
+            $scope.ConvertToCode = function () {
+                var splitted = [];
+                var code = "";
+                splitted = $scope.Item.Name.split(" ");
+                angular.forEach(splitted, function (value, key) {
+                    code += value.substring(0,1);
+                });
+                $scope.Item.Code = code.toUpperCase();
+                $scope.CheckClassExist(code);
+            };
 
-            ///////// TABLES 
-
-            ////////////////
+            
         }
     ])
 });

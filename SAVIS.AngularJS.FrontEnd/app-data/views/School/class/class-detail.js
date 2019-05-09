@@ -30,10 +30,10 @@ define(['jquery', 'app', 'angular-sanitize',
                 { Key: '#', Value: "Ngày sinh", Width: 'auto', Align: 'text-center' },
             ];
 
-            var classCode = $routeParams.ClassCode;
+            $scope.classCode = $routeParams.ClassCode;
 
             var loadData = function () {
-                var promise = ClassService.GetByCode(classCode);
+                var promise = ClassService.GetByCode($scope.classCode);
                 promise.success(function (response) {
                     //$log.debug(response);
                     console.log(response);

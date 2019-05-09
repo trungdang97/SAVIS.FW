@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label style="line-height:33px;">Mã lớp</label>
-                <input type="text" class="form-control" ng-model="Class.Code" placeholder="Nhập mã lớp" />
+                <input type="text" class="form-control" ng-model="classCode" ng-disabled="true" placeholder="Nhập mã lớp" />
                 <label style="line-height:33px;">Tên lớp</label>
                 <input type="text" class="form-control" ng-model="Class.Name" placeholder="Nhập tên lớp" />
             </div>
@@ -57,10 +57,10 @@
                 <label style="line-height:33px;">Tìm kiếm GVCN</label><br />
                 <input type="text" class="form-control" ng-model="textSearch" ng-change="TextSearchChange()" placeholder="Nhập mã/tên giáo viên cần tìm kiếm" />
                 <label style="line-height:33px;">Giáo viên chủ nhiệm <span ng-if="NewData">(hãy chọn giáo viên đã lọc theo tìm kiếm)</span></label><br />
-                <select ng-model="Class.Teacher" ng-options="teacher.TeacherId as teacher.Name+ ' - ' +(teacher.Birthday|date:'dd/MM/yyyy') for teacher in Teachers"
+                <ui-select ng-model="Class.TeacherId" ng-options="teacher.TeacherId as teacher.Name+ ' - ' +(teacher.Birthday|date:'dd/MM/yyyy') for teacher in Teachers"
                         ng-selected="teacher.TeacherId == Class.Teacher.TeacherId" class="form-control input-sm">
-                    <option value="">Không</option>
-                </select>
+                    <!--<option value="">Không</option>-->
+                </ui-select>
             </div>
         </div>
         <hr />
