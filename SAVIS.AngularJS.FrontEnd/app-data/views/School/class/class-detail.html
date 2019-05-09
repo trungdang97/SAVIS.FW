@@ -10,23 +10,14 @@
         display: flex;
     }
 
-    /*.row {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: wrap;
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
     }
-
-        .row > [class*='col-'] {
-            display: flex;
-            flex-direction: column;
-        }*/
 
     .control-button {
         height: 30px;
         width: 30px;
-
     }
 </style>
 <div class="portlet light" data-ng-init="init()">
@@ -55,11 +46,19 @@
             </div>
             <div class="col-md-6">
                 <label style="line-height:33px;">Tìm kiếm GVCN</label><br />
-                <input type="text" class="form-control" ng-model="textSearch" ng-change="TextSearchChange()" placeholder="Nhập mã/tên giáo viên cần tìm kiếm" />
-                <label style="line-height:33px;">Giáo viên chủ nhiệm <span ng-if="NewData">(hãy chọn giáo viên đã lọc theo tìm kiếm)</span></label><br />
-                <ui-select ng-model="Class.TeacherId" ng-options="teacher.TeacherId as teacher.Name+ ' - ' +(teacher.Birthday|date:'dd/MM/yyyy') for teacher in Teachers"
+                <!--<select ng-model="Class.TeacherId" ng-options="teacher.TeacherId as teacher.Name+ ' - ' +(teacher.Birthday|date:'dd/MM/yyyy') for teacher in Teachers"
                         ng-selected="teacher.TeacherId == Class.Teacher.TeacherId" class="form-control input-sm">
-                    <!--<option value="">Không</option>-->
+                    <option value="">Không</option>
+                </select>-->
+                <ui-select ng-model="Class.Teacher" theme="select2" ng-change="BindTeacherId()" ng-disabled="disabled" style="min-width: 100%; height:100%">
+                    <ui-select-match placeholder="Chọn giáo viên chủ nhiệm...">{{$select.selected.Name}}</ui-select-match>
+                    <ui-select-choices repeat="teacher in Teachers | filter: {Name: $select.search}">
+                        <div ng-bind-html="teacher.Name | highlight: $select.search"></div>
+                        <!--<small>
+                            email:
+                            age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+                        </small>-->
+                    </ui-select-choices>
                 </ui-select>
             </div>
         </div>

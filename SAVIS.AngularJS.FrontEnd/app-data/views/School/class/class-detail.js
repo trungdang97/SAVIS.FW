@@ -129,9 +129,11 @@ define(['jquery', 'app', 'angular-sanitize',
             $scope.Button.Save = {};
             $scope.Button.Save.Click = function () {
                 var model = $scope.Class;
+                $scope.Class.TeacherId = $scope.Class.Teacher.TeacherId;
                 var promise = ClassService.Update(model);
                 promise.success(function (response) {
                     $log.debug(response);
+                    var infoResult = constantsAMD.OpenDialog('Lưu thông tin lớp học thành công!', 'Chú ý', '', 'Đóng', 'sm');
                 });
             }
 
@@ -169,15 +171,6 @@ define(['jquery', 'app', 'angular-sanitize',
                     $log.debug(response);
                     loadData();
                 });
-            }
-
-            $scope.TextSearchChange = function () {
-                var promise = TeacherService.GetByText($scope.textSearch);
-                promise.success(function (response) {
-                    $log.debug(response);
-                    $scope.Teachers = response.Data;
-                });
-                $scope.NewData = true;
             }
         }
     ]);

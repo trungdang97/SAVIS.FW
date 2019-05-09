@@ -101,7 +101,12 @@ define(["app",
                 var code = "";
                 splitted = $scope.Item.Name.split(" ");
                 angular.forEach(splitted, function (value, key) {
-                    code += value.substring(0,1);
+                    if (!isNaN(value)) {
+                        code += "_" + value;
+                    }
+                    else {
+                        code += value.substring(0, 1);
+                    }
                 });
                 $scope.Item.Code = code.toUpperCase();
                 $scope.CheckClassExist(code);
