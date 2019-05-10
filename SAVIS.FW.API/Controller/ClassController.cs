@@ -6,6 +6,7 @@ using SAVIS.FW.Common;
 using SAVIS.FW.Business.Config;
 using Newtonsoft.Json;
 using System.Web.Http.Cors;
+using SAVIS.FW.Business.Logic.Student;
 
 namespace SAVIS.FW.API.Controller
 {
@@ -94,6 +95,14 @@ namespace SAVIS.FW.API.Controller
         public Response<Class> ClassDetail(Guid classId)
         {
             return _classHandler.CurrentStudents(classId);
+        }
+
+        [HttpGet]
+        [Route("api/v1/classes/roles")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<IList<ClassRole>> GetRoles()
+        {
+            return _classHandler.GetClassRoles();
         }
     }
 }

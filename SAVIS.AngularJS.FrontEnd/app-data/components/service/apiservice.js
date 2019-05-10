@@ -138,7 +138,7 @@ define(['app', 'components/factory/factory'], function (app) {
             return promise;
         }
 
-        service.Update = function (id, model) {
+        service.Update = function (model) {
             var promise = $http({
                 method: 'PUT',
                 url: baseUrl + prefixCoreApiUrl,
@@ -258,8 +258,16 @@ define(['app', 'components/factory/factory'], function (app) {
             });
             return promise;
         }
-        return service;
 
+        service.GetRoles = function () {
+            var promise = $http({
+                method: 'GET',
+                url: baseUrl + prefixCoreApiUrl + "/roles"
+            });
+            return promise;
+        }
+
+        return service;
     }]);
 
 });

@@ -69,13 +69,10 @@
                                 {{data.Code}}
                             </td>
                             <td>
-                                <a href="javascript:;" class="item-title">{{data.Name}}</a>
+                                <a href="javascript:;" ng-click="Button.Update.Click(data)" class="item-title">{{data.Name}}</a>
                             </td>
                             <td class="text-center">
                                 {{data.Birthday | date:'dd/MM/yyyy'}}
-                            </td>
-                            <td class="text-center">
-                                <!--<a href="#/teacher-manager/detail/{{data.Teacher.TeacherId}}" class="item-title">{{data.Teacher.Name}}</a>-->
                             </td>
                             <td class="text-center">
                                 <button type="button" class="btn btn-xs btn-primary" ng-click="Button.Update.Click(data)"><i class="fa fa-edit"></i></button>
@@ -97,7 +94,6 @@
                     <ul uib-pagination total-items="TotalCount"
                         ng-model="PageNumber"
                         max-size="MaxSizePage"
-                        items-per-page="PageSize"
                         class="pagination-sm"
                         boundary-link-numbers="true"
                         rotate="true"

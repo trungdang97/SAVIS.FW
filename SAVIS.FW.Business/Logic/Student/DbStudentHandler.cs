@@ -124,10 +124,10 @@ namespace SAVIS.FW.Business.Logic.Student
                     {
                         if (filter.PageSize.Value <= 0)
                             filter.PageSize = 10;
-                        int excludedRows = (filter.PageNumber.Value - 1) * (filter.PageSize.Value - 1);
+                        int excludedRows = (filter.PageNumber.Value - 1) * filter.PageSize.Value;
                         if (excludedRows <= 0)
                             excludedRows = 0;
-                        data = data.Skip(excludedRows).Take(filter.PageSize.Value + 1).ToList();
+                        data = data.Skip(excludedRows).Take(filter.PageSize.Value).ToList();
                     }
                     foreach(var s in data)
                     {
@@ -318,7 +318,7 @@ namespace SAVIS.FW.Business.Logic.Student
                 StudentId = student.StudentId,
                 Code = student.Code,
                 Name = student.Name,
-                Birthday = student.Birthday
+                Birthday = student.Birthday,
             };
             if (student.ClassId.HasValue)
             {
@@ -326,6 +326,7 @@ namespace SAVIS.FW.Business.Logic.Student
             }
             if (student.ClassRoleId.HasValue)
             {
+                model.ClassRoleId = student.ClassRoleId.Value;
                 model.Role = new ClassRole(student.scf_Class_Role);
             }
 

@@ -110,6 +110,24 @@ namespace SAVIS.FW.Business.Logic.Class
         #endregion
 
         #region GET
+        public Response<IList<ClassRole>> GetClassRoles()
+        {
+            try
+            {
+                using (var unitOfWork = new UnitOfWork())
+                {
+                    var roles = unitOfWork.GetRepository<scf_Class_Role>().GetAll().ToList();
+                    return new Response<IList<ClassRole>>(ConfigType.SUCCESS, "OK", ConvertRoles(roles))
+                    {
+                        TotalCount = roles.Count
+                    };
+                }
+            }
+            catch(Exception ex)
+            {
+                return new Response<IList<ClassRole>>(ConfigType.ERROR, ex.Message, null);
+            }
+        }
         public Response<Class> GetClassById(Guid id)
         {
             try
@@ -145,7 +163,7 @@ namespace SAVIS.FW.Business.Logic.Class
                     {
                         var _teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(Class.TeacherId.Value);
                         Class.scf_Teacher = _teacher;
-                        
+
                     }
                     var response = ConvertClass(Class);
                     response.Students = DbStudentHandler.ConvertStudents(unitOfWork.GetRepository<scf_Student>().GetMany(x => x.ClassId == Class.ClassId).ToList());
@@ -201,7 +219,7 @@ namespace SAVIS.FW.Business.Logic.Class
             {
                 try
                 {
-                    List<scf_Class> classes = unitOfWork.GetRepository<scf_Class>().GetAll().ToList();
+                    List<scf_Class> classes = unitOfWork.GetRepository<scf_Class>().GetMany(x => x.IsActive == true).ToList();
                     return new Response<IList<Class>>(ConfigType.SUCCESS, "OK", ConvertClasses(classes));
                 }
                 catch (Exception ex)
@@ -362,7 +380,31 @@ namespace SAVIS.FW.Business.Logic.Class
             }
         }
 
+        public static ClassRole ConvertRole(scf_Class_Role role)
+        {
+            try
+            {
+                ClassRole classRole = new ClassRole(role);                
+                return classRole;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
+        public static List<ClassRole> ConvertRoles(List<scf_Class_Role> roles)
+        {
+            try
+            {
+                var models = roles.Select(ConvertRole).ToList();
+                return models;
+            }
+            catch(Exception ex)
+            {
+                return new List<ClassRole>();
+            }
+        }
         #endregion
     }
 }

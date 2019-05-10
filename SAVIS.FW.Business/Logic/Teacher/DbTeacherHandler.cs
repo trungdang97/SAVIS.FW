@@ -108,7 +108,8 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     }
                     return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(data))
                     {
-                        DataCount = count
+                        DataCount = data.Count,
+                        TotalCount = count
                     };
                 }
             }

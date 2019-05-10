@@ -71,6 +71,7 @@
                     $scope.count_req = 0;
                     promise.success(function (data) {
                         $log.debug(data)
+                        console.log(data);
                         if (data.Status != null) {
                             $scope.ListData = data.Data;
                             $scope.TotalCount = data.TotalCount;

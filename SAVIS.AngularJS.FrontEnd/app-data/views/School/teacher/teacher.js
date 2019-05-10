@@ -31,7 +31,6 @@
                 { Key: '#', Value: "Mã giáo viên", Width: 'auto', Align: 'text-center' },
                 { Key: '#', Value: "Tên giáo viên", Width: 'auto', Align: 'text-center' },
                 { Key: '#', Value: "Ngày sinh", Width: '15%', Align: 'text-center' },
-                { Key: '#', Value: "Danh sách lớp chủ nhiệm", Width: 'auto', Align: 'text-center' },
                 { Key: 'Handler', Value: "Xử Lý", Width: '10%', Align: 'text-center' },
             ];
 

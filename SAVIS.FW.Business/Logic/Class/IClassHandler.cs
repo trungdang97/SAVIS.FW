@@ -1,4 +1,5 @@
-﻿using SAVIS.FW.Common;
+﻿using SAVIS.FW.Business.Logic.Student;
+using SAVIS.FW.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace SAVIS.FW.Business.Logic.Class
         Response<IList<Class>> DeleteMany(List<Guid> lstClassId);
         //specific 
         Response<Class> AssignToClass(Guid? teacherId, Guid classId);
+        Response<IList<ClassRole>> GetClassRoles();
         int TotalQuantity();
         Response<Class> CurrentStudents(Guid classId);
     }

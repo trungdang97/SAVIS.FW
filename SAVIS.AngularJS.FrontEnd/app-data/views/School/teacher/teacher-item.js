@@ -55,7 +55,8 @@ define(["app",
                 var model = {};
                 model.Code = $scope.Item.Code;
                 model.Name = $scope.Item.Name;
-                if (item.ClassId != null) {
+                if (item.TeacherId != null) {
+                    model.TeacherId = $scope.Item.TeacherId;
                     var promise = TeacherService.Update(model);
                     promise.success(function (response) {
                         $log.debug(response);
@@ -63,12 +64,14 @@ define(["app",
                         //loadData();
                     });
                 }
-                var promise = TeacherService.Create(model);
-                promise.success(function (response) {
-                    $log.debug(response);
-                    $uibModalInstance.close();
-                    //loadData();
-                });
+                else {
+                    var promise = TeacherService.Create(model);
+                    promise.success(function (response) {
+                        $log.debug(response);
+                        $uibModalInstance.close();
+                        //loadData();
+                    });
+                }
             };
         }
     ])

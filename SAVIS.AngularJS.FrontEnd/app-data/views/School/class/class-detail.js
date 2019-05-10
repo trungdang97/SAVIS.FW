@@ -30,14 +30,21 @@ define(['jquery', 'app', 'angular-sanitize',
                 { Key: '#', Value: "Ngày sinh", Width: 'auto', Align: 'text-center' },
             ];
 
+            $scope.RoleHeaders = [
+                { Key: '#', Value: "Chức vụ", Width: '30%', Align: 'text-center' },
+                { Key: '#', Value: "Sinh viên", Width: 'auto', Align: 'text-center' },
+            ];
+
             $scope.classCode = $routeParams.ClassCode;
+
 
             var loadData = function () {
                 var promise = ClassService.GetByCode($scope.classCode);
                 promise.success(function (response) {
                     //$log.debug(response);
-                    console.log(response);
                     $scope.Class = response.Data;
+                    $scope.studentQuantity = response.Data.StudentQuantity;
+                    getRoleStudent(response.Data.Students);
                 });
 
                 promise = StudentService.GetUnassignedStudents();
@@ -49,8 +56,14 @@ define(['jquery', 'app', 'angular-sanitize',
                 promise = TeacherService.GetByText('');
                 promise.success(function (response) {
                     $log.debug(response);
-                    console.log(response);
                     $scope.Teachers = response.Data;
+                });
+
+                promise = ClassService.GetRoles();
+                promise.success(function (response) {
+                    $log.debug(response);
+                    //roles
+                    $scope.Roles = response.Data;
                 });
 
                 $scope.InList = [];
@@ -79,15 +92,15 @@ define(['jquery', 'app', 'angular-sanitize',
             $scope.SelectAllInItem = function () {
                 if ($scope.InList.length === $scope.UnassignedStudents.length) {
                     $scope.InList = [];
-                    angular.forEach($scope.UnassignedStudents, function (file) {
-                        file.Selecting = false;
+                    angular.forEach($scope.UnassignedStudents, function (student) {
+                        student.Selecting = false;
                     });
                     $scope.SelectAllIn = false;
                 } else {
                     $scope.InList = [];
-                    angular.forEach($scope.UnassignedStudents, function (file) {
-                        file.Selecting = true;
-                        $scope.InList.push(file);
+                    angular.forEach($scope.UnassignedStudents, function (student) {
+                        student.Selecting = true;
+                        $scope.InList.push(student);
                     });
                     $scope.SelectAllIn = true;
                 }
@@ -112,15 +125,15 @@ define(['jquery', 'app', 'angular-sanitize',
             $scope.SelectAllOutItem = function () {
                 if ($scope.OutList.length === $scope.Class.Students.length) {
                     $scope.OutList = [];
-                    angular.forEach($scope.Class.Students, function (file) {
-                        file.Selecting = false;
+                    angular.forEach($scope.Class.Students, function (student) {
+                        student.Selecting = false;
                     });
                     $scope.SelectAllOut = false;
                 } else {
                     $scope.OutList = [];
-                    angular.forEach($scope.Class.Students, function (file) {
-                        file.Selecting = true;
-                        $scope.OutList.push(file);
+                    angular.forEach($scope.Class.Students, function (student) {
+                        student.Selecting = true;
+                        $scope.OutList.push(student);
                     });
                     $scope.SelectAllOut = true;
                 }
@@ -170,6 +183,12 @@ define(['jquery', 'app', 'angular-sanitize',
                 promise.success(function (response) {
                     $log.debug(response);
                     loadData();
+                });
+            }
+
+            var getRoleStudent = function (students) {
+                angular.forEach(students, function (value, key) {
+                    $("#" + value.ClassRoleId).text(value.Name);
                 });
             }
         }
