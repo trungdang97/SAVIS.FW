@@ -25,7 +25,7 @@ define(['jquery', 'app', 'angular-sanitize',
             //params
             /* Header grid datatable */
             $scope.Headers = [
-                { Key: '#', Value: "Mã sinh viên", Width: 'auto', Align: 'text-center' },
+                { Key: '#', Value: "Mã sinh viên", Width: '30%', Align: 'text-center' },
                 { Key: '#', Value: "Họ tên", Width: 'auto', Align: 'text-center' },
                 { Key: '#', Value: "Ngày sinh", Width: 'auto', Align: 'text-center' },
             ];

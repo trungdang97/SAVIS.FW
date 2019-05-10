@@ -3,6 +3,36 @@
         zoom: 85%;
     }
 
+    .tableFixHead {
+        overflow-y: auto;
+        height: 300px;
+    }
+
+    .tableFixHead th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    .tableFixHead th div{
+        position: sticky;
+        
+    }
+
+    /* Just common table stuff. Really. */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 8px 16px;
+    }
+
+    th {
+        background: #eee;
+    }
+
     .row-eq-height {
         display: -webkit-box;
         display: -webkit-flex;
@@ -10,7 +40,7 @@
         display: flex;
     }
 
-    .select2 > .select2-choice.ui-select-match {
+    .select2>.select2-choice.ui-select-match {
         /* Because of the inclusion of Bootstrap */
         height: 29px;
     }
@@ -40,18 +70,21 @@
         <div class="row">
             <div class="col-md-6">
                 <label style="line-height:33px;">Mã lớp</label>
-                <input type="text" class="form-control" ng-model="classCode" ng-disabled="true" placeholder="Nhập mã lớp" />
+                <input type="text" class="form-control" ng-model="classCode" ng-disabled="true"
+                    placeholder="Nhập mã lớp" />
                 <label style="line-height:33px;">Tên lớp</label>
                 <input type="text" class="form-control" ng-model="Class.Name" placeholder="Nhập tên lớp" />
             </div>
             <div class="col-md-6">
-                <label style="line-height:33px;">Tìm kiếm GVCN</label><br />
+                <label style="line-height:33px;">Giáo viên chủ nhiệm</label><br />
                 <!--<select ng-model="Class.TeacherId" ng-options="teacher.TeacherId as teacher.Name+ ' - ' +(teacher.Birthday|date:'dd/MM/yyyy') for teacher in Teachers"
                         ng-selected="teacher.TeacherId == Class.Teacher.TeacherId" class="form-control input-sm">
                     <option value="">Không</option>
                 </select>-->
-                <ui-select ng-model="Class.Teacher" theme="select2" ng-change="BindTeacherId()" ng-disabled="disabled" style="min-width: 100%; height:100%">
-                    <ui-select-match placeholder="Chọn giáo viên chủ nhiệm...">{{$select.selected.Name}}</ui-select-match>
+                <ui-select ng-model="Class.Teacher" theme="select2" ng-change="BindTeacherId()" ng-disabled="disabled"
+                    style="min-width: 100%; height:100%">
+                    <ui-select-match placeholder="Chọn giáo viên chủ nhiệm...">{{$select.selected.Name}}
+                    </ui-select-match>
                     <ui-select-choices repeat="teacher in Teachers | filter: {Name: $select.search}">
                         <div ng-bind-html="teacher.Name | highlight: $select.search"></div>
                         <!--<small>
@@ -64,18 +97,28 @@
         </div>
         <hr />
         <div class="row">
+            <div class="col-md-5">
+                    <label style="line-height:33px;">Tìm kiếm sinh viên trong lớp</label>
+                    <input type="text" class="form-control" ng-model="studenInClass"
+                        placeholder="Nhập từ khóa tìm kiếm..." />
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                    <div class="col-md-5">
+                            <label style="line-height:33px;">Tìm kiếm sinh viên ngoài lớp</label>
+                            <input type="text" class="form-control" ng-model="studenNotInClass"
+                                placeholder="Nhập từ khóa tìm kiếm..." />
+                    </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-5">Danh sách lớp</div>
             <div class="col-md-2"></div>
             <div class="col-md-5">Danh sách sinh viên</div>
         </div>
-        <div class="row">
-            <div class="col-md-5">Tìm kiếm sinh viên trong lớp</div>
-            <div class="col-md-2"></div>
-            <div class="col-md-5">Tìm kiếm sinh viên chưa có lớp</div>
-        </div>
         <div class="row row-eq-height">
             <div class="col-md-5">
-                <div class="row">
+                <div class="row tableFixHead">
                     <table class="table table-striped table-hover dataTable table-bordered">
                         <thead>
                             <tr style="background-color: #eeeeee;">
@@ -84,7 +127,7 @@
                                     <div class="checker">
                                         <span ng-class="SelectAllOut?'checked':''">
                                             <input type="checkbox" class="group-checkable" ng-click="SelectAllOutItem()"
-                                                   ng-model="SelectAllOut">
+                                                ng-model="SelectAllOut">
                                         </span>
                                     </div>
                                 </th>
@@ -95,14 +138,14 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="student in Class.Students" ng-class="student.Selecting?'selected':''">
-                                <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                <td rowspan="1" colspan="1" aria-label="" style="width: 24px;">
                                     <div class="checker">
                                         <span ng-class="student.Selecting?'checked':''">
                                             <input type="checkbox" ng-click="SelectOutItem(student)"
-                                                   ng-model="student.Selecting" class="checkboxes">
+                                                ng-model="student.Selecting" class="checkboxes">
                                         </span>
                                     </div>
-                                </th>
+                                </td>
                                 <td class="text-center">
                                     {{student.Code}}
                                 </td>
@@ -121,18 +164,18 @@
                 <div class="row control-row">
                     <div class="col-md-12" style="text-align:center;">
                         <input type="image" src="/assets/image/btn_left.png" ng-click="Button.MoveIn.Click()"
-                               class="control-button" />
+                            class="control-button" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12" style="text-align:center;">
                         <input type="image" src="/assets/image/btn_right.png" ng-click="Button.MoveOut.Click()"
-                               class="control-button" />
+                            class="control-button" />
                     </div>
                 </div>
             </div>
             <div class="col-md-5">
-                <div class="row">
+                <div class="row tableFixHead">
                     <table class="table table-striped table-hover dataTable table-bordered">
                         <thead>
                             <tr style="background-color: #eeeeee;">
@@ -141,7 +184,7 @@
                                     <div class="checker">
                                         <span ng-class="SelectAllIn?'checked':''">
                                             <input type="checkbox" class="group-checkable" ng-click="SelectAllInItem()"
-                                                   ng-model="SelectAllIn">
+                                                ng-model="SelectAllIn">
                                         </span>
                                     </div>
                                 </th>
@@ -152,14 +195,14 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="student in UnassignedStudents" ng-class="student.Selecting?'selected':''">
-                                <th rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                                <td rowspan="1" colspan="1" aria-label="" style="width: 24px;">
                                     <div class="checker">
                                         <span ng-class="student.Selecting?'checked':''">
                                             <input type="checkbox" ng-click="SelectInItem(student)"
-                                                   ng-model="student.Selecting" class="checkboxes">
+                                                ng-model="student.Selecting" class="checkboxes">
                                         </span>
                                     </div>
-                                </th>
+                                </td>
                                 <td class="text-center">
                                     {{student.Code}}
                                 </td>
