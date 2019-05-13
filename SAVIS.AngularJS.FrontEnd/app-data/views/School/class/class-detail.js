@@ -57,6 +57,7 @@ define(['jquery', 'app', 'angular-sanitize',
                 promise.success(function (response) {
                     $log.debug(response);
                     $scope.Teachers = response.Data;
+                    
                 });
 
                 promise = ClassService.GetRoles();
@@ -64,6 +65,8 @@ define(['jquery', 'app', 'angular-sanitize',
                     $log.debug(response);
                     //roles
                     $scope.Roles = response.Data;
+//                    $scope.StudentWithRoles = [];
+                    $scope.GetStudentOfRole();
                 });
 
                 $scope.InList = [];
@@ -187,8 +190,31 @@ define(['jquery', 'app', 'angular-sanitize',
             }
 
             var getRoleStudent = function (students) {
+                $scope.RoleToStudents = [];
                 angular.forEach(students, function (value, key) {
-                    $("#" + value.ClassRoleId).text(value.Name);
+                    
+                });
+            }
+
+            $scope.AssignToRole = function (StudentId, ClassRoleId) {
+                var promise = StudentService.AssignToRole(StudentId, ClassRoleId);
+                promise.success(function (response) {
+                    $log.debug(response);
+                });
+            }
+
+            $scope.GetStudentOfRole = function () {
+                angular.forEach($scope.Roles, function (value1, key1) {
+                    angular.forEach($scope.Class.Students, function (value2, key2) {
+                        if (value1.ClassRoleId == value2.ClassRoleId) {
+                            //StudentWithRoles.push(value2);
+                            value1.Student = value2;
+                            
+                        }
+                        else {
+                            value1.Student = null;
+                        }
+                    });
                 });
             }
         }

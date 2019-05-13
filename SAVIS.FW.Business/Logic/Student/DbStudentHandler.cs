@@ -38,7 +38,12 @@ namespace SAVIS.FW.Business.Logic.Student
                             return new Response<IList<Student>>(ConfigType.ERROR, "Student is in the class already.", null);
                         }
                         student.ClassId = classId;
+                        if (!classId.HasValue)
+                        {
+                            student.ClassRoleId = null;
+                        }
                         lstStudent.Add(student);
+                        
                         unitOfWork.GetRepository<scf_Student>().Update(student);
                     }
                     unitOfWork.Save();

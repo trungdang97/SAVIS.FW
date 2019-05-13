@@ -31,7 +31,7 @@ define(["app",
                 $scope.Item = item;
                 $scope.Birthday = item.Birthday;
                 if (item.Class != null) {
-                    $scope.Class = item.Class.ClassId;
+                    $scope.Class = item.Class;
                 }
             }
 
@@ -48,7 +48,7 @@ define(["app",
                 console.log(model.Birthday);
                 //
                 if ($scope.Class != null) {
-                    model.ClassId = $scope.Class;
+                    model.ClassId = $scope.Class.ClassId;
                 }
 
                 if (model.StudentId != null) {

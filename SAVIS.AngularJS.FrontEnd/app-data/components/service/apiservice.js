@@ -95,6 +95,16 @@ define(['app', 'components/factory/factory'], function (app) {
             });
             return promise;
         }
+
+        service.AssignToRole = function (StudentId, ClassRoleId) {
+            var promise = $http({
+                method: 'PUT',
+                url: baseUrl + prefixCoreApiUrl + "/role",
+                data: {studentId: StudentId, classRoleId: ClassRoleId}
+            });
+            return promise;
+        }
+
         return service;
 
     }]);

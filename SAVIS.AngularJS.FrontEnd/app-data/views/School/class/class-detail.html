@@ -111,7 +111,22 @@
                     <tbody>
                         <tr ng-repeat="role in Roles">
                             <th>{{role.Name}}</th>
-                            <td id="{{role.ClassRoleId}}"></td>
+                            <td id="{{role.ClassRoleId}}">
+                                <ui-select ng-model="role.Student" theme="select2" ng-change="AssignToRole(student.selected.StudentId, role.ClassRoleId)" ng-disabled="disabled"
+                                           style="min-width: 100%; height:100%">
+                                    <ui-select-match placeholder="Chọn sinh viên...">
+                                        
+                                        {{$select.selected.Name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="student in Class.Students | filter: {Name: $select.search}">
+                                        <div ng-bind-html="student.Name | highlight: $select.search"></div>
+                                        <!--<small>
+                                            email:
+                                            age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+                                        </small>-->
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -136,17 +151,9 @@
                        placeholder="Nhập từ khóa tìm kiếm..." />
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-5">
-                <label style="line-height:33px;">Danh sách sinh viên trong lớp</label>
-            </div>
-            <div class="col-md-2"></div>
-            <div class="col-md-5">
-                <label style="line-height:33px;">Danh sách sinh viên không trong lớp</label>
-            </div>
-        </div>
         <div class="row row-eq-height">
             <div class="col-md-5">
+                <label style="line-height:33px;">Danh sách sinh viên trong lớp</label>
                 <div class="row tableFixHead">
                     <table class="table table-striped table-hover dataTable table-bordered">
                         <thead>
@@ -204,6 +211,7 @@
                 </div>
             </div>
             <div class="col-md-5">
+                <label style="line-height:33px;">Danh sách sinh viên không trong lớp</label>
                 <div class="row tableFixHead">
                     <table class="table table-striped table-hover dataTable table-bordered">
                         <thead>

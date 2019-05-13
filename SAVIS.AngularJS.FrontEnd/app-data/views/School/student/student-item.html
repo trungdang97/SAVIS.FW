@@ -39,7 +39,7 @@
                                        id="StartDate"
                                        name="StartDate"
                                        ng-model="Item.Birthday"
-                                       ng-value = "Item.Birthday | date:'dd/MM/yyyy'"
+                                       ng-value="Item.Birthday | date:'dd/MM/yyyy'"
                                        class="form-control input-sm"
                                        ng-click="open1($event)"
                                        uib-datepicker-popup="dd/MM/yyyy"
@@ -56,12 +56,24 @@
                     <div class="form-group">
                         <label class="control-label  text-bold col-md-4">Lớp </label>
                         <div class="col-md-8 ">
-                            <select ng-model="Class" ng-options="class.ClassId as class.Name for class in Classes" ng-selected="class.ClassId == Class" class="form-control input-sm">
+                            <!--<select ng-model="Class" ng-options="class.ClassId as class.Name for class in Classes" ng-selected="class.ClassId == Class" class="form-control input-sm">
                                 <option value="">Không</option>
-                            </select>
+                            </select>-->
                             <!-- <select ng-model="Class" class="form-control input-sm">
                                 <option ng-repeat="class in Classes" value="{{class.ClassId}}" ng-selected="class.ClassId == Class">{{class.Name}}</option>
                             </select> -->
+                            <ui-select ng-model="Class" theme="select2" ng-change="" ng-disabled="disabled"
+                                       style="min-width: 100%; height:100%">
+                                <ui-select-match placeholder="Chọn lớp...">
+                                    {{$select.selected.Name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="class in Classes | filter: {Name: $select.search, Code: $select.search}">
+                                    <div ng-bind-html="class.Name | highlight: $select.search"></div>
+                                    <small>
+                                        Mã lớp: {{class.Code}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
                 </div>

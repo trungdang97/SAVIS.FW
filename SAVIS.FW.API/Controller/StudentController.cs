@@ -84,5 +84,18 @@ namespace SAVIS.FW.API.Controller
         {
             return _studentHandler.JoinClass(studentId, classId);
         }
+
+        [HttpPut]
+        [Route("api/v1/students/role")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public Response<Student> AssignToRole([FromBody]RoleRequestModel model)
+        {
+            return _studentHandler.AssignToRole(model.StudentId, model.ClassRoleId);
+        }
+        public class RoleRequestModel
+        {
+            public Guid StudentId { get; set; }
+            public Guid ClassRoleId { get; set; }
+        }
     }
 }
