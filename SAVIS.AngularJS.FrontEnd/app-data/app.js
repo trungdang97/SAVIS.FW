@@ -58,6 +58,9 @@ define(['angularAMD', 'jquery',
         'formly',
         'formlyBootstrap',
     ]);
+
+    
+
     angularAMD.Version = "26.06";
     app.factory('settings', ['$rootScope', function ($rootScope) {
         var settings = {
@@ -109,7 +112,7 @@ define(['angularAMD', 'jquery',
     app.run(['$templateCache', function ($templateCache) {
         $templateCache.put('searchbox.tpl.html', '<input id="pac-input" class="pac-controls" type="text" ng-model="ngModel" placeholder="Search">');
         $templateCache.put('window.tpl.html', '<div ng-controller="WindowCtrl" ng-init="showPlaceDetails(parameter)">{{place.name}}</div>');
-    }]);
+    }]);   
 
     App.initComponents();
     // Init header footer sidebar

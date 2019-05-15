@@ -13,19 +13,21 @@ define(['app'], function (app) {
         factory.ClassDetailId = null;
 
         factory.User = {};
-
         return factory;
 
     });
 
-    app.factory('loginService', ['constantsFactory', 'user'] function (constantsFactory, user) {
-        if (User == null) {
-            return null;
-        }
-        else {
-            return true;
-        }
-    });
+    app.service('Auth', ['constantsFactory', '$http', 'login', function (constantsFactory, $http, login) {
+        var promise = $http({
+            url: constantsFactory.ApiUrl + "api/v1/login",
+            method: "POST",
+            data: { Username: login.username, Password: login.password }
+        });
+        promise.success(function (response) {
+            //if(response.)
+            return false;
+        });
+    }]);
 
     app.factory('beforeUnload', function ($rootScope, $window) {
         // Events are broadcast outside the Scope Lifecycle
