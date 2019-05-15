@@ -7,6 +7,7 @@ using SAVIS.FW.Business.Config;
 using SAVIS.FW.Common;
 using SAVIS.FW.Data;
 using SAVIS.FW.Data.Infrastructure;
+using Sodium;
 
 namespace SAVIS.FW.Business.Logic.Login
 {
@@ -20,13 +21,20 @@ namespace SAVIS.FW.Business.Logic.Login
                 {
                     var credential = unitOfWork.GetRepository<scf_Users>().Get(x => x.Username == model.Username);
                     //libsodium
-
-                    //
-                    return new Response<LoginResponseModel>(ConfigType.SUCCESS, "OK", new LoginResponseModel()
+                    if (PasswordHash.ArgonHashStringVerify(credential.Hash, model.Password))
                     {
-                        UserId = credential.UserId,
-                        UserRoleCode = credential.scf_Users_Role.Code
-                    });
+                        return new Response<LoginResponseModel>(ConfigType.SUCCESS, "OK", new LoginResponseModel()
+                        {
+                            UserId = credential.UserId,
+                            UserRoleCode = credential.scf_Users_Role.Code,
+                            IsActive = credential.IsActive
+                        });
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                    //
                 }
             }
             catch(Exception ex)

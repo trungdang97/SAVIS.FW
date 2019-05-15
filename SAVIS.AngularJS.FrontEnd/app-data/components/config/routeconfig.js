@@ -23,7 +23,7 @@ define(function () {
                 .when("/home", angularAMD.route({
                     templateUrl: basedUrl + 'views/School/home/home.html',
                     controller: 'HomeCtrl',
-                    controllerUrl: 'views/School/home/home'
+                    controllerUrl: 'views/School/home/home',
                 }))
                 .when("/student-manager", angularAMD.route({
                     templateUrl: basedUrl + 'views/School/student/student.html',

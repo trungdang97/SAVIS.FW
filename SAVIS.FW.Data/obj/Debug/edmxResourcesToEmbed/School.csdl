@@ -5,8 +5,8 @@
       <PropertyRef Name="ClassId" />
     </Key>
     <Property Name="ClassId" Type="Guid" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StudentQuantity" Type="Int32" Nullable="false" />
     <Property Name="TeacherId" Type="Guid" />
     <NavigationProperty Name="scf_Teacher" Relationship="Self.FK_Class_Teacher" FromRole="scf_Class" ToRole="scf_Teacher" />
@@ -29,8 +29,8 @@
       <PropertyRef Name="StudentId" />
     </Key>
     <Property Name="StudentId" Type="Guid" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="ClassRoleId" Type="Guid" />
     <Property Name="ClassId" Type="Guid" />
@@ -59,8 +59,8 @@
       <PropertyRef Name="TeacherId" />
     </Key>
     <Property Name="TeacherId" Type="Guid" Nullable="false" />
-    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
     <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
@@ -213,5 +213,44 @@
       <End Role="scf_Teacher" EntitySet="scf_Teacher" />
       <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
     </AssociationSet>
+    <EntitySet Name="scf_Users" EntityType="SAVIS.CoreFW.SchoolModel.scf_Users" />
+    <EntitySet Name="scf_Users_Role" EntityType="SAVIS.CoreFW.SchoolModel.scf_Users_Role" />
+    <AssociationSet Name="FK_scf_Users_scf_Users_Role" Association="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role">
+      <End Role="scf_Users_Role" EntitySet="scf_Users_Role" />
+      <End Role="scf_Users" EntitySet="scf_Users" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="scf_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Hash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Salt" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UserRoleId" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="scf_Users_Role" Relationship="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role" FromRole="scf_Users" ToRole="scf_Users_Role" />
+  </EntityType>
+  <EntityType Name="scf_Users_Role">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="scf_Users" Relationship="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role" FromRole="scf_Users_Role" ToRole="scf_Users" />
+  </EntityType>
+  <Association Name="FK_scf_Users_scf_Users_Role">
+    <End Type="SAVIS.CoreFW.SchoolModel.scf_Users_Role" Role="scf_Users_Role" Multiplicity="0..1" />
+    <End Type="SAVIS.CoreFW.SchoolModel.scf_Users" Role="scf_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Users_Role">
+        <PropertyRef Name="UserRoleId" />
+      </Principal>
+      <Dependent Role="scf_Users">
+        <PropertyRef Name="UserRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

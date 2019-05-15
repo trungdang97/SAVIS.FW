@@ -10,6 +10,7 @@ using SAVIS.FW.Common;
 using SAVIS.FW.Business.Logic.Class;
 using SAVIS.FW.Business.Logic.Student;
 using SAVIS.FW.Business.Logic.Teacher;
+using SAVIS.FW.Business.Logic.Login;
 
 namespace SAVIS.FW.Business.Config
 {
@@ -144,6 +145,8 @@ namespace SAVIS.FW.Business.Config
             servicesType.Add(typeof(IStudentHandler), typeof(DbStudentHandler));
             //scf/teachers
             servicesType.Add(typeof(ITeacherHandler), typeof(DbTeacherHandler));
+            //scf/login
+            servicesType.Add(typeof(ILoginHandler), typeof(DbLoginHandler));
         }
     }
 

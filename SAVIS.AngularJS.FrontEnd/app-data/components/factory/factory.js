@@ -1,7 +1,7 @@
 'use strict';
 define(['app'], function (app) {
     app.service('constantsFactory', function () {
-         var factory = {};
+        var factory = {};
         // Return factory
         factory.ApiUrl = "http://localhost:9000/";
 
@@ -12,15 +12,24 @@ define(['app'], function (app) {
         factory.Student = {};
         factory.ClassDetailId = null;
 
-		return factory;
+        factory.User = {};
+
+        return factory;
 
     });
 
-    
+    app.factory('loginService', ['constantsFactory', 'user'] function (constantsFactory, user) {
+        if (User == null) {
+            return null;
+        }
+        else {
+            return true;
+        }
+    });
 
     app.factory('beforeUnload', function ($rootScope, $window) {
         // Events are broadcast outside the Scope Lifecycle
-    
+
         $window.onbeforeunload = function (e) {
             var confirmation = {};
             var event = $rootScope.$broadcast('onBeforeUnload', confirmation);
@@ -28,15 +37,15 @@ define(['app'], function (app) {
                 return confirmation.message;
             }
         };
-    
+
         $window.onunload = function () {
             $rootScope.$broadcast('onUnload');
         };
         return {};
     })
-    .run(function (beforeUnload) {
-        // Must invoke the service at least once
-    });
+        .run(function (beforeUnload) {
+            // Must invoke the service at least once
+        });
 
 
 });

@@ -136,3 +136,5 @@ C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.API\obj\Debug\SAVIS.FW.API.c
 C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.API\obj\Debug\SAVIS.FW.API.csproj.CopyComplete
 C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.API\obj\Debug\SAVIS.FW.API.exe
 C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.API\obj\Debug\SAVIS.FW.API.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.API\bin\Debug\Sodium.dll
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.API\bin\Debug\Sodium.dll.config

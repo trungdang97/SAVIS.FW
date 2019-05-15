@@ -55,3 +55,4 @@ C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.
 C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.csproj.CopyComplete
 C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.dll
 C:\Users\Trung\Desktop\Work\Savis\SAVIS.FW\SAVIS.FW.Business\obj\Debug\SAVIS.FW.Business.pdb
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\SAVIS.FW.Business\bin\Debug\Sodium.dll

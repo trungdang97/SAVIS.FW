@@ -5,8 +5,8 @@
       <PropertyRef Name="ClassId" />
     </Key>
     <Property Name="ClassId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="StudentQuantity" Type="int" Nullable="false" />
     <Property Name="TeacherId" Type="uniqueidentifier" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -23,8 +23,8 @@
       <PropertyRef Name="StudentId" />
     </Key>
     <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Birthday" Type="date" Nullable="false" />
     <Property Name="ClassRoleId" Type="uniqueidentifier" />
     <Property Name="ClassId" Type="uniqueidentifier" />
@@ -47,8 +47,8 @@
       <PropertyRef Name="TeacherId" />
     </Key>
     <Property Name="TeacherId" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Birthday" Type="date" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
@@ -62,6 +62,25 @@
     <Property Name="StartDate" Type="date" Nullable="false" />
     <Property Name="EndDate" Type="date" />
   </EntityType>
+  <EntityType Name="scf_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Hash" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Salt" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="UserRoleId" Type="uniqueidentifier" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="scf_Users_Role">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Code" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <Association Name="FK_Class_Teacher">
     <End Role="scf_Teacher" Type="Self.scf_Teacher" Multiplicity="0..1" />
     <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="*" />
@@ -71,6 +90,18 @@
       </Principal>
       <Dependent Role="scf_Class">
         <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_scf_Users_scf_Users_Role">
+    <End Role="scf_Users_Role" Type="Self.scf_Users_Role" Multiplicity="0..1" />
+    <End Role="scf_Users" Type="Self.scf_Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="scf_Users_Role">
+        <PropertyRef Name="UserRoleId" />
+      </Principal>
+      <Dependent Role="scf_Users">
+        <PropertyRef Name="UserRoleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -165,9 +196,15 @@
     <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Users" EntityType="Self.scf_Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="scf_Users_Role" EntityType="Self.scf_Users_Role" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
       <End Role="scf_Teacher" EntitySet="scf_Teacher" />
       <End Role="scf_Class" EntitySet="scf_Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_scf_Users_scf_Users_Role" Association="Self.FK_scf_Users_scf_Users_Role">
+      <End Role="scf_Users_Role" EntitySet="scf_Users_Role" />
+      <End Role="scf_Users" EntitySet="scf_Users" />
     </AssociationSet>
     <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
       <End Role="scf_Class" EntitySet="scf_Class" />

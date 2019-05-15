@@ -1,0 +1,2 @@
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestSodium\obj\Debug\TestSodium.csprojAssemblyReference.cache
+C:\Users\Trung\Desktop\SAVIS\SAVIS.FW\TestSodium\obj\Debug\TestSodium.csproj.CoreCompileInputs.cache
