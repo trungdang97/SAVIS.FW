@@ -19,6 +19,9 @@
         <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_Student_Class_Role" ManuallyRouted="false" />
         <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_Student_History_Student" ManuallyRouted="false" />
         <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_Teacher_History_Teacher" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Users" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="SAVIS.CoreFW.SchoolModel.scf_Users_Role" Width="1.5" PointX="0.75" PointY="9.25" />
+        <AssociationConnector Association="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

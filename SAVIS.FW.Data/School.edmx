@@ -10,8 +10,8 @@
             <PropertyRef Name="ClassId" />
           </Key>
           <Property Name="ClassId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="StudentQuantity" Type="int" Nullable="false" />
           <Property Name="TeacherId" Type="uniqueidentifier" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -28,8 +28,8 @@
             <PropertyRef Name="StudentId" />
           </Key>
           <Property Name="StudentId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Birthday" Type="date" Nullable="false" />
           <Property Name="ClassRoleId" Type="uniqueidentifier" />
           <Property Name="ClassId" Type="uniqueidentifier" />
@@ -52,8 +52,8 @@
             <PropertyRef Name="TeacherId" />
           </Key>
           <Property Name="TeacherId" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Birthday" Type="date" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -67,6 +67,25 @@
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" />
         </EntityType>
+        <EntityType Name="scf_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Hash" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Salt" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserRoleId" Type="uniqueidentifier" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="scf_Users_Role">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Class_Teacher">
           <End Role="scf_Teacher" Type="Self.scf_Teacher" Multiplicity="0..1" />
           <End Role="scf_Class" Type="Self.scf_Class" Multiplicity="*" />
@@ -76,6 +95,18 @@
             </Principal>
             <Dependent Role="scf_Class">
               <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scf_Users_scf_Users_Role">
+          <End Role="scf_Users_Role" Type="Self.scf_Users_Role" Multiplicity="0..1" />
+          <End Role="scf_Users" Type="Self.scf_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scf_Users_Role">
+              <PropertyRef Name="UserRoleId" />
+            </Principal>
+            <Dependent Role="scf_Users">
+              <PropertyRef Name="UserRoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -170,9 +201,15 @@
           <EntitySet Name="scf_Student_History" EntityType="Self.scf_Student_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scf_Teacher" EntityType="Self.scf_Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scf_Teacher_History" EntityType="Self.scf_Teacher_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scf_Users" EntityType="Self.scf_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scf_Users_Role" EntityType="Self.scf_Users_Role" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Class_Teacher" Association="Self.FK_Class_Teacher">
             <End Role="scf_Teacher" EntitySet="scf_Teacher" />
             <End Role="scf_Class" EntitySet="scf_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scf_Users_scf_Users_Role" Association="Self.FK_scf_Users_scf_Users_Role">
+            <End Role="scf_Users_Role" EntitySet="scf_Users_Role" />
+            <End Role="scf_Users" EntitySet="scf_Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Student_Class" Association="Self.FK_Student_Class">
             <End Role="scf_Class" EntitySet="scf_Class" />
@@ -212,8 +249,8 @@
             <PropertyRef Name="ClassId" />
           </Key>
           <Property Name="ClassId" Type="Guid" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StudentQuantity" Type="Int32" Nullable="false" />
           <Property Name="TeacherId" Type="Guid" />
           <NavigationProperty Name="scf_Teacher" Relationship="Self.FK_Class_Teacher" FromRole="scf_Class" ToRole="scf_Teacher" />
@@ -236,8 +273,8 @@
             <PropertyRef Name="StudentId" />
           </Key>
           <Property Name="StudentId" Type="Guid" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ClassRoleId" Type="Guid" />
           <Property Name="ClassId" Type="Guid" />
@@ -266,8 +303,8 @@
             <PropertyRef Name="TeacherId" />
           </Key>
           <Property Name="TeacherId" Type="Guid" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="scf_Class" Relationship="Self.FK_Class_Teacher" FromRole="scf_Teacher" ToRole="scf_Class" />
           <NavigationProperty Name="scf_Teacher_History" Relationship="Self.FK_Teacher_History_Teacher" FromRole="scf_Teacher" ToRole="scf_Teacher_History" />
@@ -420,7 +457,46 @@
             <End Role="scf_Teacher" EntitySet="scf_Teacher" />
             <End Role="scf_Teacher_History" EntitySet="scf_Teacher_History" />
           </AssociationSet>
+          <EntitySet Name="scf_Users" EntityType="SAVIS.CoreFW.SchoolModel.scf_Users" />
+          <EntitySet Name="scf_Users_Role" EntityType="SAVIS.CoreFW.SchoolModel.scf_Users_Role" />
+          <AssociationSet Name="FK_scf_Users_scf_Users_Role" Association="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role">
+            <End Role="scf_Users_Role" EntitySet="scf_Users_Role" />
+            <End Role="scf_Users" EntitySet="scf_Users" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="scf_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Hash" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UserRoleId" Type="Guid" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="scf_Users_Role" Relationship="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role" FromRole="scf_Users" ToRole="scf_Users_Role" />
+        </EntityType>
+        <EntityType Name="scf_Users_Role">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="scf_Users" Relationship="SAVIS.CoreFW.SchoolModel.FK_scf_Users_scf_Users_Role" FromRole="scf_Users_Role" ToRole="scf_Users" />
+        </EntityType>
+        <Association Name="FK_scf_Users_scf_Users_Role">
+          <End Type="SAVIS.CoreFW.SchoolModel.scf_Users_Role" Role="scf_Users_Role" Multiplicity="0..1" />
+          <End Type="SAVIS.CoreFW.SchoolModel.scf_Users" Role="scf_Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scf_Users_Role">
+              <PropertyRef Name="UserRoleId" />
+            </Principal>
+            <Dependent Role="scf_Users">
+              <PropertyRef Name="UserRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -492,6 +568,27 @@
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scf_Users">
+            <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Users">
+              <MappingFragment StoreEntitySet="scf_Users">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Hash" ColumnName="Hash" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scf_Users_Role">
+            <EntityTypeMapping TypeName="SAVIS.CoreFW.SchoolModel.scf_Users_Role">
+              <MappingFragment StoreEntitySet="scf_Users_Role">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

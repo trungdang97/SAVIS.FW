@@ -31,5 +31,7 @@ namespace SAVIS.FW.Data
         public virtual DbSet<scf_Student_History> scf_Student_History { get; set; }
         public virtual DbSet<scf_Teacher> scf_Teacher { get; set; }
         public virtual DbSet<scf_Teacher_History> scf_Teacher_History { get; set; }
+        public virtual DbSet<scf_Users> scf_Users { get; set; }
+        public virtual DbSet<scf_Users_Role> scf_Users_Role { get; set; }
     }
 }
