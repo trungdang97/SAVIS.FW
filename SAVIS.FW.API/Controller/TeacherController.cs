@@ -16,7 +16,7 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/teachers/{teacherId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Teacher> GetById(Guid teacherId)
+        public Response<TeacherModel> GetById(Guid teacherId)
         {
             return _teacherHandler.GetById(teacherId);
         }
@@ -24,42 +24,42 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/teachers")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Teacher>> GetFilter(string filter)
+        public Response<IList<TeacherModel>> GetFilter(string filter)
         {
-            var teacherFilter = JsonConvert.DeserializeObject<TeacherQueryFilter>(filter);
-            return _teacherHandler.GetFilter(teacherFilter);
+            var teacherFilter = JsonConvert.DeserializeObject<TeacherQueryFilterModel>(filter);
+            return _teacherHandler.GetByFilter(teacherFilter);
         }
 
-        [HttpGet]
-        [Route("api/v1/teachers/text")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Teacher>> GetByText(string searchText)
-        {
-            return _teacherHandler.GetByText(searchText);
-        }
+        //[HttpGet]
+        //[Route("api/v1/teachers/text")]
+        //[EnableCors(origins: "*", headers: "*", methods: "*")]
+        //public Response<IList<TeacherModel>> GetByText(string searchText)
+        //{
+        //    return _teacherHandler.GetByText(searchText);
+        //}
 
         [HttpPost]
         [Route("api/v1/teachers")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Teacher> CreateTeacher(TeacherCreateRequestModel teacher)
+        public Response<TeacherModel> CreateTeacher(TeacherCreateRequestModel teacher)
         {
-            return _teacherHandler.CreateTeacher(teacher);
+            return _teacherHandler.Create(teacher);
         }
 
         [HttpPut]
         [Route("api/v1/teachers")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Teacher> UpdateTeacher(TeacherUpdateRequestModel teacher)
+        public Response<TeacherModel> UpdateTeacher(TeacherUpdateRequestModel teacher)
         {
-            return _teacherHandler.UpdateTeacher(teacher);
+            return _teacherHandler.Update(teacher);
         }
 
         [HttpDelete]
         [Route("api/v1/teachers/{teacherId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Teacher> DeleteTeacher(Guid teacherId)
+        public Response<TeacherModel> DeleteTeacher(Guid teacherId)
         {
-            return _teacherHandler.DeleteTeacher(teacherId);
+            return _teacherHandler.Delete(teacherId);
         }
 
         //Nghiep vu
@@ -68,9 +68,9 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/teachers/{teacherId}/detail")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Teacher> TeacherDetail(Guid teacherId)
+        public Response<TeacherModel> TeacherDetail(Guid teacherId)
         {
-            return _teacherHandler.CurrentAssignedClasses(teacherId);
+            return _teacherHandler.GetAssignedClasses(teacherId);
         }
     }
 }

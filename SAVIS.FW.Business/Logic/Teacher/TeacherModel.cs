@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SAVIS.FW.Business.Logic.Teacher
 {
-    public class Teacher
+    public class TeacherModel
     {
         public Guid TeacherId { get; set; }
         public string Code { get; set; }
@@ -30,12 +30,12 @@ namespace SAVIS.FW.Business.Logic.Teacher
         public DateTime Birthday { get; set; }
     }
 
-    public class TeacherQueryFilter
+    public class TeacherQueryFilterModel
     {
         public string TextSearch { get; set; }
         public int? PageSize { get; set; }
         public int? PageNumber { get; set; }
-        public TeacherQueryFilter()
+        public TeacherQueryFilterModel()
         {
             PageSize = 10;
             PageNumber = 1;
@@ -44,7 +44,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
 
     public class TeacherClassHistory
     {
-        public Class.Class Class { get; set; }
+        public Class.ClassModel Class { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime? ToDate { get; set; }
     }

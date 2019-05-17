@@ -18,7 +18,7 @@ namespace SAVIS.FW.Business.Logic.Class
         ILogService logger = BusinessServiceLocator.Instance.GetService<ILogService>();
 
         #region Nghiệp vụ
-        public Response<Class> AssignToClass(Guid? teacherId, Guid classId)
+        public Response<ClassModel> AssignToClass(Guid? teacherId, Guid classId)
         {
             try
             {
@@ -29,24 +29,24 @@ namespace SAVIS.FW.Business.Logic.Class
                     var _teacherId = teacherHistory.TeacherId;
                     if (teacher == null)
                     {
-                        return new Response<Class>(ConfigType.ERROR, "Objects doesn't exists.", null);
+                        return new Response<ClassModel>(ConfigType.ERROR, "Objects doesn't exists.", null);
                     }
                     else if (teacherHistory != null && teacherId == _teacherId)
                     {
-                        return new Response<Class>(ConfigType.ERROR, "Teacher's already in charge of this class.", null);
+                        return new Response<ClassModel>(ConfigType.ERROR, "Teacher's already in charge of this class.", null);
                     }
                     teacher.TeacherId = (teacherId == Guid.Empty) ? null : teacherId;
                     unitOfWork.GetRepository<scf_Class>().Update(teacher);
                     unitOfWork.Save();
 
                     teacher = unitOfWork.GetRepository<scf_Class>().GetById(classId);
-                    Teacher.Teacher Teacher = new Teacher.Teacher();
+                    Teacher.TeacherModel Teacher = new Teacher.TeacherModel();
                     if (teacherId != null)
                     {
                         Teacher = DbTeacherHandler.ConvertTeacher(unitOfWork.GetRepository<scf_Teacher>().GetById(teacherId.Value));
                     }
 
-                    Class response = new Class()
+                    ClassModel response = new ClassModel()
                     {
                         ClassId = teacher.ClassId,
                         Code = teacher.Code,
@@ -57,15 +57,15 @@ namespace SAVIS.FW.Business.Logic.Class
                     };
                     if (response.TeacherId == null)
                     {
-                        return new Response<Class>(ConfigType.SUCCESS, "Resigned from class: " + response.Name, response);
+                        return new Response<ClassModel>(ConfigType.SUCCESS, "Resigned from class: " + response.Name, response);
                     }
 
-                    return new Response<Class>(ConfigType.SUCCESS, "Assigned to class: " + response.Name, response);
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "Assigned to class: " + response.Name, response);
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
@@ -74,7 +74,7 @@ namespace SAVIS.FW.Business.Logic.Class
             return new UnitOfWork().GetRepository<scf_Class>().Count;
         }
 
-        public Response<Class> CurrentStudents(Guid classId)
+        public Response<ClassModel> GetCurrentStudents(Guid classId)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace SAVIS.FW.Business.Logic.Class
                     var _class = unitOfWork.GetRepository<scf_Class>().GetById(classId);
                     if (_class == null)
                     {
-                        return new Response<Class>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<ClassModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     var response = ConvertClass(_class);
                     var students = unitOfWork.GetRepository<scf_Student>().GetMany(x => x.ClassId == classId).Select(DbStudentHandler.ConvertStudent);
@@ -92,11 +92,11 @@ namespace SAVIS.FW.Business.Logic.Class
                         if (student.ClassRoleId != Guid.Empty)
                         {
                             var role = unitOfWork.GetRepository<scf_Class_Role>().GetById(student.ClassRoleId);
-                            student.Role = new ClassRole(role);
+                            student.Role = new ClassRoleModel(role);
                         }
                     }
                     response.Students = students.ToList();
-                    return new Response<Class>(ConfigType.SUCCESS, "OK. Class has " + response.Students.Count + " students", response)
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "OK. Class has " + response.Students.Count + " students", response)
                     {
                         DataCount = response.Students.Count
                     };
@@ -104,20 +104,20 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
         #endregion
 
         #region GET
-        public Response<IList<ClassRole>> GetClassRoles()
+        public Response<IList<ClassRoleModel>> GetRoles()
         {
             try
             {
                 using (var unitOfWork = new UnitOfWork())
                 {
                     var roles = unitOfWork.GetRepository<scf_Class_Role>().GetAll().ToList();
-                    return new Response<IList<ClassRole>>(ConfigType.SUCCESS, "OK", ConvertRoles(roles))
+                    return new Response<IList<ClassRoleModel>>(ConfigType.SUCCESS, "OK", ConvertRoles(roles))
                     {
                         TotalCount = roles.Count
                     };
@@ -125,10 +125,10 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch(Exception ex)
             {
-                return new Response<IList<ClassRole>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<ClassRoleModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
-        public Response<Class> GetClassById(Guid id)
+        public Response<ClassModel> GetById(Guid id)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace SAVIS.FW.Business.Logic.Class
                         Class.scf_Teacher = _teacher;
 
                     }
-                    return new Response<Class>(ConfigType.SUCCESS, "OK", ConvertClass(Class))
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "OK", ConvertClass(Class))
                     {
                         DataCount = 1
                     };
@@ -149,10 +149,10 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
-        public Response<Class> GetClassByCode(string code)
+        public Response<ClassModel> GetByCode(string code)
         {
             try
             {
@@ -168,7 +168,7 @@ namespace SAVIS.FW.Business.Logic.Class
                     var response = ConvertClass(Class);
                     response.Students = DbStudentHandler.ConvertStudents(unitOfWork.GetRepository<scf_Student>().GetMany(x => x.ClassId == Class.ClassId).ToList());
 
-                    return new Response<Class>(ConfigType.SUCCESS, "OK", response)
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "OK", response)
                     {
                         DataCount = 1
                     };
@@ -176,11 +176,11 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<IList<Class>> GetFilter(ClassQueryFilter filter)
+        public Response<IList<ClassModel>> GetByFilter(ClassQueryFilterModel filter)
         {
             try
             {
@@ -200,7 +200,7 @@ namespace SAVIS.FW.Business.Logic.Class
                         data = data.Skip(excludedRows).Take(filter.PageSize.Value).ToList();
                     }
 
-                    return new Response<IList<Class>>(ConfigType.SUCCESS, "OK", ConvertClasses(data))
+                    return new Response<IList<ClassModel>>(ConfigType.SUCCESS, "OK", ConvertClasses(data))
                     {
                         TotalCount = count,
                         DataCount = data.Count
@@ -209,29 +209,29 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch (Exception ex)
             {
-                return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<ClassModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<IList<Class>> GetAll()
+        public Response<IList<ClassModel>> GetAll()
         {
             using (var unitOfWork = new UnitOfWork())
             {
                 try
                 {
                     List<scf_Class> classes = unitOfWork.GetRepository<scf_Class>().GetMany(x => x.IsActive == true).ToList();
-                    return new Response<IList<Class>>(ConfigType.SUCCESS, "OK", ConvertClasses(classes));
+                    return new Response<IList<ClassModel>>(ConfigType.SUCCESS, "OK", ConvertClasses(classes));
                 }
                 catch (Exception ex)
                 {
-                    return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
+                    return new Response<IList<ClassModel>>(ConfigType.ERROR, ex.Message, null);
                 }
             }
         }
         #endregion
 
         #region CREATE, UPDATE, DELETE
-        public Response<Class> CreateClass(ClassCreateRequestModel Class)
+        public Response<ClassModel> Create(ClassCreateRequestModel Class)
         {
             try
             {
@@ -251,16 +251,16 @@ namespace SAVIS.FW.Business.Logic.Class
                     unitOfWork.GetRepository<scf_Class>().Add(model);
                     unitOfWork.Save();
 
-                    return new Response<Class>(ConfigType.SUCCESS, "CREATED", ConvertClass(model));
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "CREATED", ConvertClass(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<Class> UpdateClass(ClassUpdateRequestModel Class)
+        public Response<ClassModel> Update(ClassUpdateRequestModel Class)
         {
             try
             {
@@ -268,7 +268,7 @@ namespace SAVIS.FW.Business.Logic.Class
                 {
                     if (unitOfWork.GetRepository<scf_Class>().GetById(Class.ClassId) == null)
                     {
-                        return new Response<Class>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<ClassModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     scf_Class model = unitOfWork.GetRepository<scf_Class>().GetById(Class.ClassId);
                     model.Code = Class.Code;
@@ -280,16 +280,16 @@ namespace SAVIS.FW.Business.Logic.Class
                     unitOfWork.GetRepository<scf_Class>().Update(model);
                     unitOfWork.Save();
 
-                    return new Response<Class>(ConfigType.SUCCESS, "UPDATED", ConvertClass(model));
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "UPDATED", ConvertClass(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<Class> DeleteClass(Guid ClassId)
+        public Response<ClassModel> Delete(Guid ClassId)
         {
             try
             {
@@ -298,23 +298,23 @@ namespace SAVIS.FW.Business.Logic.Class
                     var db = unitOfWork.DataContext;
                     if (db.Set<scf_Class>().FirstOrDefault(x => x.ClassId == ClassId) == null)
                     {
-                        return new Response<Class>(ConfigType.ERROR, "Objects doesn't exists.", null);
+                        return new Response<ClassModel>(ConfigType.ERROR, "Objects doesn't exists.", null);
                     }
                     scf_Class model = unitOfWork.GetRepository<scf_Class>().GetById(ClassId);
                     model.IsActive = false;
                     unitOfWork.GetRepository<scf_Class>().Update(model);
                     unitOfWork.Save();
 
-                    return new Response<Class>(ConfigType.SUCCESS, "DELETED", ConvertClass(model));
+                    return new Response<ClassModel>(ConfigType.SUCCESS, "DELETED", ConvertClass(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Class>(ConfigType.ERROR, ex.Message, null);
+                return new Response<ClassModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<IList<Class>> DeleteMany(List<Guid> lstClassId)
+        public Response<IList<ClassModel>> DeleteMany(List<Guid> lstClassId)
         {
             using (var unitOfWork = new UnitOfWork())
             {
@@ -331,22 +331,22 @@ namespace SAVIS.FW.Business.Logic.Class
                         }
                     }
                     unitOfWork.Save();
-                    return new Response<IList<Class>>(ConfigType.SUCCESS, "DELETED MANY", ConvertClasses(lstClass));
+                    return new Response<IList<ClassModel>>(ConfigType.SUCCESS, "DELETED MANY", ConvertClasses(lstClass));
                 }
                 catch (Exception ex)
                 {
-                    return new Response<IList<Class>>(ConfigType.ERROR, ex.Message, null);
+                    return new Response<IList<ClassModel>>(ConfigType.ERROR, ex.Message, null);
                 }
             }
         }
         #endregion
 
         #region CONVERT DATA
-        public static Class ConvertClass(scf_Class classEntity)
+        public static ClassModel ConvertClass(scf_Class classEntity)
         {
             try
             {
-                Class model = new Class();
+                ClassModel model = new ClassModel();
                 model.ClassId = classEntity.ClassId;
                 model.Code = classEntity.Code;
                 model.Name = classEntity.Name;
@@ -363,11 +363,11 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch (Exception ex)
             {
-                return new Class();
+                return new ClassModel();
             }
         }
 
-        public static List<Class> ConvertClasses(List<scf_Class> classEntities)
+        public static List<ClassModel> ConvertClasses(List<scf_Class> classEntities)
         {
             try
             {
@@ -376,15 +376,15 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch (Exception ex)
             {
-                return new List<Class>();
+                return new List<ClassModel>();
             }
         }
 
-        public static ClassRole ConvertRole(scf_Class_Role role)
+        public static ClassRoleModel ConvertRole(scf_Class_Role role)
         {
             try
             {
-                ClassRole classRole = new ClassRole(role);                
+                ClassRoleModel classRole = new ClassRoleModel(role);                
                 return classRole;
             }
             catch (Exception ex)
@@ -393,7 +393,7 @@ namespace SAVIS.FW.Business.Logic.Class
             }
         }
 
-        public static List<ClassRole> ConvertRoles(List<scf_Class_Role> roles)
+        public static List<ClassRoleModel> ConvertRoles(List<scf_Class_Role> roles)
         {
             try
             {
@@ -402,7 +402,7 @@ namespace SAVIS.FW.Business.Logic.Class
             }
             catch(Exception ex)
             {
-                return new List<ClassRole>();
+                return new List<ClassRoleModel>();
             }
         }
         #endregion

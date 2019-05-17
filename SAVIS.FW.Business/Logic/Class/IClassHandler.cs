@@ -10,18 +10,18 @@ namespace SAVIS.FW.Business.Logic.Class
 {
     public interface IClassHandler
     {
-        Response<Class> GetClassById(Guid id);
-        Response<Class> GetClassByCode(string code);
-        Response<Class> CreateClass(ClassCreateRequestModel Class);
-        Response<Class> UpdateClass(ClassUpdateRequestModel Class);
-        Response<Class> DeleteClass(Guid ClassId);
-        Response<IList<Class>> GetFilter(ClassQueryFilter filter);
-        Response<IList<Class>> GetAll();
-        Response<IList<Class>> DeleteMany(List<Guid> lstClassId);
+        Response<ClassModel> GetById(Guid id);
+        Response<ClassModel> GetByCode(string code);
+        Response<ClassModel> Create(ClassCreateRequestModel Class);
+        Response<ClassModel> Update(ClassUpdateRequestModel Class);
+        Response<ClassModel> Delete(Guid ClassId);
+        Response<IList<ClassModel>> GetByFilter(ClassQueryFilterModel filter);
+        Response<IList<ClassModel>> GetAll();
+        Response<IList<ClassModel>> DeleteMany(List<Guid> lstClassId);
         //specific 
-        Response<Class> AssignToClass(Guid? teacherId, Guid classId);
-        Response<IList<ClassRole>> GetClassRoles();
+        Response<ClassModel> AssignToClass(Guid? teacherId, Guid classId);
+        Response<IList<ClassRoleModel>> GetRoles();
         int TotalQuantity();
-        Response<Class> CurrentStudents(Guid classId);
+        Response<ClassModel> GetCurrentStudents(Guid classId);
     }
 }

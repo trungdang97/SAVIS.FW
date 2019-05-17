@@ -18,24 +18,24 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/students/{studentId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Student> GetById(Guid studentId)
+        public Response<StudentModel> GetById(Guid studentId)
         {
-            return _studentHandler.GetStudentById(studentId);
+            return _studentHandler.GetById(studentId);
         }
         [HttpGet]
         [Route("api/v1/students")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Student>> GetFilter(string filter)
+        public Response<IList<StudentModel>> GetFilter(string filter)
         {
-            StudentQueryFilter studentFilter = JsonConvert.DeserializeObject<StudentQueryFilter>(filter);
+            StudentQueryFilterModel studentFilter = JsonConvert.DeserializeObject<StudentQueryFilterModel>(filter);
 
-            return _studentHandler.GetFilter(studentFilter);
+            return _studentHandler.GetByFilter(studentFilter);
         }
 
         [HttpGet]
         [Route("api/v1/students/unassigned")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Student>> GetUnassignedStudents()
+        public Response<IList<StudentModel>> GetUnassignedStudents()
         {
             return _studentHandler.GetUnassignedStudents();
         }
@@ -43,36 +43,36 @@ namespace SAVIS.FW.API.Controller
         [HttpPost]
         [Route("api/v1/students")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Student> Create([FromBody]StudentCreateRequestModel student)
+        public Response<StudentModel> Create([FromBody]StudentCreateRequestModel student)
         {
-            return _studentHandler.CreateStudent(student);
+            return _studentHandler.Create(student);
         }
 
         [HttpPut]
         [Route("api/v1/students")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Student> Update([FromBody]StudentUpdateRequestModel student)
+        public Response<StudentModel> Update([FromBody]StudentUpdateRequestModel student)
         {
             if(student.Birthday.Hour == 17)
             {
                 //UTC thi phai + 7 ve local
                 student.Birthday = student.Birthday.AddHours(7);
             }
-            return _studentHandler.UpdateStudent(student);
+            return _studentHandler.Update(student);
         }
 
         [HttpDelete]
         [Route("api/v1/students/{studentId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Student> Delete(Guid studentId)
+        public Response<StudentModel> Delete(Guid studentId)
         {
-            return _studentHandler.DeleteStudent(studentId);
+            return _studentHandler.Delete(studentId);
         }
 
         [HttpDelete]
         [Route("api/v1/students/deletemany")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Student>> DeleteMany([FromBody]List<Guid> model)
+        public Response<IList<StudentModel>> DeleteMany([FromBody]List<Guid> model)
         {
             return _studentHandler.DeleteMany(model);
         }
@@ -80,7 +80,7 @@ namespace SAVIS.FW.API.Controller
         [HttpPut]
         [Route("api/v1/students/class/{classId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Student>> InAndOut([FromBody]List<Guid> studentId, Guid? classId)
+        public Response<IList<StudentModel>> InAndOut([FromBody]List<Guid> studentId, Guid? classId)
         {
             return _studentHandler.JoinClass(studentId, classId);
         }
@@ -88,7 +88,7 @@ namespace SAVIS.FW.API.Controller
         [HttpPut]
         [Route("api/v1/students/role")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Student> AssignToRole([FromBody]RoleRequestModel model)
+        public Response<StudentModel> AssignToRole([FromBody]RoleRequestModel model)
         {
             return _studentHandler.AssignToRole(model.StudentId, model.ClassRoleId);
         }

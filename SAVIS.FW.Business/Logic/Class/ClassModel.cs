@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace SAVIS.FW.Business.Logic.Class
 {
-    public class Class
+    public class ClassModel
     {
         public Guid ClassId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public int StudentQuantity { get; set; }
         public Guid? TeacherId { get; set; }
-        public Teacher.Teacher Teacher { get; set; }
-        public List<Student.Student> Students { get; set; }
-        public Class()
+        public Teacher.TeacherModel Teacher { get; set; }
+        public List<Student.StudentModel> Students { get; set; }
+        public ClassModel()
         {
             StudentQuantity = 0;
         }
     }
 
-    public class ClassQueryFilter
+    public class ClassQueryFilterModel
     {
         public string TextSearch { get; set; }
         public int? PageSize { get; set; }
         public int? PageNumber { get; set; }
         //public int? DisplayStatus { get; set; }
-        public ClassQueryFilter()
+        public ClassQueryFilterModel()
         {
             PageSize = 10;
             PageNumber = 1;

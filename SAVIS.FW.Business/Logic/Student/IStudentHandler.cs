@@ -9,17 +9,17 @@ namespace SAVIS.FW.Business.Logic.Student
 {
     public interface IStudentHandler
     {
-        Response<Student> GetStudentById(Guid studentId);
-        Response<IList<Student>> GetFilter(StudentQueryFilter filter);
-        Response<Student> CreateStudent(StudentCreateRequestModel student);
-        Response<Student> UpdateStudent(StudentUpdateRequestModel student);
-        Response<Student> DeleteStudent(Guid studentId);
-        Response<IList<Student>> DeleteMany(List<Guid> deletedItems);
+        Response<StudentModel> GetById(Guid studentId);
+        Response<IList<StudentModel>> GetByFilter(StudentQueryFilterModel filter);
+        Response<StudentModel> Create(StudentCreateRequestModel student);
+        Response<StudentModel> Update(StudentUpdateRequestModel student);
+        Response<StudentModel> Delete(Guid studentId);
+        Response<IList<StudentModel>> DeleteMany(List<Guid> deletedItems);
         //Nghiep vu
-        Response<IList<Student>> JoinClass(List<Guid> studentId, Guid? classId);
+        Response<IList<StudentModel>> JoinClass(List<Guid> studentId, Guid? classId);
         //Response<Student> LeaveClass(Guid studentId, Guid? ToClassId);
-        Response<Student> AssignToRole(Guid studentId, Guid classRoleId);
-        Response<IList<Student>> GetUnassignedStudents();
+        Response<StudentModel> AssignToRole(Guid studentId, Guid classRoleId);
+        Response<IList<StudentModel>> GetUnassignedStudents();
         int TotalQuantity();
     }
 }

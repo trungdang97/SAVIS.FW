@@ -21,7 +21,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
             return new UnitOfWork().GetRepository<scf_Teacher>().Count;
         }
 
-        public Response<Teacher> CurrentAssignedClasses(Guid teacherId)
+        public Response<TeacherModel> GetAssignedClasses(Guid teacherId)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     var teacher = unitOfWork.GetRepository<scf_Teacher>().GetById(teacherId);
                     if(teacher == null)
                     {
-                        return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<TeacherModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     var response = ConvertTeacher(teacher);
                     var history = unitOfWork.GetRepository<scf_Teacher_History>().GetMany(x => x.TeacherId == teacherId).OrderByDescending(x=>x.StartDate).ThenByDescending(x=>x.EndDate).ToList();
@@ -46,18 +46,18 @@ namespace SAVIS.FW.Business.Logic.Teacher
                         });
                     }
 
-                    return new Response<Teacher>(ConfigType.SUCCESS, "OK", response);
+                    return new Response<TeacherModel>(ConfigType.SUCCESS, "OK", response);
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
+                return new Response<TeacherModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
         #endregion
 
         #region R
-        public Response<Teacher> GetById(Guid teacherId)
+        public Response<TeacherModel> GetById(Guid teacherId)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     var model = unitOfWork.GetRepository<scf_Teacher>().GetById(teacherId);
                     if (model == null)
                     {
-                        return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists", null);
+                        return new Response<TeacherModel>(ConfigType.ERROR, "Object doesn't exists", null);
                     }
                     var response = ConvertTeacher(model);
                     response.Classes = new List<TeacherClassHistory>();//
@@ -78,16 +78,16 @@ namespace SAVIS.FW.Business.Logic.Teacher
 
                         }
                     }
-                    return new Response<Teacher>(ConfigType.SUCCESS, "OK", response);
+                    return new Response<TeacherModel>(ConfigType.SUCCESS, "OK", response);
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
+                return new Response<TeacherModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<IList<Teacher>> GetFilter(TeacherQueryFilter filter)
+        public Response<IList<TeacherModel>> GetByFilter(TeacherQueryFilterModel filter)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                             excludedRows = 0;
                         data = data.Skip(excludedRows).Take(filter.PageSize.Value + 1).ToList();
                     }
-                    return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(data))
+                    return new Response<IList<TeacherModel>>(ConfigType.SUCCESS, "OK", ConvertTeachers(data))
                     {
                         DataCount = data.Count,
                         TotalCount = count
@@ -115,11 +115,11 @@ namespace SAVIS.FW.Business.Logic.Teacher
             }
             catch (Exception ex)
             {
-                return new Response<IList<Teacher>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<TeacherModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<IList<Teacher>> GetByText(string searchText)
+        public Response<IList<TeacherModel>> GetByText(string searchText)
         {
             try
             {
@@ -128,13 +128,13 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     if(searchText == null)
                     {
                         var allTeachers = unitOfWork.GetRepository<scf_Teacher>().GetAll().ToList();
-                        return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(allTeachers))
+                        return new Response<IList<TeacherModel>>(ConfigType.SUCCESS, "OK", ConvertTeachers(allTeachers))
                         {
                             DataCount = allTeachers.Count
                         };
                     }
                     var teachers = unitOfWork.GetRepository<scf_Teacher>().GetMany(x => x.Code.Contains(searchText)||x.Name.Contains(searchText)).ToList();
-                    return new Response<IList<Teacher>>(ConfigType.SUCCESS, "OK", ConvertTeachers(teachers))
+                    return new Response<IList<TeacherModel>>(ConfigType.SUCCESS, "OK", ConvertTeachers(teachers))
                     {
                         DataCount = teachers.Count()
                     };
@@ -142,13 +142,13 @@ namespace SAVIS.FW.Business.Logic.Teacher
             }
             catch(Exception ex)
             {
-                return new Response<IList<Teacher>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<TeacherModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
         #endregion
 
         #region CUD
-        public Response<Teacher> CreateTeacher(TeacherCreateRequestModel teacher)
+        public Response<TeacherModel> Create(TeacherCreateRequestModel teacher)
         {
             try
             {
@@ -165,16 +165,16 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     unitOfWork.GetRepository<scf_Teacher>().Add(model);
                     unitOfWork.Save();
 
-                    return new Response<Teacher>(ConfigType.SUCCESS, "CREATED", ConvertTeacher(model));
+                    return new Response<TeacherModel>(ConfigType.SUCCESS, "CREATED", ConvertTeacher(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
+                return new Response<TeacherModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<Teacher> DeleteTeacher(Guid teacherId)
+        public Response<TeacherModel> Delete(Guid teacherId)
         {
             try
             {
@@ -183,20 +183,20 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     var model = unitOfWork.GetRepository<scf_Teacher>().GetById(teacherId);
                     if (model == null)
                     {
-                        return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<TeacherModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     unitOfWork.GetRepository<scf_Teacher>().Delete(model);
                     unitOfWork.Save();
 
-                    return new Response<Teacher>(ConfigType.SUCCESS, "DELETED", ConvertTeacher(model));
+                    return new Response<TeacherModel>(ConfigType.SUCCESS, "DELETED", ConvertTeacher(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
+                return new Response<TeacherModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
-        public Response<Teacher> UpdateTeacher(TeacherUpdateRequestModel teacher)
+        public Response<TeacherModel> Update(TeacherUpdateRequestModel teacher)
         {
             try
             {
@@ -205,7 +205,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     var model = unitOfWork.GetRepository<scf_Teacher>().GetById(teacher.TeacherId);
                     if (model == null)
                     {
-                        return new Response<Teacher>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<TeacherModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     model.Name = teacher.Name;
                     model.Birthday = teacher.Birthday;
@@ -213,20 +213,20 @@ namespace SAVIS.FW.Business.Logic.Teacher
                     unitOfWork.GetRepository<scf_Teacher>().Update(model);
                     unitOfWork.Save();
 
-                    return new Response<Teacher>(ConfigType.SUCCESS, "UPDATED", ConvertTeacher(model));
+                    return new Response<TeacherModel>(ConfigType.SUCCESS, "UPDATED", ConvertTeacher(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Teacher>(ConfigType.ERROR, ex.Message, null);
+                return new Response<TeacherModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
         #endregion
 
         #region CONVERT DATA
-        public static Teacher ConvertTeacher(scf_Teacher teacher)
+        public static TeacherModel ConvertTeacher(scf_Teacher teacher)
         {
-            var model = new Teacher()
+            var model = new TeacherModel()
             {
                 TeacherId = teacher.TeacherId,
                 Code = teacher.Code,
@@ -236,7 +236,7 @@ namespace SAVIS.FW.Business.Logic.Teacher
             return model;
         }
 
-        public static List<Teacher> ConvertTeachers(List<scf_Teacher> teachers)
+        public static List<TeacherModel> ConvertTeachers(List<scf_Teacher> teachers)
         {
             return teachers.Select(ConvertTeacher).ToList();
         }

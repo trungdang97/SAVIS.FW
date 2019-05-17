@@ -9,16 +9,16 @@ namespace SAVIS.FW.Business.Logic.Teacher
 {
     public interface ITeacherHandler
     {
-        Response<Teacher> GetById(Guid teacherId);
-        Response<IList<Teacher>> GetByText(string searchText);
-        Response<IList<Teacher>> GetFilter(TeacherQueryFilter filter);
-        Response<Teacher> CreateTeacher(TeacherCreateRequestModel teacher);
-        Response<Teacher> UpdateTeacher(TeacherUpdateRequestModel teacher);
-        Response<Teacher> DeleteTeacher(Guid teacherId);
+        Response<TeacherModel> GetById(Guid teacherId);
+        //Response<IList<TeacherModel>> GetByText(string searchText);
+        Response<IList<TeacherModel>> GetByFilter(TeacherQueryFilterModel filter);
+        Response<TeacherModel> Create(TeacherCreateRequestModel teacher);
+        Response<TeacherModel> Update(TeacherUpdateRequestModel teacher);
+        Response<TeacherModel> Delete(Guid teacherId);
 
         //
         int TotalQuantity();
 
-        Response<Teacher> CurrentAssignedClasses(Guid teacherId);
+        Response<TeacherModel> GetAssignedClasses(Guid teacherId);
     }
 }

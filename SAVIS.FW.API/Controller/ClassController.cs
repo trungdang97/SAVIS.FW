@@ -17,22 +17,22 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/classes/{classId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> GetClassById(Guid classId)
+        public Response<ClassModel> GetClassById(Guid classId)
         {
-            return _classHandler.GetClassById(classId);
+            return _classHandler.GetById(classId);
         }
         [HttpGet]
         [Route("api/v1/classes/code/{classCode}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> GetClassByCode(string classCode)
+        public Response<ClassModel> GetClassByCode(string classCode)
         {
-            return _classHandler.GetClassByCode(classCode);
+            return _classHandler.GetByCode(classCode);
         }
 
         [HttpGet]
         [Route("api/v1/classes/all")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Class>> GetClassById()
+        public Response<IList<ClassModel>> GetClassById()
         {
             return _classHandler.GetAll();
         }
@@ -40,40 +40,40 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/classes")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Class>> GetFilter(string filter)
+        public Response<IList<ClassModel>> GetFilter(string filter)
         {
-            ClassQueryFilter classFilter = JsonConvert.DeserializeObject<ClassQueryFilter>(filter);
-            return _classHandler.GetFilter(classFilter);
+            ClassQueryFilterModel classFilter = JsonConvert.DeserializeObject<ClassQueryFilterModel>(filter);
+            return _classHandler.GetByFilter(classFilter);
         }
 
         [HttpPost]
         [Route("api/v1/classes")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> CreateClass([FromBody]ClassCreateRequestModel Class)
+        public Response<ClassModel> CreateClass([FromBody]ClassCreateRequestModel Class)
         {
-            return _classHandler.CreateClass(Class);
+            return _classHandler.Create(Class);
         }
 
         [HttpPut]
         [Route("api/v1/classes")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> CreateClass([FromBody]ClassUpdateRequestModel Class)
+        public Response<ClassModel> CreateClass([FromBody]ClassUpdateRequestModel Class)
         {
-            return _classHandler.UpdateClass(Class);
+            return _classHandler.Update(Class);
         }
 
         [HttpDelete]
         [Route("api/v1/classes/{classId}")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> DeleteClass(Guid classId)
+        public Response<ClassModel> DeleteClass(Guid classId)
         {
-            return _classHandler.DeleteClass(classId);
+            return _classHandler.Delete(classId);
         }
 
         [HttpDelete]
         [Route("api/v1/classes/deletemany")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<Class>> DeleteManyClass([FromBody]List<Guid> model)
+        public Response<IList<ClassModel>> DeleteManyClass([FromBody]List<Guid> model)
         {
             return _classHandler.DeleteMany(model);
             
@@ -84,7 +84,7 @@ namespace SAVIS.FW.API.Controller
         [HttpPost]
         [Route("api/v1/classes/assign")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> AssignToClass(Guid? teacherId, Guid classId)
+        public Response<ClassModel> AssignToClass(Guid? teacherId, Guid classId)
         {
             return _classHandler.AssignToClass(teacherId, classId);
         }
@@ -92,17 +92,17 @@ namespace SAVIS.FW.API.Controller
         [HttpGet]
         [Route("api/v1/classes/{classId}/detail")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<Class> ClassDetail(Guid classId)
+        public Response<ClassModel> ClassDetail(Guid classId)
         {
-            return _classHandler.CurrentStudents(classId);
+            return _classHandler.GetCurrentStudents(classId);
         }
 
         [HttpGet]
         [Route("api/v1/classes/roles")]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public Response<IList<ClassRole>> GetRoles()
+        public Response<IList<ClassRoleModel>> GetRoles()
         {
-            return _classHandler.GetClassRoles();
+            return _classHandler.GetRoles();
         }
     }
 }

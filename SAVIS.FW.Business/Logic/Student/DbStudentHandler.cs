@@ -16,7 +16,7 @@ namespace SAVIS.FW.Business.Logic.Student
         ILogService logger = BusinessServiceLocator.Instance.GetService<ILogService>();
 
         #region Nghiep vu
-        public Response<IList<Student>> JoinClass(List<Guid> studentId, Guid? classId)
+        public Response<IList<StudentModel>> JoinClass(List<Guid> studentId, Guid? classId)
         {
             try
             {
@@ -32,10 +32,10 @@ namespace SAVIS.FW.Business.Logic.Student
                             if (classId == null) //không có lớp sẵn
                             {
                                 // Trường hợp không có lớp => không có lớp
-                                return new Response<IList<Student>>(ConfigType.ERROR, "Student doesn't belong to any class.", null);
+                                return new Response<IList<StudentModel>>(ConfigType.ERROR, "Student doesn't belong to any class.", null);
                             }
                             //Trường hợp lớp giống nhau
-                            return new Response<IList<Student>>(ConfigType.ERROR, "Student is in the class already.", null);
+                            return new Response<IList<StudentModel>>(ConfigType.ERROR, "Student is in the class already.", null);
                         }
                         student.ClassId = classId;
                         if (!classId.HasValue)
@@ -50,12 +50,12 @@ namespace SAVIS.FW.Business.Logic.Student
 
                     var response = ConvertStudents(lstStudent);
                     
-                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", response);
+                    return new Response<IList<StudentModel>>(ConfigType.SUCCESS, "OK", response);
                 }
             }
             catch (Exception ex)
             {
-                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<StudentModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
         //public Response<Student> LeaveClass(Guid studentId, Guid? classId)
@@ -82,7 +82,7 @@ namespace SAVIS.FW.Business.Logic.Student
         //        return new Response<Student>(ConfigType.ERROR, ex.Message, null);
         //    }
         //}
-        public Response<Student> AssignToRole(Guid studentId, Guid classRoleId)
+        public Response<StudentModel> AssignToRole(Guid studentId, Guid classRoleId)
         {
             try
             {
@@ -91,19 +91,19 @@ namespace SAVIS.FW.Business.Logic.Student
                     var model = unitOfWork.GetRepository<scf_Student>().GetById(studentId);
                     if (model.ClassId == null)
                     {
-                        return new Response<Student>(ConfigType.ERROR, "Student isn't in a specific class.", null);
+                        return new Response<StudentModel>(ConfigType.ERROR, "Student isn't in a specific class.", null);
                     }
                     model.ClassRoleId = classRoleId;
                     unitOfWork.GetRepository<scf_Student>().Update(model);
                     unitOfWork.Save();
 
                     var role = unitOfWork.GetRepository<scf_Class_Role>().GetById(classRoleId);
-                    return new Response<Student>(ConfigType.SUCCESS, "Assigned to class role: " + role.Name, ConvertStudent(model));
+                    return new Response<StudentModel>(ConfigType.SUCCESS, "Assigned to class role: " + role.Name, ConvertStudent(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Student>(ConfigType.ERROR, ex.Message, null);
+                return new Response<StudentModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
@@ -114,7 +114,7 @@ namespace SAVIS.FW.Business.Logic.Student
         #endregion
 
         #region R
-        public Response<IList<Student>> GetFilter(StudentQueryFilter filter)
+        public Response<IList<StudentModel>> GetByFilter(StudentQueryFilterModel filter)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace SAVIS.FW.Business.Logic.Student
                     
                     
 
-                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", ConvertStudents(data))
+                    return new Response<IList<StudentModel>>(ConfigType.SUCCESS, "OK", ConvertStudents(data))
                     {
                         TotalCount = count,
                         DataCount = data.Count
@@ -157,11 +157,11 @@ namespace SAVIS.FW.Business.Logic.Student
             }
             catch (Exception ex)
             {
-                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<StudentModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<Student> GetStudentById(Guid studentId)
+        public Response<StudentModel> GetById(Guid studentId)
         {
             try
             {
@@ -170,38 +170,38 @@ namespace SAVIS.FW.Business.Logic.Student
                     var student = unitOfWork.GetRepository<scf_Student>().GetById(studentId);
                     if (student == null)
                     {
-                        return new Response<Student>(ConfigType.ERROR, "Object doesn't exists", null);
+                        return new Response<StudentModel>(ConfigType.ERROR, "Object doesn't exists", null);
                     }
-                    return new Response<Student>(ConfigType.SUCCESS, "OK", ConvertStudent(student));
+                    return new Response<StudentModel>(ConfigType.SUCCESS, "OK", ConvertStudent(student));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Student>(ConfigType.ERROR, ex.Message, null);
+                return new Response<StudentModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<IList<Student>> GetUnassignedStudents()
+        public Response<IList<StudentModel>> GetUnassignedStudents()
         {
             try
             {
                 using(var unitOfWork = new UnitOfWork())
                 {
                     var students = ConvertStudents(unitOfWork.GetRepository<scf_Student>().GetMany(x => x.ClassId == null && x.IsActive == true).ToList());
-                    return new Response<IList<Student>>(ConfigType.SUCCESS, "OK", students) {
+                    return new Response<IList<StudentModel>>(ConfigType.SUCCESS, "OK", students) {
                         TotalCount = students.Count
                     };
                 }
             }
             catch(Exception ex)
             {
-                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<StudentModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
         #endregion
 
         #region CUD
-        public Response<Student> CreateStudent(StudentCreateRequestModel student)
+        public Response<StudentModel> Create(StudentCreateRequestModel student)
         {
             try
             {
@@ -229,16 +229,16 @@ namespace SAVIS.FW.Business.Logic.Student
                     unitOfWork.GetRepository<scf_Student>().Add(model);
                     unitOfWork.Save();
 
-                    return new Response<Student>(ConfigType.SUCCESS, "CREATED", ConvertStudent(model));
+                    return new Response<StudentModel>(ConfigType.SUCCESS, "CREATED", ConvertStudent(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Student>(ConfigType.ERROR, ex.Message, null);
+                return new Response<StudentModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<Student> DeleteStudent(Guid studentId)
+        public Response<StudentModel> Delete(Guid studentId)
         {
             try
             {
@@ -247,20 +247,20 @@ namespace SAVIS.FW.Business.Logic.Student
                     var model = unitOfWork.GetRepository<scf_Student>().GetById(studentId);
                     if (model == null)
                     {
-                        return new Response<Student>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<StudentModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     unitOfWork.GetRepository<scf_Student>().Delete(model);
                     unitOfWork.Save();
 
-                    return new Response<Student>(ConfigType.SUCCESS, "DELETED", ConvertStudent(model));
+                    return new Response<StudentModel>(ConfigType.SUCCESS, "DELETED", ConvertStudent(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Student>(ConfigType.ERROR, ex.Message, null);
+                return new Response<StudentModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
-        public Response<IList<Student>> DeleteMany(List<Guid> deletedItems)
+        public Response<IList<StudentModel>> DeleteMany(List<Guid> deletedItems)
         {
             try
             {
@@ -277,16 +277,16 @@ namespace SAVIS.FW.Business.Logic.Student
                         }
                     }
                     unitOfWork.Save();
-                    return new Response<IList<Student>>(ConfigType.SUCCESS, "DELETED", ConvertStudents(lstStudent));
+                    return new Response<IList<StudentModel>>(ConfigType.SUCCESS, "DELETED", ConvertStudents(lstStudent));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<IList<Student>>(ConfigType.ERROR, ex.Message, null);
+                return new Response<IList<StudentModel>>(ConfigType.ERROR, ex.Message, null);
             }
         }
 
-        public Response<Student> UpdateStudent(StudentUpdateRequestModel student)
+        public Response<StudentModel> Update(StudentUpdateRequestModel student)
         {
             try
             {
@@ -295,7 +295,7 @@ namespace SAVIS.FW.Business.Logic.Student
                     var model = unitOfWork.GetRepository<scf_Student>().GetById(student.StudentId);
                     if (model == null)
                     {
-                        return new Response<Student>(ConfigType.ERROR, "Object doesn't exists.", null);
+                        return new Response<StudentModel>(ConfigType.ERROR, "Object doesn't exists.", null);
                     }
                     model.Name = student.Name;
                     model.Birthday = student.Birthday;
@@ -305,20 +305,20 @@ namespace SAVIS.FW.Business.Logic.Student
                     unitOfWork.GetRepository<scf_Student>().Update(model);
                     unitOfWork.Save();
 
-                    return new Response<Student>(ConfigType.SUCCESS, "UPDATED", ConvertStudent(model));
+                    return new Response<StudentModel>(ConfigType.SUCCESS, "UPDATED", ConvertStudent(model));
                 }
             }
             catch (Exception ex)
             {
-                return new Response<Student>(ConfigType.ERROR, ex.Message, null);
+                return new Response<StudentModel>(ConfigType.ERROR, ex.Message, null);
             }
         }
         #endregion
 
         #region CONVERT DATA
-        public static Student ConvertStudent(scf_Student student)
+        public static StudentModel ConvertStudent(scf_Student student)
         {
-            var model = new Student()
+            var model = new StudentModel()
             {
                 StudentId = student.StudentId,
                 Code = student.Code,
@@ -332,13 +332,13 @@ namespace SAVIS.FW.Business.Logic.Student
             if (student.ClassRoleId.HasValue)
             {
                 model.ClassRoleId = student.ClassRoleId.Value;
-                model.Role = new ClassRole(student.scf_Class_Role);
+                model.Role = new ClassRoleModel(student.scf_Class_Role);
             }
 
             return model;
         }
 
-        public static List<Student> ConvertStudents(List<scf_Student> students)
+        public static List<StudentModel> ConvertStudents(List<scf_Student> students)
         {
             return students.Select(ConvertStudent).ToList();
         }
